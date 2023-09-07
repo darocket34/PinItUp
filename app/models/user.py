@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     birthday = db.Column(db.Date)
+    profile_img = db.Column(db.String(255))
 
     board = db.relationship("Board", back_populates="board")
     pins = db.relationship("Pin", back_populates="pins")

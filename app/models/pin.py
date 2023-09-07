@@ -13,7 +13,6 @@ class Pin(db.Model):
     url = db.Column(db.String(255))
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     postDate = db.Column(db.Date, nullable=False)
-    likes = db.Column(db.Integer, nullable=False)
 
     board_pin = db.relationship(
     "Board",

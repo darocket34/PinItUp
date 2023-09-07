@@ -1,16 +1,35 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
+from faker import Faker
+from faker.providers import person, internet, date_time
+import random
 
+fake = Faker()
+fake.add_provider(profile)
+
+def create_users(num_users):
+    for _ in range(num_users):
+        personObj = fake.simple_profile()
+        yield User(
+            name = personObj.name,
+            username = personObj.username,
+            email = personObj.mail,
+            birthday = personObj.birthdate,
+            password = 'password',
+            profile_img = f'https://picsum.photos/250.jpg?random={random.randint(1,100)}'
+        )
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
+def seed_users(num_users):
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
+        name = personObj.name, username='Demo', email='demo@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
+        name = personObj.name, username='marnie', email='marnie@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        name = personObj.name, username='bobbie', email='bobbie@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
 
+    new_users = list(create_users(num_users))
+    add_users = [db.session.add(user) for user in new_users]
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
@@ -28,5 +47,5 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
+
     db.session.commit()
