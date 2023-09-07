@@ -10,9 +10,16 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), nullable=False)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    birthday = db.Column(db.Date)
+
+    board = db.relationship("Board", back_populates="board")
+    pins = db.relationship("Pin", back_populates="pins")
+    comments = db.relationship("Comment", back_populates="comments")
+
 
     @property
     def password(self):
@@ -29,5 +36,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'birthday': self.birthday,
+            'name': self.name
         }
