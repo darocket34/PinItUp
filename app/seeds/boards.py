@@ -14,4 +14,14 @@ def create_boards(num_boards):
             creatorId = random.randint(1,40)
         )
 
-def seed_boards()
+def seed_boards(num_boards):
+    boards = list(create_boards(num_boards))
+    add_boards = [db.session.add(board) for board in boards]
+    db.session.commit()
+    return boards
+
+def undo_boards():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.boards RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM boards"))
