@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: 5d77e1a9271e
-Revises: 
+Revises:
 Create Date: 2023-09-08 09:08:39.046962
 
 """
@@ -32,7 +32,7 @@ def upgrade():
     )
     op.create_table('boards',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=40), nullable=False),
+    sa.Column('name', sa.String(length=60), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=False),
     sa.Column('creatorId', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['creatorId'], ['users.id'], ),
@@ -40,7 +40,7 @@ def upgrade():
     )
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=40), nullable=False),
+    sa.Column('name', sa.String(length=60), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=False),
     sa.Column('url', sa.String(length=255), nullable=True),
     sa.Column('creatorId', sa.Integer(), nullable=False),

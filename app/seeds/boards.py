@@ -10,7 +10,7 @@ fake.add_provider(lorem)
 def create_boards(num_boards, num_users):
     for _ in range(num_boards):
         yield Board(
-            name = fake.sentence(nb_words=8),
+            name = fake.sentence(nb_words=5),
             description = fake.paragraph(nb_sentences=4),
             creatorId = random.randint(1,num_users)
         )
