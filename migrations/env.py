@@ -60,8 +60,7 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    if environment == "production":
-        connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+
 
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
@@ -86,6 +85,8 @@ def run_migrations_online():
         with context.begin_transaction():
             context.run_migrations()
 
+    if environment == "production":
+        connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
 
 if context.is_offline_mode():
     run_migrations_offline()
