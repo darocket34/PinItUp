@@ -1,5 +1,5 @@
 from __future__ import with_statement
-
+from app.models.db import environment
 import logging
 from logging.config import fileConfig
 
@@ -60,6 +60,8 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    if environment == "production":
+        connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
 
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
