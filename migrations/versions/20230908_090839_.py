@@ -54,7 +54,7 @@ def upgrade():
     sa.Column('id', sa.Integer, nullable=False),
     sa.Column('creatorId', sa.Integer, nullable=False),
     sa.Column('pinId', sa.Integer, nullable=False),
-    sa.Column('comment', sa.String(length=150), nullable=False),
+    sa.Column('comment', sa.String(length=250), nullable=False),
     sa.ForeignKeyConstraint(['creatorId'], ['users.id'], ),
     sa.ForeignKeyConstraint(['pinId'], ['pins.id'], ),
     sa.PrimaryKeyConstraint('id')

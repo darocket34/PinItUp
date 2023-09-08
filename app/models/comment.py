@@ -9,7 +9,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     pinId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pins.id")), nullable=False)
-    comment = db.Column(db.String(150), nullable=False)
+    comment = db.Column(db.String(250), nullable=False)
 
     user = db.relationship("User", back_populates="comments")
     pins = db.relationship("Pin", back_populates="comments")
