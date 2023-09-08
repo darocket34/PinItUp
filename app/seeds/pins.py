@@ -13,7 +13,7 @@ def create_pins(num_pins, num_users, num_boards):
     for _ in range(num_pins):
         yield Pin(
             name = fake.name(),
-            description = fake.paragraph(nb_sentences=5),
+            description = fake.paragraph(nb_sentences=4),
             url = f'https://picsum.photos/250.jpg?random={random.randint(1,100)}',
             creatorId = random.randint(1, num_users),
             postDate = fake.date_this_year(),
