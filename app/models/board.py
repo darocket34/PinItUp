@@ -9,7 +9,7 @@ class Board(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    description = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(300), nullable=False)
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
     user = db.relationship("User", back_populates="board")
