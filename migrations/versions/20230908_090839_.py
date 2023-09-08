@@ -33,7 +33,7 @@ def upgrade():
     op.create_table('boards',
     sa.Column('id', sa.Integer, nullable=False),
     sa.Column('name', sa.String(length=60), nullable=False),
-    sa.Column('description', sa.String(length=200), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('creatorId', sa.Integer, nullable=False),
     sa.ForeignKeyConstraint(['creatorId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -41,7 +41,7 @@ def upgrade():
     op.create_table('pins',
     sa.Column('id', sa.Integer, nullable=False),
     sa.Column('name', sa.String(length=60), nullable=False),
-    sa.Column('description', sa.String(length=200), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('url', sa.String(length=255), nullable=True),
     sa.Column('creatorId', sa.Integer, nullable=False),
     sa.Column('postDate', sa.Date(), nullable=False),
