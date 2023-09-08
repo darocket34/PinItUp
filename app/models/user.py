@@ -17,9 +17,9 @@ class User(db.Model, UserMixin):
     birthday = db.Column(db.Date)
     profile_img = db.Column(db.String(255))
 
-    board = db.relationship("Board", back_populates="board")
-    pins = db.relationship("Pin", back_populates="pins")
-    comments = db.relationship("Comment", back_populates="comments")
+    board = db.relationship("Board", back_populates="user")
+    pins = db.relationship("Pin", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user")
 
 
     @property

@@ -12,7 +12,7 @@ class Comment(db.Model):
     comment = db.Column(db.String(150), nullable=False)
 
     user = db.relationship("User", back_populates="comments")
-    pin = db.relationship("Pin", back_populates="comments")
+    pins = db.relationship("Pin", back_populates="comments")
 
 
     def to_dict(self):

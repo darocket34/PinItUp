@@ -1,0 +1,39 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table comments {
+  id integer [primary key]
+  creatorId integer
+  boardId integer
+  comment str
+}
+
+Table users {
+  id integer [primary key]
+  username str
+  name str
+  email str
+  birthday date
+}
+
+Table boards {
+  id integer [primary key]
+  name str
+  description str
+  creatorId integer
+}
+
+Table pins {
+  id integer [primary key]
+  name str
+  description str
+  url str
+  creatorId integer
+  postDate date
+}
+
+Ref: users.id < pins.creatorId
+Ref: users.id < comments.creatorId
+Ref: users.id < boards.creatorId
+
+Ref: boards.id < comments.boardId

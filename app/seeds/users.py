@@ -1,20 +1,21 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
-from faker.providers import person, internet, date_time
+from faker.providers import profile, date_time
 import random
 
 fake = Faker()
 fake.add_provider(profile)
+fake.add_provider(date_time)
 
 def create_users(num_users):
     for _ in range(num_users):
         personObj = fake.simple_profile()
         yield User(
-            name = personObj.name,
-            username = personObj.username,
-            email = personObj.mail,
-            birthday = personObj.birthdate,
+            name = personObj['name'],
+            username = personObj['username'],
+            email = personObj['mail'],
+            birthday = personObj['birthdate'],
             password = 'password',
             profile_img = f'https://picsum.photos/250.jpg?random={random.randint(1,100)}'
         )
@@ -22,11 +23,11 @@ def create_users(num_users):
 # Adds a demo user, you can add other users here if you want
 def seed_users(num_users):
     demo = User(
-        name = personObj.name, username='Demo', email='demo@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
+        name = fake.name(), username='Demo', email='demo@aa.io', password='password', birthday = fake.date_of_birth(), profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
     marnie = User(
-        name = personObj.name, username='marnie', email='marnie@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
+        name = fake.name(), username='marnie', email='marnie@aa.io', password='password', birthday = fake.date_of_birth(), profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
     bobbie = User(
-        name = personObj.name, username='bobbie', email='bobbie@aa.io', password='password', birthday = personObj.birthdate, profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
+        name = fake.name(), username='bobbie', email='bobbie@aa.io', password='password', birthday = fake.date_of_birth(), profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
 
     new_users = list(create_users(num_users))
     add_users = [db.session.add(user) for user in new_users]
@@ -34,6 +35,7 @@ def seed_users(num_users):
     db.session.add(marnie)
     db.session.add(bobbie)
     db.session.commit()
+    return len(User.query.all())
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
@@ -47,5 +49,4 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-
     db.session.commit()
