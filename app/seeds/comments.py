@@ -12,7 +12,7 @@ def create_comments(num_comments, num_users, num_pins):
         yield Comment(
             creatorId = random.randint(1,num_users),
             pinId = random.randint(1, num_pins),
-            comment = fake.sentence(nb_words=20)
+            comment = fake.sentence(nb_words=10)
         )
 
 def seed_comments(num_comments, num_users, num_pins):
