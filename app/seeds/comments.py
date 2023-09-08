@@ -15,8 +15,8 @@ def create_comments(num_comments, num_users, num_pins):
             comment = fake.sentence(nb_words=20)
         )
 
-def seed_comments(num_comments, num_users, num_boards):
-    comments = list(create_comments(num_comments, num_users, num_boards))
+def seed_comments(num_comments, num_users, num_pins):
+    comments = list(create_comments(num_comments, num_users, num_pins))
     add_comments = [db.session.add(comment) for comment in comments]
     db.session.commit()
 

@@ -8,4 +8,4 @@
 # )
 
 # if environment == "production":
-#     business_amenities.schema = SCHEMA
+#     board_pins.schema = SCHEMA
