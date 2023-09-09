@@ -27,5 +27,5 @@ class Pin(db.Model):
             "url": self.url,
             "creatorId": self.creatorId,
             "postDate": self.postDate,
-            "likes": self.likes
+            "boardId": self.boardId
         }

@@ -10,6 +10,7 @@ class Comment(db.Model):
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     pinId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pins.id")), nullable=False)
     comment = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.Date)
 
     user = db.relationship("User", back_populates="comments")
     pins = db.relationship("Pin", back_populates="comments")
@@ -20,5 +21,6 @@ class Comment(db.Model):
             "id": self.id,
             "creatorId": self.creatorId,
             "boardId": self.boardId,
-            "comment": self.comment
+            "comment": self.comment,
+            "date": self.date
         }

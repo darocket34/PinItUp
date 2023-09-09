@@ -1,1 +1,44 @@
-/* TODO Add site wide styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+input {
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 0 0 0 2px #E9E9E9;
+}
+
+button {
+    background-color: #B4125D;
+    border: none;
+    border-radius: 8px;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#modal-content {
+    align-items: center;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+    width: 30vw;
+}
+
+form.login,
+form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+h1.login {
+    margin-bottom: 0;
+}

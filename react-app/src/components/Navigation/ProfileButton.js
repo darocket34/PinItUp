@@ -4,15 +4,18 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import "./Navigation.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [chevron, setChevron] = useState("down")
   const ulRef = useRef();
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
+    setChevron('up')
   };
 
   useEffect(() => {
@@ -22,6 +25,7 @@ function ProfileButton({ user }) {
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
+      setChevron('down')
     };
 
     document.addEventListener("click", closeMenu);
@@ -39,20 +43,22 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button className="navbar menu" onClick={openMenu}>
+      <i className={`fa-solid fa-chevron-${chevron} fa-xl profile-dropdown`}></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+            <div className="profile-dropdown user">
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li>
+                <button onClick={handleLogout}>Log Out</button>
+              </li>
+            </div>
           </>
         ) : (
-          <>
+          <div className="profile-dropdown menu">
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
@@ -64,7 +70,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-          </>
+          </div>
         )}
       </ul>
     </>

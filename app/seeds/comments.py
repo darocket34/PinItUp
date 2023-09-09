@@ -1,18 +1,20 @@
 from app.models import db, Comment, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
-from faker.providers import lorem
+from faker.providers import lorem, date_time
 import random
 
 fake = Faker()
 fake.add_provider(lorem)
+fake.add_provider(date_time)
 
 def create_comments(num_comments, num_users, num_pins):
     for _ in range(num_comments):
         yield Comment(
             creatorId = random.randint(1,num_users),
             pinId = random.randint(1, num_pins),
-            comment = fake.sentence(nb_words=10)
+            comment = fake.sentence(nb_words=10),
+            date = fake.date_this_year()
         )
 
 def seed_comments(num_comments, num_users, num_pins):

@@ -1,0 +1,40 @@
+#modal-content form,
+button.demo.user {
+    width: 60%;
+}
+
+button.login.form {
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight: 700;
+    height: 2rem;
+}
+
+p.login.link {
+    font-size: 12px;
+}
+
+p.login.link.bold {
+    font-weight: bold;
+}
+
+p.login.link.bold:hover {
+    cursor: pointer;
+}
+
+div.login.signup.link.container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.login.form.signup.link.button {
+    color: unset;
+    background-color: unset;
+    width: unset;
+    height: unset;
+}
+
+.login.form.option {
+    margin: 10px 10px;
+}
