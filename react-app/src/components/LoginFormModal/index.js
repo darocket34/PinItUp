@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import logo from "../../images/logo.jpg"
+import {useHistory} from "react-router-dom";
+import logo from "../../images/logo.jpg";
 import SignupFormModal from "../SignupFormModal";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signup, setSignUp] = useState(false)
@@ -16,9 +18,7 @@ function LoginFormModal() {
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
-    if(e){
-      e.preventDefault();
-    }
+    e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
@@ -27,10 +27,18 @@ function LoginFormModal() {
     }
   };
 
-  const demoLogin = async () => {
-      setEmail("demo@aa.io")
-      setPassword("password")
+  const demoLogin = async (e) => {
+      e.preventDefault();
+      const res = await dispatch(login("demo@aa.io", "password"))
+      if (res) {
+        setErrors(res);
+      } else {
+        closeModal()
+        history.push('/')
+    }
   }
+
+
 
   return (
     <>
@@ -67,7 +75,7 @@ function LoginFormModal() {
             <button className="login form submit" type="submit">Log In</button>
           </form>
           <p className="login form option">Or</p>
-          <button className="login form demo user" onClick={demoLogin}>Login as Demo User</button>
+          <button className="login form demo user" type="submit" onClick={demoLogin}>Login as Demo User</button>
           <div className="login form signup link container">
             <p className="login form signup link">Already a member?</p>
             <p className="login form signup link bold"onClick={() => {

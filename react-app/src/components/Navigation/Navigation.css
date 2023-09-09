@@ -1,12 +1,12 @@
-.profile-dropdown {
+.profile-dropdown.master.container {
   position: absolute;
 }
 
 div.profile-dropdown.menu {
   align-items: center;
-  background-color: #E9E9E9;
+  background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 8px 1px #e9e9e970;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -15,6 +15,13 @@ div.profile-dropdown.menu {
   right: 0px;
   top: 30px;
   width: 20vw;
+}
+
+div.profile-dropdown.user.card {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 90%;
 }
 
 .hidden {
@@ -103,4 +110,14 @@ button.modal {
 button.modal:hover {
   background-color: #B4125D;
   color: #E9E9E9;
+}
+
+ul.profile-dropdown {
+  list-style: none;
+}
+
+img.profile-dropdown.user {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }

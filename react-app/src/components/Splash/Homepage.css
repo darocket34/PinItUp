@@ -1,0 +1,19 @@
+div.homepage.pin.master.container {
+    column-count: 4;
+    margin-top: 20px;
+}
+
+div.homepage.single.pin.container {
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+img.pincard {
+    border-radius: 15px;
+    max-width: 100%;
+}
+
+img.pincard:hover {
+    cursor: zoom-in;
+    opacity: 0.45;
+}

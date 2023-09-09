@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown master container" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
@@ -49,11 +49,17 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <div className="profile-dropdown user">
-              <li>{user.username}</li>
-              <li>{user.email}</li>
+            <div className="profile-dropdown menu">
+              <div className="profile-dropdown user card">
+                <img className="profile-dropdown user img" src={user.profile_img}></img>
+                <div className="profile-dropdown user acc details">
+                  <li>{user.username}</li>
+                  <li>{user.email}</li>
+                </div>
+              </div>
+
               <li>
-                <button onClick={handleLogout}>Log Out</button>
+                <button className="modal" onClick={handleLogout}>Log Out</button>
               </li>
             </div>
           </>
