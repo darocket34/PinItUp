@@ -46,8 +46,9 @@ div.navbar.menu.button.container {
 }
 
 div.navbar.links1 {
+  align-items: center;
   display: flex;
-  gap: 40px;
+  gap: 20px;
 }
 
 div.navbar.search.container {
@@ -103,7 +104,7 @@ button.modal {
   background-color: #B4125D;
   border-radius: 18px;
   color: #E9E9E9;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 20px;
   width: 200px;
 }
@@ -121,4 +122,53 @@ img.profile-dropdown.user {
   border-radius: 50%;
   height: 50px;
   width: 50px;
+}
+
+a.navbar.link.text,
+button.navbar.menu.create {
+  color: black;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+a.navbar.link.text.active,
+button.navbar.menu.create.active {
+  background-color: black;
+  border-radius: 26px;
+  color: white;
+  padding: 0 15px;
+}
+
+button.navbar.menu.create {
+  border-radius: 26px;
+  gap: 6px;
+  margin-right: 5px;
+  height: 51px;
+  padding: 0 15px;
+  width: 90px;
+}
+
+button.navbar.menu.create:hover {
+  background-color: #B4125D;
+  color: white;
+}
+
+a.navbar.link.text:hover {
+  background-color: #B4125D;
+}
+
+div.create.menu {
+  align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  position: absolute;
+  /* right: 0px; */
+  top: 30px;
+  width: 20vw;
+  z-index: 2;
 }

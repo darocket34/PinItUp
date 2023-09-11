@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import CreateButton from './CreateButton';
 import navLogo from '../../images/logo.jpg'
 import './Navigation.css';
 
@@ -17,7 +18,7 @@ function Navigation({ isLoaded }){
 			</div>
 			<div className="navbar links1">
 				<NavLink exact to="/home" className='navbar link text'><p className='navbar link text'>Home</p></NavLink>
-				<NavLink exact to="/create" className='navbar link text'><p className='navbar link text'>Create</p></NavLink>
+				<CreateButton user={sessionUser} />
 			</div>
 			<div className='navbar search container'>
 				<input className='navbar search' placeholder='Search' />
