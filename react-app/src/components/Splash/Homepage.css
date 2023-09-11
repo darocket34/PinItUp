@@ -15,5 +15,39 @@ img.pincard {
 
 img.pincard:hover {
     cursor: zoom-in;
-    opacity: 0.45;
+    opacity: 0.35;
+}
+
+div.pincard.master.container {
+    border-radius: 15px;
+    position: relative;
+}
+
+div.homepage.single.pin.overlay.container {
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 99%;
+    padding: 8px;
+    position: absolute;
+    width: 100%;
+}
+
+div.homepage.single.pin.overlay.top {
+    display: flex;
+    justify-content: space-between;
+}
+
+button.overlay.save {
+    font-size: 16px;
+    height: 40px;
+    opacity: 1;
+    padding: 0 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 1;
 }

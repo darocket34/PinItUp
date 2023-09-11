@@ -88,11 +88,11 @@ function SignupFormModal() {
 					<button className='login form submit' type="submit">Sign Up</button>
 				</form>
 				<div className="login form signup link container">
-				<p className="login form signup link">Not a member yet?</p>
+				<p className="login form signup link">Already a member?</p>
 				<p className="login form signup link bold"onClick={() => {
 					setSignUpForm(false)
 					setLoginForm(true)
-				}}>Sign Up</p>
+				}}>Log in</p>
           </div>
 		  </>
 		  )}

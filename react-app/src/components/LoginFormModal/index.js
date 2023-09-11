@@ -34,7 +34,7 @@ function LoginFormModal() {
         setErrors(res);
       } else {
         closeModal()
-        history.push('/')
+        history.push('/home')
     }
   }
 
@@ -77,11 +77,11 @@ function LoginFormModal() {
           <p className="login form option">Or</p>
           <button className="login form demo user" type="submit" onClick={demoLogin}>Login as Demo User</button>
           <div className="login form signup link container">
-            <p className="login form signup link">Already a member?</p>
+            <p className="login form signup link">Not a member yet?</p>
             <p className="login form signup link bold"onClick={() => {
               setLoginForm(false)
               setSignUp(true)
-            }}>Log in</p>
+            }}>Sign Up</p>
           </div>
         </>
       )}

@@ -1,0 +1,84 @@
+div.boardlist.dropdown.master.container {
+    background-color: white;
+    border-radius: 15px;
+    left: 60px;
+    max-height: 500px;
+    max-width: 350px;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    width: 350px;
+    z-index: 1;
+}
+
+div.boardlist.dropdown.submaster.container {
+    /* overflow: scroll; */
+    text-align: center;
+}
+
+div.boardlist.subcontainer {
+    height: 400px;
+    overflow: scroll;
+}
+
+button.boardlist.dropdown {
+    align-items: center;
+    display: flex;
+    height: 40px;
+    margin-top: 7px;
+    gap: 7px;
+    opacity: 1;
+    padding-left: 8px;
+    padding-right: 8px;
+    position: absolute;
+    z-index: 1;
+}
+
+div.boardlist.card.container {
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+div.boardlist.card.container:hover {
+    background-color: #E9E9E9;
+}
+
+div.boardlist.card.content {
+    display: flex;
+    gap: 10px;
+}
+
+img.boardlist.card {
+    border-radius: 15px;
+    height: 50px;
+    width: 50px;
+}
+
+p.boardlist.card.name {
+    color: black;
+    font-size: 14px;
+}
+
+p.boardlist.dropdown.button.text {
+    font-size: 16px;
+}
+
+p.boardlist.dropdown.master.title {
+    color: black;
+    font-size: 15px;
+}
+
+button.boardlist.card.save:hover {
+    background-color: #E9E9E9;
+    color: #B4125D;
+}
+
+button.boardlist.card.save {
+    opacity: 0;
+}
+
+div.boardlist.card.container:hover button.boardlist.card.save {
+    opacity: 1;
+}

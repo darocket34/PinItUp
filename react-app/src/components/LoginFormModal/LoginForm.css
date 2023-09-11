@@ -10,6 +10,11 @@ button.login.form {
     height: 2rem;
 }
 
+button.login.form:hover {
+    background-color: #E9E9E9;
+    color: #B4125D;
+}
+
 p.login.link {
     font-size: 12px;
 }

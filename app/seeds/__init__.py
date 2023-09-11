@@ -23,10 +23,10 @@ def seed():
         undo_pins()
         undo_boards()
         undo_comments()
-    users = seed_users(100)
-    boards = seed_boards(50, users)
-    pins = seed_pins(200, users, len(boards))
-    seed_comments(300, users, len(pins))
+    users = seed_users(40)
+    boards = seed_boards(250, users)
+    pins = seed_pins(600, users, len(boards))
+    seed_comments(400, users, len(pins))
 
 
 # Creates the `flask seed undo` command

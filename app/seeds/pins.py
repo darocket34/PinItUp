@@ -17,7 +17,7 @@ def create_pins(num_pins, num_users, num_boards):
             url = f'https://picsum.photos/{random.randint(260,500)}/350.jpg?random={random.randint(1,100)}',
             creatorId = random.randint(1, num_users),
             postDate = fake.date_this_year(),
-            boardId = random.randint(1, num_boards)
+            boardId = random.randint(1, num_boards) 
         )
 
 

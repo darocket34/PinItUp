@@ -15,6 +15,7 @@ div.profile-dropdown.menu {
   right: 0px;
   top: 30px;
   width: 20vw;
+  z-index: 2;
 }
 
 div.profile-dropdown.user.card {
@@ -99,17 +100,17 @@ button.navbar.menu:hover {
 }
 
 button.modal {
-  background-color: #E9E9E9;
-  border-radius: 8px;
-  color: #B4125D;
+  background-color: #B4125D;
+  border-radius: 18px;
+  color: #E9E9E9;
   font-weight: bold;
   font-size: 20px;
   width: 200px;
 }
 
 button.modal:hover {
-  background-color: #B4125D;
-  color: #E9E9E9;
+  background-color: #E9E9E9;
+  color: #B4125D;
 }
 
 ul.profile-dropdown {
