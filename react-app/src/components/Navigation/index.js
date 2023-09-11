@@ -7,8 +7,8 @@ import './Navigation.css';
 
 
 function Navigation({ isLoaded }){
-
 	const sessionUser = useSelector(state => state.session.user);
+
 
 	return (
 		<div className='navbar master container'>
@@ -16,8 +16,8 @@ function Navigation({ isLoaded }){
 				<NavLink exact to="/"><img className='navbar home logo image' src={navLogo} alt='PinItUp Logo' /></NavLink>
 			</div>
 			<div className="navbar links1">
-				<p className='navbar link text'>Home</p>
-				<p className='navbar link text'>Create</p>
+				<NavLink exact to="/home" className='navbar link text'><p className='navbar link text'>Home</p></NavLink>
+				<NavLink exact to="/create" className='navbar link text'><p className='navbar link text'>Create</p></NavLink>
 			</div>
 			<div className='navbar search container'>
 				<input className='navbar search' placeholder='Search' />
