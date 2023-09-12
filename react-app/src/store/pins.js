@@ -4,6 +4,8 @@ const cloneDeep = require("clone-deep")
 const GET_ALL_PINS = "pins/GET_ALL_PINS"
 const CREATE_PIN = "pins/CREATE_PIN"
 const GET_PIN = "pins/GET_PIN"
+const DELETE_PIN = "pins/DELETE_PIN"
+const UPDATE_PIN = "pins/UPDATE_PIN"
 
 /* Action Creators */
 const getPins = (pins) => ({
@@ -21,6 +23,16 @@ const addPin = (pin) => ({
     pin
 })
 
+const updateSinglePin = (pin) => ({
+    type: UPDATE_PIN,
+    pin
+})
+
+const deletePin = (pin) => ({
+    type: DELETE_PIN,
+    pin
+})
+
 /* Thunks */
 export const getAllPins = () => async (dispatch) => {
     const res = await fetch("/api/pins");
@@ -34,13 +46,11 @@ export const getAllPins = () => async (dispatch) => {
 }
 
 export const getSinglePin = (pin) => async (dispatch) => {
-    console.log("PIN", pin)
     const res = await fetch(`/api/pins/${pin}`, {
         method: "get"
     });
     if (res.ok) {
         const pinRes = await res.json();
-        console.log(pinRes.pin)
         dispatch(getPin(pinRes.pin));
     } else {
         const {errors} = await res.json();
@@ -49,7 +59,6 @@ export const getSinglePin = (pin) => async (dispatch) => {
 }
 
 export const createPin = (pin) => async (dispatch) => {
-    console.log("STEP !", pin)
     const res = await fetch(`/api/pins/newpin`, {
         method: "post",
         headers: {
@@ -60,6 +69,44 @@ export const createPin = (pin) => async (dispatch) => {
     if (res.ok) {
         const pin = await res.json();
         dispatch(addPin(pin));
+    } else {
+        const {errors} = await res.json();
+        return errors;
+    }
+}
+
+export const updatePin = (pin) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/pins/${pin.id}/edit`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pin)
+        })
+        if (res.ok) {
+            const pinRes = await res.json();
+            dispatch(updateSinglePin(pinRes.pin));
+        } else {
+            const {errors} = await res.json();
+            return errors;
+        }
+    } catch (err) {
+        if (err) {
+            let {error} = await err.json()
+            return error
+        }
+    }
+
+}
+
+export const removePin = (pin) => async (dispatch) => {
+    const res = await fetch(`/api/pins/${pin}`, {
+        method: "DELETE"
+    })
+    if (res.ok) {
+        const pin = await res.json();
+        dispatch(deletePin(pin));
     } else {
         const {errors} = await res.json();
         console.log(errors)
@@ -86,6 +133,11 @@ const pinsReducer = (
             return newState;
         case GET_PIN:
             newState.singlePin = action.pin;
+            return newState;
+        case UPDATE_PIN:
+            newState.singlePin = action.pin;
+            return newState;
+        case DELETE_PIN:
             return newState;
         default:
             return state

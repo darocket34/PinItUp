@@ -47,8 +47,8 @@ export default function BoardList({boards}){
                                 {boards.map((board,idx)=> (
                                     <div key={idx} className="boardlist card container">
                                         <div className="boardlist card content">
-                                            <img className="boardlist card image" src={board.preview.url} />
-                                            <p className="boardlist card name">{board.name}</p>
+                                            <img className="boardlist card image" src={board?.preview?.url} />
+                                            <p className="boardlist card name">{board?.name}</p>
                                         </div>
                                         <button className={`boardlist card save ${hidden}`}>Save</button>
                                     </div>
