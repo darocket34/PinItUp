@@ -4,6 +4,8 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import PinModal from "../Pins/PinModal";
 import "./Navigation.css"
+import PinDetails from "../Pins/PinDetails";
+import { Link } from "react-router-dom";
 
 function CreateButton({ user }) {
   const dispatch = useDispatch();
@@ -49,12 +51,13 @@ function CreateButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user && (
           <div className="create menu">
+            {/*!! <Link to="/pins">Create New Pin</Link> */}
+
             <OpenModalButton
               buttonText="Create New Pin"
               onItemClick={closeMenu}
               modalComponent={<PinModal user={user} type="create" />}
             />
-
             {/* <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}

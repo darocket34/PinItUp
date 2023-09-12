@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/Splash";
 import NotFound from "./components/NotFound/NotFound";
+import PinDetails from "./components/Pins/PinDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,9 +27,15 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/home">
+          <Route exact path="/home">
             <HomePage />
           </Route>
+          <Route exact path="/pins/:id">
+            <PinDetails />
+          </Route>
+          {/* <Route path="/pins">
+            <PinDetails staging={true} />
+          </Route> */}
           <Route path="/notfound">
             <NotFound />
           </Route>

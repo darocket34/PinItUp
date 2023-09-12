@@ -82,3 +82,20 @@ button.boardlist.card.save {
 div.boardlist.card.container:hover button.boardlist.card.save {
     opacity: 1;
 }
+
+form.pinform.create input,
+form.pinform.create textarea,
+form.pinform.create select {
+    width: 100%;
+}
+
+form#pinform {
+    width: 100%;
+}
+
+button.create.submit{
+    font-size: 15px;
+    height: 30px;
+    margin-top: 20px;
+    width: 90px;
+}

@@ -7,16 +7,17 @@ import random
 fake = Faker()
 fake.add_provider(lorem)
 
-def create_boards(num_boards, num_users):
+def create_boards(num_boards, num_users, pinList):
     for _ in range(num_boards):
         yield Board(
             name = fake.sentence(nb_words=3),
             description = fake.paragraph(nb_sentences=3),
-            creatorId = random.randint(1,num_users)
+            creatorId = random.randint(1,num_users),
+            pins = random.sample(pinList, random.randint(1,20))
         )
 
-def seed_boards(num_boards, num_users):
-    boards = list(create_boards(num_boards, num_users))
+def seed_boards(num_boards, num_users, pinList):
+    boards = list(create_boards(num_boards, num_users, pinList))
     add_boards = [db.session.add(board) for board in boards]
     db.session.commit()
     return boards
