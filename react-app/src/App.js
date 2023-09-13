@@ -9,7 +9,7 @@ import HomePage from "./components/Splash";
 import NotFound from "./components/NotFound/NotFound";
 import PinDetails from "./components/Pins/PinDetails";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
-import BoardPage from "./components/Boards/BoardPage"
+import BoardDetails from "./components/Boards/BoardDetails"
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function App() {
             <PinDetails />
           </Route>
           <Route exact path={"/boards/:id"}>
-            <BoardPage />
+            <BoardDetails />
           </Route>
           <Route exact path={`/${user.username}/profile`}>
             <ProfilePage user={user}/>

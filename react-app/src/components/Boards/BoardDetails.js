@@ -1,24 +1,32 @@
 
-import { StaticRouter, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import "./Boards.css"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllBoards, getBoard } from "../../store/boards";
 import OpenModalButton from "../OpenModalButton";
 import DeleteBoardModal from "./DeleteBoardModal";
 import BoardModal from "./BoardModal";
 
-function BoardPage() {
+function BoardDetails() {
     const {id} = useParams();
     const dispatch = useDispatch();
+    const [isOwner, setIsOwner] = useState(false)
     const board = useSelector(state => state.boards.singleBoard)
     const user = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getBoard(id))
         dispatch(getAllBoards(user.username))
-    },[dispatch]
-    )
+    },[dispatch])
+
+    useEffect(() => {
+        if(user?.id === board?.creatorId){
+            setIsOwner(true)
+        } else {
+            setIsOwner(false)
+        }
+    })
     return (
         <>
             <h1>Board Details</h1>
@@ -28,17 +36,22 @@ function BoardPage() {
             <div>Pins: {board?.pins.map((pin,idx) => (
                 <p key={idx}>{pin?.name}</p>
             ))}</div>
-            <OpenModalButton
-                buttonText="Update"
-                modalComponent={<BoardModal type="update" user={user} board={board}/>}
-                />
-            <OpenModalButton
-                buttonText="Delete"
-                modalComponent={<DeleteBoardModal board={board}/>}
-                />
+            {isOwner && (
+                <>
+                    <OpenModalButton
+                        buttonText="Update"
+                        modalComponent={<BoardModal type="update" user={user} board={board}/>}
+                    />
+                    <OpenModalButton
+                        buttonText="Delete"
+                        modalComponent={<DeleteBoardModal board={board}/>}
+                    />
+                </>
+            )}
+
         </>
     )
 }
 
 
-export default BoardPage;
+export default BoardDetails;

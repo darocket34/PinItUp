@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
 	return (
 		<div className='navbar master container'>
 			<div className='navbar home logo link'>
-				<NavLink exact to="/"><img className='navbar home logo image' src={navLogo} alt='PinItUp Logo' /></NavLink>
+				<NavLink exact to="/home"><img className='navbar home logo image' src={navLogo} alt='PinItUp Logo' /></NavLink>
 			</div>
 			<div className="navbar links1">
 				<NavLink exact to="/home" className='navbar link text'><p className='navbar link text'>Home</p></NavLink>
