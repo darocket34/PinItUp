@@ -1,4 +1,4 @@
-
+import "../Navigation/Navigation.css"
 
 export default function NotFound() {
     return (

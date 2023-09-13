@@ -7,6 +7,7 @@ import "./Navigation.css"
 import PinDetails from "../Pins/PinDetails";
 import { Link } from "react-router-dom";
 import BoardModal from "../Boards/BoardModal";
+import LoginFormModal from "../LoginFormModal";
 
 function CreateButton({ user }) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ function CreateButton({ user }) {
         <i className={`fa-solid fa-chevron-${chevron} fa-xl create`}></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        {user && (
+        {user ? (
           <div className="create menu">
 
             <OpenModalButton
@@ -59,6 +60,17 @@ function CreateButton({ user }) {
               modalComponent={<BoardModal user={user} type="create" />}
             />
           </div>
+        ) : (
+          <>
+            <div className="create menu">
+              <p>Please login to continue</p>
+              <OpenModalButton
+              buttonText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+              />
+            </div>
+          </>
         )}
       </ul>
     </>

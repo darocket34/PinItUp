@@ -27,13 +27,8 @@ def all_boards(username):
     for board in Board.query.filter(Board.creatorId == user.id).all():
         data = board.to_dict()
         previewPin = Pin.query.filter(Pin.boardId == board.id).first()
-        pins = Pin.query.filter(Pin.boardId == board.id).all()
-        pinList = [pin.to_dict() for pin in pins]
-        if pinList:
-            data["pins"] = pinList
-        if previewPin:
-            data["preview"] = previewPin.to_dict()
         allBoards.append(data)
+    db.session.commit()
     return {"boards": allBoards}
 
 @board_routes.route('/<int:id>')
@@ -84,10 +79,24 @@ def update_board(id):
         board.creatorId = data["creatorId"]
         db.session.commit()
         return board.to_dict()
-        # name = request_data["name"],
-        # description = request_data["description"],
-        # creatorId = request_data["creatorId"]
     return {"errors": form.errors}, 400
+
+@board_routes.route("/<int:id>/addpin", methods=["PUT"])
+@login_required
+def add_pin_to_board(id):
+    req = request.get_json()
+    print("BORARD--------", req)
+    pinId = req["id"]
+    pin = Pin.query.get(pinId)
+    if not pin:
+        return {"error", "Pin not found"}, 404
+    board_id = req["id"]
+    board = Board.query.get(board_id)
+    board.pins.append(pin)
+    db.session.commit()
+    board = Board.query.get(board_id)
+    print("POSTBOARD--------", board.pins)
+    return board.to_dict()
 
 @board_routes.route('/<int:id>', methods=["DELETE"])
 @login_required

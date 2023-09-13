@@ -46,7 +46,7 @@ function App() {
           <Route exact path={`/${user?.username}/profile`}>
             <ProfilePage />
           </Route>
-          <Route path="/notfound">
+          <Route exact path="/notfound">
             <NotFound />
           </Route>
         </Switch>

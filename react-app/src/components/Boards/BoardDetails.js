@@ -1,12 +1,12 @@
 
-import { useParams } from "react-router-dom"
-import "./Boards.css"
+import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllBoards, getBoard } from "../../store/boards";
 import OpenModalButton from "../OpenModalButton";
 import DeleteBoardModal from "./DeleteBoardModal";
 import BoardModal from "./BoardModal";
+import "./Boards.css"
 
 function BoardDetails() {
     const {id} = useParams();
@@ -30,11 +30,12 @@ function BoardDetails() {
     return (
         <>
             <h1>Board Details</h1>
+            <Link to={`/${user.username}/profile`}>All Boards</Link>
             <h2>All Pins</h2>
             <p>Name: {board?.name}</p>
             <p>Description: {board?.description}</p>
-            <div>Pins: {board?.pins.map((pin,idx) => (
-                <p key={idx}>{pin?.name}</p>
+            <div className="boarddetails pinList">Pins: {board?.pins.map((pin,idx) => (
+                <Link to={`/pins/${pin.id}`} key={idx}>{pin?.name}</Link>
             ))}</div>
             {isOwner && (
                 <>

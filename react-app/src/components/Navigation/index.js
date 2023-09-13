@@ -43,7 +43,7 @@ function Navigation({ isLoaded }){
 				</form>
 			</div>
 			<div className="navbar links2">
-				<p className='navbar link text'>Messages</p>
+				<p className='navbar link text messages'>Messages</p>
 			</div>
 			{isLoaded && (
 				<div className='navbar menu button container'>
