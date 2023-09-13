@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound/NotFound";
 import PinDetails from "./components/Pins/PinDetails";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import BoardDetails from "./components/Boards/BoardDetails"
+import SearchPage from "./components/Splash/SearchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route exact path="/home">
             <HomePage />
+          </Route>
+          <Route exact path="/search">
+            <SearchPage />
           </Route>
           <Route exact path="/pins/:id">
             <PinDetails />

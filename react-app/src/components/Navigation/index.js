@@ -1,5 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {useEffect, useState, useContext} from 'react';
+import {PinSearchContext} from '../../context/PinSearch'
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import CreateButton from './CreateButton';
@@ -8,8 +9,21 @@ import './Navigation.css';
 
 
 function Navigation({ isLoaded }){
+	const history = useHistory()
+    const [searchDetails, setSearchDetails] = useState('')
 	const sessionUser = useSelector(state => state.session.user);
+	const {setSearchPins} = useContext(PinSearchContext)
 
+	const handleFormSubmit = (e) => {
+		if (!searchDetails.length){
+			return
+		} else {
+			e.preventDefault()
+			setSearchPins(searchDetails)
+			history.push('/search')
+			setSearchDetails('')
+		}
+	}
 
 	return (
 		<div className='navbar master container'>
@@ -21,8 +35,12 @@ function Navigation({ isLoaded }){
 				<CreateButton user={sessionUser} />
 			</div>
 			<div className='navbar search container'>
-				<input className='navbar search' placeholder='Search' />
-				<button className='navbar search submit'><i className="fa-solid fa-magnifying-glass fa-xl"></i></button>
+				<form className='navbar search form' onSubmit={handleFormSubmit}>
+					<div className='navbar search container'>
+						<input className='navbar search' value={searchDetails} placeholder='Search' onChange={e => setSearchDetails(e.target.value)}/>
+						<button className='navbar search submit' type='submit'><i className="fa-solid fa-magnifying-glass fa-xl"></i></button>
+					</div>
+				</form>
 			</div>
 			<div className="navbar links2">
 				<p className='navbar link text'>Messages</p>
