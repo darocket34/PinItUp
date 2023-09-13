@@ -35,12 +35,7 @@ function CreateButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-  };
-
-  const ulClassName = "profile-dropdown master container" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown create master container" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
@@ -52,7 +47,6 @@ function CreateButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user && (
           <div className="create menu">
-            {/*!! <Link to="/pins">Create New Pin</Link> */}
 
             <OpenModalButton
               buttonText="Create New Pin"

@@ -39,8 +39,8 @@ function App() {
           <Route exact path={"/boards/:id"}>
             <BoardDetails />
           </Route>
-          <Route exact path={`/${user.username}/profile`}>
-            <ProfilePage user={user}/>
+          <Route exact path={`/${user?.username}/profile`}>
+            <ProfilePage />
           </Route>
           <Route path="/notfound">
             <NotFound />
