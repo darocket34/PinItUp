@@ -6,6 +6,7 @@ const CREATE_PIN = "pins/CREATE_PIN"
 const GET_PIN = "pins/GET_PIN"
 const DELETE_PIN = "pins/DELETE_PIN"
 const UPDATE_PIN = "pins/UPDATE_PIN"
+const ADD_TO_BOARD = "pins/ADD_TO_BOARD"
 
 /* Action Creators */
 const getPins = (pins) => ({
@@ -32,6 +33,8 @@ const deletePin = (pin) => ({
     type: DELETE_PIN,
     pin
 })
+
+
 
 /* Thunks */
 export const getAllPins = () => async (dispatch) => {

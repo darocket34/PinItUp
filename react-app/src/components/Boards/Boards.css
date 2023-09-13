@@ -1,0 +1,4 @@
+div.boarddetails.pinList {
+    display: flex;
+    flex-direction: column;
+}

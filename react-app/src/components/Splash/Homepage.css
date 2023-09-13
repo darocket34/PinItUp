@@ -14,8 +14,9 @@ img.pincard {
 }
 
 img.pincard:hover {
+    background-color: black;
     cursor: zoom-in;
-    opacity: 0.35;
+    opacity: 0.2;
 }
 
 div.pincard.master.container {
@@ -24,7 +25,6 @@ div.pincard.master.container {
 }
 
 div.homepage.single.pin.overlay.container {
-    background-color: black;
     border-radius: 15px;
     color: white;
     display: flex;
@@ -44,7 +44,6 @@ div.homepage.single.pin.overlay.top {
 button.overlay.save {
     font-size: 16px;
     height: 40px;
-    opacity: 1;
     padding: 0 15px;
     position: absolute;
     right: 15px;

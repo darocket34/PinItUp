@@ -6,6 +6,7 @@ const CREATE_BOARD = "boards/CREATE_BOARD"
 const GET_BOARD = "boards/GET_BOARD"
 const DELETE_BOARD = "boards/DELETE_BOARD"
 const UPDATE_BOARD = "boards/UPDATE_BOARD"
+const ADD_TO_BOARD = "pins/ADD_TO_BOARD"
 
 /* Action Creators */
 const getBoards = (boards) => ({
@@ -30,6 +31,11 @@ const addBoard = (board) => ({
 
 const removeBoard = (board) => ({
     type: DELETE_BOARD,
+    board
+})
+
+const addToBoard = (board) => ({
+    type: ADD_TO_BOARD,
     board
 })
 
@@ -104,6 +110,25 @@ export const updateBoard = (board) => async (dispatch) => {
     }
 }
 
+export const addPinToBoard = (pin, board) => async (dispatch) => {
+    console.log(pin,board)
+    const res = await fetch(`/api/boards/${board.id}/addpin`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(board)
+    })
+    if (res.ok) {
+        const board = await res.json();
+        dispatch(addToBoard(board));
+        return board;
+    } else {
+        const {errors} = await res.json();
+        return errors;
+    }
+}
+
 export const deleteBoard = (boardId) => async (dispatch) => {
     const res = await fetch(`/api/boards/${boardId}`, {
         method: "DELETE"
@@ -140,6 +165,9 @@ const boardsReducer = (
             return newState;
         case UPDATE_BOARD:
             newState.singleBoard = action.board
+            return newState;
+        case ADD_TO_BOARD:
+            newState.allBoards[action.board.id] = action.board
             return newState;
         case DELETE_BOARD:
             return newState;

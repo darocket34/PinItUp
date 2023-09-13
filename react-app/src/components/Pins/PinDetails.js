@@ -33,12 +33,12 @@ function PinDetails() {
             {user?.id && (
             <Link to={`/${user?.username}/profile`} className="pindetails form redirect">Boards</Link>
             )}
-            <p>{pin?.name}</p>
-            <p>{pin?.description}</p>
+            <p>Name: {pin?.name}</p>
+            <p>Desc: {pin?.description}</p>
             <img className="pindetail image" src={pin?.url}></img>
-            <p>{pin?.creatorId}</p>
-            <p>{pin?.postDate}</p>
-            <p>{pin?.boardId}</p>
+            <p>Owner Id: {pin?.creatorId}</p>
+            <p>Post Date: {pin?.postDate}</p>
+            <p>Board: {pin?.boardId}</p>
 
            {isOwner && (
             <>

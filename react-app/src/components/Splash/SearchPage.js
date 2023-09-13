@@ -18,12 +18,8 @@ export default function SearchPage() {
 
 
     useEffect(() => {
-        if (user === null) {
-            history.push('/notfound')
-        } else {
-            dispatch(getAllPins())
-            dispatch(getAllBoards(user?.username))
-        }
+        dispatch(getAllPins())
+        dispatch(getAllBoards(user?.username))
     },[dispatch])
 
     useEffect(() => {

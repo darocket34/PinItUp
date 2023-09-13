@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {getAllPins} from "../../store/pins"
 import { getAllBoards } from "../../store/boards"
 import PinCard from "../Pins/PinCard";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Homepage.css"
 
 export default function HomePage() {
@@ -16,13 +16,9 @@ export default function HomePage() {
 
 
     useEffect(() => {
-        if (user === null) {
-            history.push('/notfound')
-        } else {
-            dispatch(getAllPins())
-            dispatch(getAllBoards(user?.username))
-        }
-    },[dispatch])
+        dispatch(getAllPins())
+        dispatch(getAllBoards(user?.username))
+    },[dispatch, user])
 
     useEffect(() => {
         if(Object.keys(pinsObj)){
