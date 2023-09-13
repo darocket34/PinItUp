@@ -4,9 +4,10 @@ import { getAllBoards } from "../../store/boards";
 import { Link } from "react-router-dom";
 
 
-function ProfilePage({user}) {
+function ProfilePage() {
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boards.allBoards)
+    const user = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getAllBoards(user?.username))
@@ -25,7 +26,7 @@ function ProfilePage({user}) {
                         <Link to={`/boards/${board?.id}`} key={idx}>{board?.name}</Link>
                         <ul><p>PINS:</p>
                             {board.pins.map((pin,idx2) => (
-                                <li key={idx2*0.12}>{pin?.name}</li>
+                                <li key={idx2*0.12}><Link to={`/pins/${pin.id}`}>{pin?.name}</Link></li>
                             ))}
                         </ul>
                     </li>

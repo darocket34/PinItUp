@@ -12,7 +12,7 @@ const DeleteBoardModal = ({board}) => {
     const handleDelete = async (e) => {
         e.preventDefault();
         dispatch(deleteBoard(board.id)).then(closeModal());
-        history.push(`/${user.id}/profile`)
+        history.push(`/${user?.username}/profile`)
     }
 
     return (
