@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, abort
 from flask_login import login_required, current_user
-from app.models import Pin, Board, db
+from app.models import Pin, Board, db, board_pins
 from ..forms import PinForm
 from .AWS_helpers import remove_file_from_s3, get_unique_filename, upload_file_to_s3
 from datetime import datetime
@@ -32,7 +32,6 @@ def create_pin():
     Create a new pin
     """
     current_date = datetime.now()
-    print("DATE--------------", current_date)
     form = PinForm()
     data = form.data
     boardId = data["boardId"]
@@ -64,6 +63,7 @@ def update_pin(id):
     current_date = datetime.now()
     request_data = request.get_json()
     pin = Pin.query.get(id)
+    original_boardId = pin.boardId
     form = PinForm(
         name = request_data["name"],
         url = request_data["url"],
@@ -74,7 +74,6 @@ def update_pin(id):
     )
 
     data = form.data
-    print("DATA ------------------", request_data)
     form['csrf_token'].data = request.cookies['csrf_token']
     board = Board.query.get(data["boardId"])
     if form.validate_on_submit():
@@ -85,9 +84,12 @@ def update_pin(id):
         pin.postDate = current_date
         pin.boardId = data["boardId"]
         board.pins.append(pin)
+        db.session.execute(board_pins.delete().where(
+            board_pins.c.pinId == id,
+            board_pins.c.boardId == original_boardId
+        ))
         db.session.commit()
         return {"pin": pin.to_dict()}
-    print("UPDATE ___________________", form.errors)
     return {"errors": form.errors}, 400
 
 @pin_routes.route("/<int:id>")
@@ -95,7 +97,6 @@ def getSinglePin(id):
     pin = Pin.query.get(id)
     if not pin:
         return {"error", "Pin not found"}, 404
-    print("PRINT_______________", pin.to_dict())
     return {"pin": pin.to_dict()}
 
 @pin_routes.route("/<int:id>", methods=["DELETE"])

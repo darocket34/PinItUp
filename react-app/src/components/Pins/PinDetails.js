@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModal, closeMenu } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import {getSinglePin} from "../../store/pins"
 import { getAllBoards } from "../../store/boards";
 import PinModal from "./PinModal";
@@ -30,6 +30,9 @@ function PinDetails() {
     return (
         <>
             <h1>Pin Details</h1>
+            {user?.id && (
+            <Link to={`/${user?.username}/profile`} className="pindetails form redirect">Boards</Link>
+            )}
             <p>{pin?.name}</p>
             <p>{pin?.description}</p>
             <img className="pindetail image" src={pin?.url}></img>

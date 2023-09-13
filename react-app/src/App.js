@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
@@ -8,10 +8,13 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/Splash";
 import NotFound from "./components/NotFound/NotFound";
 import PinDetails from "./components/Pins/PinDetails";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+import BoardPage from "./components/Boards/BoardPage"
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector(state=> state?.session?.user)
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -33,9 +36,12 @@ function App() {
           <Route exact path="/pins/:id">
             <PinDetails />
           </Route>
-          {/* <Route path="/pins">
-            <PinDetails staging={true} />
-          </Route> */}
+          <Route exact path={"/boards/:id"}>
+            <BoardPage />
+          </Route>
+          <Route exact path={`/${user.username}/profile`}>
+            <ProfilePage user={user}/>
+          </Route>
           <Route path="/notfound">
             <NotFound />
           </Route>

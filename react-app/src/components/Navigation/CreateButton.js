@@ -6,6 +6,7 @@ import PinModal from "../Pins/PinModal";
 import "./Navigation.css"
 import PinDetails from "../Pins/PinDetails";
 import { Link } from "react-router-dom";
+import BoardModal from "../Boards/BoardModal";
 
 function CreateButton({ user }) {
   const dispatch = useDispatch();
@@ -58,11 +59,11 @@ function CreateButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<PinModal user={user} type="create" />}
             />
-            {/* <OpenModalButton
-              buttonText="Sign Up"
+            <OpenModalButton
+              buttonText="Create New Board"
               onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            /> */}
+              modalComponent={<BoardModal user={user} type="create" />}
+            />
           </div>
         )}
       </ul>

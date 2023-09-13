@@ -10,12 +10,21 @@ function PinModal({user, type, pin}) {
     const history = useHistory()
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState('' || pin?.name)
-    const [description, setDescription] = useState('' || pin?.description)
-    const [url, setUrl] = useState('' || pin?.url)
-    const [selectedBoard, setSelectedBoard] = useState('' || pin?.boardId)
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [url, setUrl] = useState('')
+    const [selectedBoard, setSelectedBoard] = useState('')
     const { closeModal } = useModal();
     const boards = useSelector(state=> state.boards.allBoards)
+
+    useEffect(() => {
+        if(pin?.name){
+            setName(pin?.name)
+            setDescription(pin?.description)
+            setUrl(pin?.url)
+            setSelectedBoard(pin?.boardId)
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -30,14 +39,14 @@ function PinModal({user, type, pin}) {
             errorObj.selectedBoard = "Please select a board to save this pin to"
         }
         const today = new Date();
-        const getCurrentDate = () => {
-            const today = new Date();
-            console.log(today)
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0
-            const day = String(today.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
+        // const getCurrentDate = () => {
+        //     const today = new Date();
+        //     console.log(today)
+        //     const year = today.getFullYear();
+        //     const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0
+        //     const day = String(today.getDate()).padStart(2, '0');
+        //     return `${year}-${month}-${day}`;
+        // }
 
         const newPin = {
             name,
@@ -54,8 +63,7 @@ function PinModal({user, type, pin}) {
             try {
                 if (type === "update"){
                     newPin.id = pin.id
-                    console.log("PIN", newPin)
-                    const resUpdate = dispatch(updatePin(newPin))
+                    const resUpdate = await dispatch(updatePin(newPin))
                     if (resUpdate.errors){
                         setErrors(resUpdate)
                     } else {
@@ -75,20 +83,16 @@ function PinModal({user, type, pin}) {
                         body: uploadForm,
                     })
                     const resUpload = await upload.json();
-                    console.log("RES", resUpload.pin)
                     if (resUpload.errors){
-                        console.log("NOSUCCESS Backend", resUpload)
                         setErrors(resUpload)
                     } else {
                         closeModal()
                         history.push(`/pins/${resUpload.id}`)
-                        console.log("SUCCESS", resUpload)
                     }
                 }
             } catch (err) {
                     if (err) {
                         errorObj.pin = "Something went wrong"
-                        console.log("CREATE PIN DISPATCH ERROR", err)
                     }}
             }
         }

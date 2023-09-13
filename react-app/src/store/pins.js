@@ -39,6 +39,7 @@ export const getAllPins = () => async (dispatch) => {
     if (res.ok) {
         const pins = await res.json();
         dispatch(getPins(pins));
+        return pins;
     } else {
         const {errors} = await res.json();
         return errors;
@@ -52,6 +53,7 @@ export const getSinglePin = (pin) => async (dispatch) => {
     if (res.ok) {
         const pinRes = await res.json();
         dispatch(getPin(pinRes.pin));
+        return pinRes;
     } else {
         const {errors} = await res.json();
         return errors;
@@ -69,6 +71,7 @@ export const createPin = (pin) => async (dispatch) => {
     if (res.ok) {
         const pin = await res.json();
         dispatch(addPin(pin));
+        return pin;
     } else {
         const {errors} = await res.json();
         return errors;
@@ -87,6 +90,7 @@ export const updatePin = (pin) => async (dispatch) => {
         if (res.ok) {
             const pinRes = await res.json();
             dispatch(updateSinglePin(pinRes.pin));
+            return pinRes.pin
         } else {
             const {errors} = await res.json();
             return errors;
@@ -97,7 +101,6 @@ export const updatePin = (pin) => async (dispatch) => {
             return error
         }
     }
-
 }
 
 export const removePin = (pin) => async (dispatch) => {
@@ -107,6 +110,7 @@ export const removePin = (pin) => async (dispatch) => {
     if (res.ok) {
         const pin = await res.json();
         dispatch(deletePin(pin));
+        return pin
     } else {
         const {errors} = await res.json();
         console.log(errors)
