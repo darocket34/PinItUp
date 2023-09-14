@@ -26,9 +26,6 @@ export default function HomePage() {
         }
     })
 
-    //! Give everyone a default "All Pins" board to use
-    //! Add boards to overlay dropdown
-
     return (
         <>
             {isLoaded ? (

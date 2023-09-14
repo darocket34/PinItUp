@@ -47,7 +47,7 @@ export default function BoardList({boards, pin}){
     return (
         <>
             <button className="boardlist dropdown" onClick={openMenu}>
-                <p className="boardlist dropdown board button text">Boards{"    "}</p>
+                <p className="boardlist dropdown board button text">Save to a Board{"    "}</p>
                 <i className={`fa-solid fa-chevron-${chevron} fa-xl boardlist dropdown`}></i>
             </button>
             {showMenu && (
@@ -67,12 +67,10 @@ export default function BoardList({boards, pin}){
                                                 <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
                                             </div>
                                         </div>
-                                        <button className={`boardlist card save ${saved}`} onClick={() => {
-                                            setTest(board.pins)
-                                            handleSave(pin, board)
-                                            console.log(board.pins)
-                                            }}>
-                                            {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
+                                        <button className={`boardlist card save ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
+                                            <p className={board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}>
+                                                {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
+                                            </p>
                                         </button>
                                     </div>
                                 ))}

@@ -4,8 +4,11 @@ div.homepage.pin.master.container {
 }
 
 div.homepage.single.pin.container {
-    border-radius: 10px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    height: 100%;
     margin-bottom: 10px;
+    padding: 0;
 }
 
 img.pincard {
@@ -13,24 +16,39 @@ img.pincard {
     max-width: 100%;
 }
 
+a.pincard.image.link {
+    display: inline-block;
+    margin: 0;
+    height: 10px;
+}
+
 img.pincard:hover {
     background-color: black;
     cursor: zoom-in;
-    opacity: 0.2;
+    opacity: 0.3;
+}
+
+div.pincard.master.container:hover img.pincard {
+    background-color: black;
+    cursor: zoom-in;
+    opacity: 0.3;
 }
 
 div.pincard.master.container {
+    background-color: grey;
+    box-shadow: 4px 0 4px gray;
     border-radius: 15px;
     position: relative;
 }
 
 div.homepage.single.pin.overlay.container {
+    background-color: none;
     border-radius: 15px;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 99%;
+    height: 95%;
     padding: 8px;
     position: absolute;
     width: 100%;

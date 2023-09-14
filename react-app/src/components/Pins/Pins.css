@@ -3,11 +3,11 @@ div.boardlist.dropdown.master.container {
     border-radius: 15px;
     left: 60px;
     max-height: 500px;
-    max-width: 350px;
+    max-width: 330px;
     padding: 10px;
     position: absolute;
     top: 60px;
-    width: 350px;
+    width: 330px;
     z-index: 1;
 }
 
@@ -18,7 +18,7 @@ div.boardlist.dropdown.submaster.container {
 
 div.boardlist.subcontainer {
     height: 400px;
-    overflow: scroll;
+    overflow:auto;
     text-align: left;
 }
 
@@ -32,6 +32,7 @@ p.boardlist.card.content {
 p.boardlist.card.boardname {
     color: black;
     font-size: 12px;
+    font-weight: bold;
     overflow: hidden;
     text-align: left;
 }
@@ -42,10 +43,17 @@ button.boardlist.dropdown {
     height: 40px;
     margin-top: 7px;
     gap: 7px;
-    opacity: 1;
     padding-left: 8px;
     padding-right: 8px;
     position: absolute;
+    z-index: 1;
+}
+
+a.pincard.pin.name {
+    bottom: 5%;
+    color: white;
+    position: absolute;
+    text-decoration: none;
     z-index: 1;
 }
 
@@ -55,6 +63,7 @@ div.boardlist.card.container {
     justify-content: space-between;
     height: 65px;
     padding: 10px;
+    width: 90%;
 }
 
 div.boardlist.card.container:hover {
@@ -62,16 +71,19 @@ div.boardlist.card.container:hover {
 }
 
 div.boardlist.card.image.container {
-    display: flex;
     align-items: center;
+    display: flex;
+    width: fit-content;
     margin: 0;
+    margin-right: 10px;
     padding: 0;
 }
 
 div.boardlist.card.content {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: flex-start;
+    width: 80%;
 }
 
 div.boardlist.textcontent {
@@ -110,15 +122,26 @@ p.boardlist.dropdown.master.title {
 }
 
 button.boardlist.card.save:hover {
-    background-color: #E9E9E9;
-    color: #B4125D;
+    background-color: black;
+    color: white;
 }
 
 button.boardlist.card.save {
     opacity: 0;
+    padding: 0 12px;
+}
+
+p.savedClass,
+button.savedClass {
+    background-color: black;
+    color: white;
 }
 
 div.boardlist.card.container:hover button.boardlist.card.save {
+    opacity: 1;
+}
+
+button.boardlist.card.savedClass {
     opacity: 1;
 }
 

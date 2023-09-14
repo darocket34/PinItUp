@@ -86,12 +86,12 @@ def update_board(id):
 @login_required
 def add_pin_to_board(id):
     req = request.get_json()
-    print("BORARD--------", req)
-    pinId = req["id"]
+    print("BORARD--------", req['board'])
+    pinId = req["pin"]["id"]
     pin = Pin.query.get(pinId)
     if not pin:
         return {"error", "Pin not found"}, 404
-    board_id = req["id"]
+    board_id = req["board"]["id"]
     board = Board.query.get(board_id)
     board.pins.append(pin)
     db.session.commit()
