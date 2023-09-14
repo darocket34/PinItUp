@@ -17,7 +17,7 @@ class Board(db.Model):
 
     def get_preview_pin(self):
         if self.pins:
-            return self.pins[0]
+            return self.pins[0].to_dict()
         else:
             return None
 
@@ -28,5 +28,5 @@ class Board(db.Model):
             "description": self.description,
             "creatorId": self.creatorId,
             "pins": [pin.to_dict() for pin in self.pins],
-            "previewPin": self.get_preview_pin().to_dict()
+            "previewPin": self.get_preview_pin()
         }

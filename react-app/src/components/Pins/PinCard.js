@@ -11,16 +11,16 @@ export default function PinCard({pin, boardsObj}) {
     // const user = useSelector(state=>state.session.user)
     const boards = Object.values(boardsObj)
 
-    const handleSave = async (e) => {
-        e.preventDefault()
-        const res = await fetch(`/api/pins/${pin.id}`, {
-            method: "put",
-            headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(pin),
-        })
-    }
+    // const handleSave = async (e) => {
+    //     e.preventDefault()
+    //     const res = await fetch(`/api/pins/${pin.id}`, {
+    //         method: "put",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify(pin),
+    //     })
+    // }
 
     return (
         <>
@@ -30,17 +30,17 @@ export default function PinCard({pin, boardsObj}) {
             >
                 {!hidden && (
                     <div className="homepage single pin overlay container">
-                        <div className='homepage single pin overlay display top'>
+                        {/* <div className='homepage single pin overlay display top'> */}
                             <BoardList boards={boards} pin={pin} />
-                            <button className="homepage single pin overlay save" onClick={handleSave}>Save
-                            </button>
-                        </div>
-                        <div className='homepage single pin overlay display bottom'>
-                            <p>{pin.name}</p>
-                        </div>
+                            {/* <button className="homepage single pin overlay save" onClick={handleSave}>Save
+                            </button> */}
+                        {/* </div> */}
+                        {/* <div className='homepage single pin overlay display bottom'> */}
+                            <Link to={`/pins/${pin.id}`} className="pincard pin name">{pin.name}</Link>
+                        {/* </div> */}
                     </div>
                 )}
-                <Link to={`/pins/${pin.id}`}>
+                <Link className="pincard image link" to={`/pins/${pin.id}`}>
                     <img className='pincard image' src={pin.url} />
                 </Link>
             </div>

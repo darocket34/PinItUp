@@ -118,7 +118,7 @@ export const addPinToBoard = (pin, board) => async (dispatch) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(board)
+        body: JSON.stringify({pin,board})
     })
     if (res.ok) {
         const board = await res.json();
