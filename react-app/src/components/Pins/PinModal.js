@@ -148,6 +148,7 @@ function PinModal({user, type, pin}) {
                                 />
                             </label>
                             )}
+                            {type === "create" && (
                             <label>
                                 Board
                                 <select
@@ -163,7 +164,7 @@ function PinModal({user, type, pin}) {
                                             {board.name}</option>
                                         ))}
                                 </select>
-                            </label>
+                            </label>)}
                             <button className="pinform create submit" type="submit" disabled={false}>{type === "update" ? "Update":"Create"}</button>
                         </form>
                     </div>

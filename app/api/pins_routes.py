@@ -64,31 +64,31 @@ def update_pin(id):
     current_date = datetime.now()
     request_data = request.get_json()
     pin = Pin.query.get(id)
-    original_boardId = pin.boardId
+    # original_boardId = pin.boardId
     form = PinForm(
         name = request_data["name"],
         url = request_data["url"],
         description = request_data["description"],
         creatorId = request_data["creatorId"],
-        boardId = request_data["boardId"],
+        # boardId = request_data["boardId"],
         postDate = current_date
     )
 
     data = form.data
     form['csrf_token'].data = request.cookies['csrf_token']
-    board = Board.query.get(data["boardId"])
+    # board = Board.query.get(data["boardId"])
     if form.validate_on_submit():
         pin.name = data["name"]
         pin.description = data["description"]
         pin.url = data["url"]
         pin.creatorId = data["creatorId"]
         pin.postDate = current_date
-        pin.boardId = data["boardId"]
-        board.pins.append(pin)
-        db.session.execute(board_pins.delete().where(
-            board_pins.c.pinId == id,
-            board_pins.c.boardId == original_boardId
-        ))
+        # pin.boardId = data["boardId"]
+        # board.pins.append(pin)
+        # db.session.execute(board_pins.delete().where(
+        #     board_pins.c.pinId == id,
+        #     board_pins.c.boardId == original_boardId
+        # ))
         db.session.commit()
         return {"pin": pin.to_dict()}
     return {"errors": form.errors}, 400
