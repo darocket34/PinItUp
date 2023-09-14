@@ -15,7 +15,7 @@ div.profile-dropdown.menu {
   right: 0px;
   top: 30px;
   width: 20vw;
-  z-index: 2;
+  z-index: 1;
 }
 
 div.profile-dropdown.user.card {
@@ -174,7 +174,7 @@ div.create.menu {
   position: absolute;
   top: 30px;
   width: 20vw;
-  z-index: 2;
+  z-index: 1;
 }
 
 p.navbar.messages {

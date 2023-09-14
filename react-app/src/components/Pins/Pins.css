@@ -1,14 +1,14 @@
 div.boardlist.dropdown.master.container {
     background-color: white;
     border-radius: 15px;
-    left: 60px;
+    left: 30%;
     max-height: 500px;
     max-width: 330px;
     padding: 10px;
     position: absolute;
-    top: 60px;
+    top: 30%;
     width: 330px;
-    z-index: 1;
+    z-index: 2;
 }
 
 div.boardlist.dropdown.submaster.container {
