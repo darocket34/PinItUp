@@ -28,7 +28,8 @@ def all_boards(username):
         data = board.to_dict()
         previewPin = Pin.query.filter(Pin.boardId == board.id).first()
         allBoards.append(data)
-    db.session.commit()
+        print("RIGHTHERE", board)
+        db.session.commit()
     return {"boards": allBoards}
 
 @board_routes.route('/<int:id>')

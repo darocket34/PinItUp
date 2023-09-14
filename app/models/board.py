@@ -15,11 +15,18 @@ class Board(db.Model):
     user = db.relationship("User", back_populates="board")
     pins = db.relationship("Pin", secondary=board_pins, back_populates="board")
 
+    def get_preview_pin(self):
+        if self.pins:
+            return self.pins[0]
+        else:
+            return None
+
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
             "creatorId": self.creatorId,
-            "pins": [pin.to_dict() for pin in self.pins]
+            "pins": [pin.to_dict() for pin in self.pins],
+            "previewPin": self.get_preview_pin().to_dict()
         }
