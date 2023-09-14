@@ -32,7 +32,6 @@ def all_boards(username):
         # else:
         #     data['previewPin'] = None
         allBoards.append(data)
-        print("RIGHTHERE", board)
         db.session.commit()
     return {"boards": allBoards}
 

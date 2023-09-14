@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useModal, closeMenu } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useParams} from "react-router-dom"
-import {getSinglePin} from "../../store/pins"
+import {getSinglePin, getUser} from "../../store/pins"
 import { getAllBoards } from "../../store/boards";
 import PinModal from "./PinModal";
 import OpenModalButton from "../OpenModalButton";
@@ -21,18 +21,18 @@ function PinDetails() {
     useEffect(() => {
         dispatch(getSinglePin(id))
         dispatch(getAllBoards(user?.username))
-        const getUser = fetch(`api/users/${pin?.creatorId}`)
-        if(getUser.id){
-            setCreator(getUser)
-            console.log(creator)
-        }
+        if (pin?.creatorId){
+            const pinCreator = dispatch(getUser(pin?.creatorId))
+            console.log(pinCreator)
+            if (pinCreator?.id) {
+                setCreator(pinCreator)
+        }}
         setIsLoaded(true)
     }, [dispatch, id, user])
 
     useEffect(() => {
         if (user?.id === pin?.creatorId) setIsOwner(true)
-
-    })
+    }, [])
 
     return (
         <>

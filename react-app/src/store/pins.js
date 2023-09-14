@@ -122,6 +122,18 @@ export const removePin = (pin) => async (dispatch) => {
     }
 }
 
+export const getUser = (userId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}`)
+    if (res.ok) {
+        const user = await res.json();
+        return user
+    } else {
+        const {errors} = await res.json();
+        console.log(errors)
+        return errors;
+    }
+}
+
 /* Reducer */
 const pinsReducer = (
     state = {allPins: [], singlePin: null},
