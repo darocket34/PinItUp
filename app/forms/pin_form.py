@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, SubmitField, IntegerField, FileField
+from wtforms import StringField, SelectField, SubmitField, IntegerField, FileField, DateField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import Pin
@@ -11,7 +11,7 @@ class PinForm(FlaskForm):
     description = StringField("Description", validators=[DataRequired(), Length(min=0, max=300)])
     url = FileField("Image Url", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     creatorId = IntegerField("Creator Id", validators=[DataRequired()])
-    postDate = StringField("Day", validators=[DataRequired()])
+    postDate = DateField("Day", validators=[DataRequired()])
     boardId = IntegerField("Board Id")
 
 def to_dict(self):

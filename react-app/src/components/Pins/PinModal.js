@@ -38,15 +38,15 @@ function PinModal({user, type, pin}) {
         if (!selectedBoard) {
             errorObj.selectedBoard = "Please select a board to save this pin to"
         }
-        const today = new Date();
-        // const getCurrentDate = () => {
-        //     const today = new Date();
-        //     console.log(today)
-        //     const year = today.getFullYear();
-        //     const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0
-        //     const day = String(today.getDate()).padStart(2, '0');
-        //     return `${year}-${month}-${day}`;
-        // }
+        const getCurrentDate = () => {
+            const currentDate = new Date();
+            console.log(currentDate)
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        const today = getCurrentDate();
 
         const newPin = {
             name,

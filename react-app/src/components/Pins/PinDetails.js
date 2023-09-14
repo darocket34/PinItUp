@@ -19,15 +19,18 @@ function PinDetails() {
     const {id} = useParams();
 
     useEffect(() => {
-        dispatch(getSinglePin(id))
-        dispatch(getAllBoards(user?.username))
-        if (pin?.creatorId){
-            const pinCreator = dispatch(getUser(pin?.creatorId))
-            console.log(pinCreator)
-            if (pinCreator?.id) {
-                setCreator(pinCreator)
-        }}
-        setIsLoaded(true)
+        const fetchData = async () => {
+            await dispatch(getSinglePin(id))
+            await dispatch(getAllBoards(user?.username))
+            if (pin?.creatorId){
+                const pinCreator = await dispatch(getUser(pin?.creatorId))
+                console.log(pinCreator)
+                if (pinCreator?.id) {
+                    setCreator(pinCreator)
+            }}
+            setIsLoaded(true)
+        }
+        fetchData();
     }, [dispatch, id, user])
 
     useEffect(() => {
@@ -40,7 +43,7 @@ function PinDetails() {
             {user?.id && (
             <Link to={`/${user?.username}/profile`} className="pindetails form redirect">Boards</Link>
             )}
-            <p>Name: {pin?.name}</p>
+            <Link to={`/${pin?.creatorId}/profile`}>Name: {pin?.name}</Link>
             <p>Desc: {pin?.description}</p>
             <img className="pindetail image" src={pin?.url}></img>
             <p>Owner Id: {pin?.creatorId}</p>

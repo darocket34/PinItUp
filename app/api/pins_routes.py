@@ -32,8 +32,10 @@ def create_pin():
     Create a new pin
     """
     req_data = request.files.get("url")
-    print("DATRA------------------------------------------------", req_data)
     current_date = datetime.now()
+    date = str(current_date)
+    print("DATRA------------------------------------------------", date)
+
     form = PinForm()
     data = form.data
     boardId = data["boardId"]
@@ -43,7 +45,7 @@ def create_pin():
         image = req_data
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
-        print("IMGGGG------------------------------------------------", not upload["url"])
+        print("IMGGGG------------------------------------------------", data)
         if not upload["url"]:
             return {"errors": {"img": upload}}
         pin = Pin(
@@ -51,12 +53,13 @@ def create_pin():
             description = data["description"],
             url = upload["url"],
             creatorId = current_user.id,
-            postDate = current_date,
+            postDate = data["postDate"],
             boardId = data["boardId"]
         )
         board.pins.append(pin)
         db.session.add(pin)
         db.session.commit()
+        print("LAST NEO----------------------------------------------", pin.to_dict())
         return pin.to_dict()
     return {"errors": form.errors}, 400
 

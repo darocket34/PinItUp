@@ -31,29 +31,28 @@ function ProfilePage() {
                 <ul className="profilepage board tile list">
                     {Object.values(boards).length && (
                         Object.values(boards).map((board, idx) => (
-                            // <li key={idx}>
                             <>
-                                    <div className="profilepage board tile master container"  key={board.id}>
-                                        <Link to={`/boards/${board.id}`} className="profilepage tile link" key={idx*0.1}>
-                                            <div className="profilepage board tile image container">
-                                                <img src={board?.pins[0]?.url || null} className="profilepage board tile main"></img>
-                                                <div className="profilepage board tile nonmain images">
-                                                    <img src={board?.pins[1]?.url || null} className="profilepage board tile secondary"></img>
-                                                    <img src={board?.pins[2]?.url || null} className="profilepage board tile terciary"></img>
-                                                </div>
+                                <div className="profilepage board tile master container"  key={board.id}>
+                                    <Link to={`/boards/${board.id}`} className="profilepage tile link" key={idx*0.1}>
+                                        <div className="profilepage board tile image container">
+                                            <img src={board?.pins[0]?.url || null} className="profilepage board tile main"></img>
+                                            <div className="profilepage board tile nonmain images">
+                                                <img src={board?.pins[1]?.url || null} className="profilepage board tile secondary"></img>
+                                                <img src={board?.pins[2]?.url || null} className="profilepage board tile terciary"></img>
                                             </div>
-                                            <div className="profilepage board tile text container">
-                                                <p className="profilepage board tile board name">{board?.name}</p>
-                                                <p className="profilepage board tile number of pins">{board?.pins?.length} Pins</p>
-                                            </div>
-                                                {/* <ul><p>PINS:</p>
-                                                    {board.pins.map((pin,idx2) => (
-                                                        <li key={idx2*0.12}><Link to={`/pins/${pin.id}`}>{pin?.name}</Link></li>
-                                                    ))}
-                                                </ul> */}
-                                            {/* </li> */}
-                                        </Link>
-                                    </div>
+                                        </div>
+                                        <div className="profilepage board tile text container">
+                                            <p className="profilepage board tile board name">{board?.name}</p>
+                                            <p className="profilepage board tile number of pins">{board?.pins?.length} Pins</p>
+                                        </div>
+                                            {/* <ul><p>PINS:</p>
+                                                {board.pins.map((pin,idx2) => (
+                                                    <li key={idx2*0.12}><Link to={`/pins/${pin.id}`}>{pin?.name}</Link></li>
+                                                ))}
+                                            </ul> */}
+                                        {/* </li> */}
+                                    </Link>
+                                </div>
                             </>
                         ))
                     )}
