@@ -13,6 +13,7 @@ function PinDetails() {
     const dispatch = useDispatch()
     const [isOwner, setIsOwner] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [creator, setCreator] = useState({})
     const pin = useSelector(state=> state.pins.singlePin)
     const user = useSelector(state=> state.session.user)
     const {id} = useParams();
@@ -20,11 +21,17 @@ function PinDetails() {
     useEffect(() => {
         dispatch(getSinglePin(id))
         dispatch(getAllBoards(user?.username))
+        const getUser = fetch(`api/users/${pin?.creatorId}`)
+        if(getUser.id){
+            setCreator(getUser)
+            console.log(creator)
+        }
         setIsLoaded(true)
     }, [dispatch, id, user])
 
     useEffect(() => {
         if (user?.id === pin?.creatorId) setIsOwner(true)
+
     })
 
     return (
