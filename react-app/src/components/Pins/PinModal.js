@@ -85,6 +85,7 @@ function PinModal({user, type, pin}) {
                     const resUpload = await upload.json();
                     if (resUpload.errors){
                         setErrors(resUpload)
+                        console.log(errors)
                     } else {
                         console.log(selectedBoard)
                         const newlySelectedBoard = {"id": Number(selectedBoard)}
@@ -97,6 +98,7 @@ function PinModal({user, type, pin}) {
             } catch (err) {
                     if (err) {
                         errorObj.pin = "Something went wrong"
+                        console.log(errorObj)
                     }}
             }
         }
