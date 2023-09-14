@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBoards } from "../../store/boards";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css"
-import { getUser } from "../../store/pins";
+import { getUser } from "../../store/session";
 
 
 function ProfilePage() {

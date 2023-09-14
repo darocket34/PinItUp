@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useModal, closeMenu } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useParams} from "react-router-dom"
-import {getSinglePin, getUser} from "../../store/pins"
+import {getSinglePin} from "../../store/pins"
+import { getUser } from "../../store/session";
 import { getAllBoards } from "../../store/boards";
 import PinModal from "./PinModal";
 import OpenModalButton from "../OpenModalButton";
@@ -26,20 +27,23 @@ function PinDetails() {
             setIsLoaded(true)
         }
         fetchData();
-    }, [dispatch, id, user])
+    }, [dispatch, id, user, isLoaded])
 
     useEffect(() => {
-        if (user?.id === pin?.creatorId) {
-            setIsOwner(true)
-            if (pin?.creatorId){
-                const pinCreator = dispatch(getUser(pin?.username))
-                console.log("CREATOR", pinCreator)
+        console.log("PIN", pin)
+        if (user?.id === pin?.creatorId) setIsOwner(true)
+        if (pin?.creatorId){
+            const fetchData = async () => {
+                const pinCreator = await dispatch(getUser(pin?.creatorId))
+                const res = await pinCreator;
+                console.log("CREATOR", res)
                 if (pinCreator?.id) {
                     setCreator(pinCreator)
                 }
             }
+            fetchData();
         }
-    }, [])
+    }, [isLoaded])
 
     return (
         <>
@@ -47,7 +51,10 @@ function PinDetails() {
             {user?.id && (
             <Link to={`/${user?.username}/profile`} className="pindetails form redirect">Boards</Link>
             )}
-            {creator?.username && <Link to={`/${creator?.username}/profile`}>Name: {pin?.name}</Link>}
+            <br></br>
+            <br></br>
+            {creator?.username && <Link to={`/${creator?.username}/profile`}>Creator: {pin?.name}</Link>}
+            <p>Pin Name: {pin?.name}</p>
             <p>Desc: {pin?.description}</p>
             <img className="pindetail image" src={pin?.url}></img>
             <p>Owner Id: {pin?.creatorId}</p>

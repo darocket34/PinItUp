@@ -1,6 +1,8 @@
+const cloneDeep = require("clone-deep")
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const GET_CREATOR = "session/GET_CREATOR"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -11,7 +13,12 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-const initialState = { user: null };
+const getCreator = (creator) => ({
+	type: GET_CREATOR,
+	creator
+})
+
+const initialState = { user: null, creator: null };
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -94,12 +101,30 @@ export const signUp = (username, email, password) => async (dispatch) => {
 	}
 };
 
+export const getUser = (userId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}`)
+    if (res.ok) {
+        const user = await res.json();
+		console.log("USER", user)
+		dispatch(getCreator(user))
+        return user;
+	    } else {
+        const {errors} = await res.json();
+        console.log(errors)
+        return errors;
+    }
+}
+
 export default function reducer(state = initialState, action) {
+	let newState = cloneDeep(state)
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
+		case GET_CREATOR:
+			newState.creator = action.creator
+			return newState;
 		default:
 			return state;
 	}

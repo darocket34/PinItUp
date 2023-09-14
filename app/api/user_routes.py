@@ -15,11 +15,12 @@ def users():
     return {'users': [user.to_dict() for user in users]}
 
 
-@user_routes.route('/<string:username>')
+@user_routes.route('/<int:id>')
 @login_required
-def user(username):
+def user(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
-    user = User.query.filter(User.username == username).first()
+    user = User.query.get(id)
+    print("USER________________________", user.to_dict())
     return user.to_dict()
