@@ -14,13 +14,23 @@ def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
 
+@user_routes.route('/username/<string:username>')
+@login_required
+def userByUsername(username):
+    """
+    Query for a user by username and returns that user in a dictionary
+    """
+    user = User.query.filter(User.username == username).first()
+    print("USER________________________", user.to_dict())
+    return user.to_dict()
 
 @user_routes.route('/<int:id>')
 @login_required
-def user(id):
+def userById(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
     print("USER________________________", user.to_dict())
     return user.to_dict()
+

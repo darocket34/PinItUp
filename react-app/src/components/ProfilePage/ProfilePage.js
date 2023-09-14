@@ -1,28 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBoards } from "../../store/boards";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css"
-import { getUser } from "../../store/session";
+import { getUserByUsername } from "../../store/session";
 
 
 function ProfilePage() {
     const dispatch = useDispatch();
     const {username} = useParams();
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [isOwner, setIsOwner] = useState(false)
     const boards = useSelector(state => state.boards.allBoards);
     const user = useSelector(state => state.session.user);
+    const creator = useSelector(state => state.session.creator)
 
     useEffect(() => {
-        console.log(username)
-        dispatch(getUser(username));
-        dispatch(getAllBoards(username));
-    }, []);
+        const fetchData = async () => {
+            await dispatch(getUserByUsername(username));
+            await dispatch(getAllBoards(username));
+            if (user?.id === creator?.id) setIsOwner(true);
+            setIsLoaded(true);
+        }
+        fetchData();
+        // dispatch(getUser(username));
+        // dispatch(getAllBoards(username));
+        console.log(creator)
+    }, [dispatch]);
     return (
         <>
             <div className="profilepage upper section container">
-                <img src={user.profile_img} alt="Profile Image" className="profilepage user pic" />
-                <h1 className="profilepage user name">{user?.name}</h1>
-                <p className="profilepage user username">{`@${user?.username}`}</p>
+                {/* <img src={creator.profile_img} alt="Profile Image" className="profilepage user pic" /> */}
+                <h1 className="profilepage user name">{creator?.name}</h1>
+                <p className="profilepage user username">{`@${creator?.username}`}</p>
                 {/*
                     Add ability to share profile via link as well as to edit user information
                 {user.id === Object.values(boards)[0].creatorId && (

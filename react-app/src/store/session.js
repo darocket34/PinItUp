@@ -2,7 +2,8 @@ const cloneDeep = require("clone-deep")
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-const GET_CREATOR = "session/GET_CREATOR"
+const GET_CREATOR_ID = "session/GET_CREATOR_ID"
+const GET_CREATOR_USERNAME = "session/GET_CREATOR_USERNAME"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -13,8 +14,13 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-const getCreator = (creator) => ({
-	type: GET_CREATOR,
+const getCreatorById = (creator) => ({
+	type: GET_CREATOR_ID,
+	creator
+})
+
+const getCreatorByUsername = (creator) => ({
+	type: GET_CREATOR_USERNAME,
 	creator
 })
 
@@ -101,12 +107,26 @@ export const signUp = (username, email, password) => async (dispatch) => {
 	}
 };
 
-export const getUser = (userId) => async (dispatch) => {
+export const getUserById = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}`)
     if (res.ok) {
         const user = await res.json();
 		console.log("USER", user)
-		dispatch(getCreator(user))
+		dispatch(getCreatorById(user))
+        return user;
+	    } else {
+        const {errors} = await res.json();
+        console.log(errors)
+        return errors;
+    }
+}
+
+export const getUserByUsername = (username) => async (dispatch) => {
+    const res = await fetch(`/api/users/username/${username}`)
+    if (res.ok) {
+        const user = await res.json();
+		console.log("USER", user)
+		dispatch(getCreatorByUsername(user))
         return user;
 	    } else {
         const {errors} = await res.json();
@@ -122,7 +142,10 @@ export default function reducer(state = initialState, action) {
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
-		case GET_CREATOR:
+		case GET_CREATOR_ID:
+			newState.creator = action.creator
+			return newState;
+		case GET_CREATOR_USERNAME:
 			newState.creator = action.creator
 			return newState;
 		default:
