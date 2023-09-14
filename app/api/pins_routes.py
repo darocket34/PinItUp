@@ -35,7 +35,6 @@ def create_pin():
     current_date = datetime.now()
     form = PinForm()
     data = form.data
-    print("DATRA------------------------------------------------", form)
     boardId = data["boardId"]
     board = Board.query.get(boardId)
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -64,6 +63,8 @@ def create_pin():
 def update_pin(id):
     current_date = datetime.now()
     request_data = request.get_json()
+
+    print("DATRA------------------------------------------------", request_data)
     pin = Pin.query.get(id)
     # original_boardId = pin.boardId
     form = PinForm(
@@ -92,6 +93,7 @@ def update_pin(id):
         # ))
         db.session.commit()
         return {"pin": pin.to_dict()}
+    print("ERRORS--------------------------------------------", form.errors)
     return {"errors": form.errors}, 400
 
 @pin_routes.route("/<int:id>")
