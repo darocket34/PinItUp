@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import "./Pins.css"
 import { addPinToBoard, getAllBoards } from "../../store/boards";
+import { getAllPins } from "../../store/pins";
 
 
 export default function BoardList({boards, pin}){
@@ -19,9 +20,12 @@ export default function BoardList({boards, pin}){
         if (showMenu) return;
         setShowMenu(true);
         setChevron('up')
+        dispatch(getAllBoards(user?.username))
+        dispatch(getAllPins())
     };
 
     useEffect(() => {
+
         if (!showMenu) return;
 
         const closeMenu = (e) => {
@@ -55,8 +59,13 @@ export default function BoardList({boards, pin}){
                                 {boards?.map((board,idx)=> (
                                     <div key={board?.id+idx} className="boardlist card container">
                                         <div className="boardlist card content">
-                                            <img className="boardlist card image" src={board?.preview?.url} />
-                                            <p className="boardlist card name">{board?.name}</p>
+                                            <div className="boardlist card image container">
+                                                <img className="boardlist card image" id="bdimage" src={board?.previewPin?.url} />
+                                            </div>
+                                            <div className="boardlist card textcontent">
+                                                <p className="boardlist card boardname">{board?.name}</p>
+                                                <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
+                                            </div>
                                         </div>
                                         <button className={`boardlist card save ${saved}`} onClick={() => {
                                             setTest(board.pins)

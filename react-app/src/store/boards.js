@@ -46,6 +46,7 @@ export const getAllBoards = (username) => async (dispatch) => {
     if (res.ok) {
         const boards = await res.json();
         dispatch(getBoards(boards));
+        console.log(boards)
         return boards
     } else {
         const {errors} = await res.json();
