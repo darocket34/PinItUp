@@ -1,18 +1,22 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBoards } from "../../store/boards";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css"
+import { getUser } from "../../store/pins";
 
 
 function ProfilePage() {
-    const dispatch = useDispatch()
-    const boards = useSelector(state => state.boards.allBoards)
-    const user = useSelector(state => state.session.user)
+    const dispatch = useDispatch();
+    const {username} = useParams();
+    const boards = useSelector(state => state.boards.allBoards);
+    const user = useSelector(state => state.session.user);
 
     useEffect(() => {
-        dispatch(getAllBoards(user?.username))
-    }, [])
+        console.log(username)
+        dispatch(getUser(username));
+        dispatch(getAllBoards(username));
+    }, []);
     return (
         <>
             <div className="profilepage upper section container">

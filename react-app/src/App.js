@@ -43,7 +43,7 @@ function App() {
           <Route exact path={"/boards/:id"}>
             <BoardDetails />
           </Route>
-          <Route exact path={`/${user?.username}/profile`}>
+          <Route exact path={`/:username/profile`}>
             <ProfilePage />
           </Route>
           <Route exact path="/notfound">

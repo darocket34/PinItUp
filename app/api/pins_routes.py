@@ -32,10 +32,6 @@ def create_pin():
     Create a new pin
     """
     req_data = request.files.get("url")
-    current_date = datetime.now()
-    date = str(current_date)
-    print("DATRA------------------------------------------------", date)
-
     form = PinForm()
     data = form.data
     boardId = data["boardId"]
@@ -68,7 +64,6 @@ def create_pin():
 def update_pin(id):
     current_date = datetime.now()
     request_data = request.get_json()
-
     print("DATRA------------------------------------------------", request_data)
     pin = Pin.query.get(id)
     # original_boardId = pin.boardId
@@ -80,7 +75,6 @@ def update_pin(id):
         # boardId = request_data["boardId"],
         postDate = current_date
     )
-
     data = form.data
     form['csrf_token'].data = request.cookies['csrf_token']
     # board = Board.query.get(data["boardId"])

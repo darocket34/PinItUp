@@ -98,7 +98,7 @@ function PinModal({user, type, pin}) {
                 }
             } catch (err) {
                     if (err) {
-                        console.log(err)
+                        console.log(err.json())
                         errorObj.pin = "Something went wrong"
                         console.log(errorObj)
                     }}

@@ -122,8 +122,8 @@ export const removePin = (pin) => async (dispatch) => {
     }
 }
 
-export const getUser = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}`)
+export const getUser = (username) => async (dispatch) => {
+    const res = await fetch(`/api/users/${username}`)
     if (res.ok) {
         const user = await res.json();
         return user
