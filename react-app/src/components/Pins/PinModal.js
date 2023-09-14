@@ -5,6 +5,7 @@ import { useModal } from "../../context/Modal";
 import { createPin, updatePin } from "../../store/pins";
 import {useHistory} from "react-router-dom"
 import "./Pins.css"
+import { addPinToBoard } from "../../store/boards";
 
 function PinModal({user, type, pin}) {
     const history = useHistory()
@@ -13,7 +14,7 @@ function PinModal({user, type, pin}) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
-    const [selectedBoard, setSelectedBoard] = useState('')
+    const [selectedBoard, setSelectedBoard] = useState({})
     const { closeModal } = useModal();
     const boards = useSelector(state=> state.boards.allBoards)
 
@@ -22,7 +23,6 @@ function PinModal({user, type, pin}) {
             setName(pin?.name)
             setDescription(pin?.description)
             setUrl(pin?.url)
-            setSelectedBoard(pin?.boardId)
         }
     }, [])
 
@@ -52,7 +52,7 @@ function PinModal({user, type, pin}) {
             name,
             description,
             url,
-            boardId: Number(selectedBoard),
+            // boardId: Number(selectedBoard),
             postDate: today,
             creatorId: user.id
         }
@@ -77,7 +77,7 @@ function PinModal({user, type, pin}) {
                     uploadForm.append("url", url);
                     uploadForm.append("creatorId", user.id);
                     uploadForm.append("postDate", newPin.postDate);
-                    uploadForm.append("boardId", newPin.boardId)
+                    // uploadForm.append("boardId", newPin.boardId)
                     const upload = await fetch("/api/pins/newpin", {
                         method: "POST",
                         body: uploadForm,
@@ -86,6 +86,10 @@ function PinModal({user, type, pin}) {
                     if (resUpload.errors){
                         setErrors(resUpload)
                     } else {
+                        console.log(selectedBoard)
+                        const newlySelectedBoard = {"id": Number(selectedBoard)}
+                        // const newlySelectedPin = {"pin": resUpload}
+                        await dispatch(addPinToBoard(resUpload, newlySelectedBoard))
                         closeModal()
                         history.push(`/pins/${resUpload.id}`)
                     }

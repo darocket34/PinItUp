@@ -112,7 +112,7 @@ export const updateBoard = (board) => async (dispatch) => {
 }
 
 export const addPinToBoard = (pin, board) => async (dispatch) => {
-    console.log(pin,board)
+    console.log("FRONT END", pin,board)
     const res = await fetch(`/api/boards/${board.id}/addpin`, {
         method: "PUT",
         headers: {
