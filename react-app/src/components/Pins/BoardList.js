@@ -75,6 +75,9 @@ export default function BoardList({boards, pin}){
                                     </div>
                                 ))}
                             </div>
+                            <div className="boardlist create board container">
+                                <p>Create a new board</p>
+                            </div>
                         </div>
                     </div>
                 </>
