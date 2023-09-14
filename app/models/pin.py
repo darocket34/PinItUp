@@ -13,7 +13,7 @@ class Pin(db.Model):
     url = db.Column(db.String(255))
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     postDate = db.Column(db.Date, nullable=False)
-    boardId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("boards.id")))
+    # boardId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("boards.id")))
 
     comments = db.relationship("Comment", back_populates="pins")
     user = db.relationship("User", back_populates="pins")
@@ -27,5 +27,5 @@ class Pin(db.Model):
             "url": self.url,
             "creatorId": self.creatorId,
             "postDate": self.postDate,
-            "boardId": self.boardId
+            # "boardId": self.boardId
         }

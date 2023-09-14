@@ -34,8 +34,9 @@ def create_pin():
     current_date = datetime.now()
     form = PinForm()
     data = form.data
-    boardId = data["boardId"]
-    board = Board.query.get(boardId)
+
+    # boardId = data["boardId"]
+    # board = Board.query.get(boardId)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         image = data["url"]
@@ -49,9 +50,9 @@ def create_pin():
             url = upload["url"],
             creatorId = current_user.id,
             postDate = current_date,
-            boardId = data["boardId"]
+            # boardId = data["boardId"]
         )
-        board.pins.append(pin)
+        # board.pins.append(pin)
         db.session.add(pin)
         db.session.commit()
         return pin.to_dict()

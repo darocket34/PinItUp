@@ -26,7 +26,11 @@ def all_boards(username):
     allBoards = []
     for board in Board.query.filter(Board.creatorId == user.id).all():
         data = board.to_dict()
-        previewPin = Pin.query.filter(Pin.boardId == board.id).first()
+        # last_pin = board.pins.order_by(Pin.id.desc()).first()
+        # if last_pin:
+        #     data['previewPin'] = last_pin.to_dict()
+        # else:
+        #     data['previewPin'] = None
         allBoards.append(data)
         print("RIGHTHERE", board)
         db.session.commit()

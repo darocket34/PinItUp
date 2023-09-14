@@ -1,5 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .board_pins import board_pins
+from sqlalchemy import desc
+from .pin import Pin
+
 
 class Board(db.Model):
     __tablename__ = "boards"
@@ -13,7 +16,7 @@ class Board(db.Model):
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
     user = db.relationship("User", back_populates="board")
-    pins = db.relationship("Pin", secondary=board_pins, back_populates="board")
+    pins = db.relationship("Pin", secondary=board_pins, back_populates="board", order_by=lambda: desc(Pin.id))
 
     def get_preview_pin(self):
         if self.pins:
