@@ -78,6 +78,7 @@ function PinModal({user, type, pin}) {
                     uploadForm.append("creatorId", user.id);
                     uploadForm.append("postDate", newPin.postDate);
                     uploadForm.append("boardId", selectedBoard);
+                    console.log(selectedBoard)
                     const upload = await fetch("/api/pins/newpin", {
                         method: "POST",
                         body: uploadForm

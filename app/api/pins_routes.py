@@ -31,7 +31,8 @@ def create_pin():
     """
     Create a new pin
     """
-    req_data = request.get_json()
+    req_data = request.files.get("url")
+    print("DATRA------------------------------------------------", req_data)
     current_date = datetime.now()
     form = PinForm()
     data = form.data
@@ -39,11 +40,12 @@ def create_pin():
     board = Board.query.get(boardId)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        image = data["url"]
+        print("IMGGGG------------------------------------------------", data)
+        image = req_data
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         if "url" not in upload:
-            return {"errors": upload}
+            return {"errors": {"img": upload}}
         pin = Pin(
             name = data["name"],
             description = data["description"],
