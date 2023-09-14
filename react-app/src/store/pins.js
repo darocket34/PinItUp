@@ -63,7 +63,8 @@ export const getSinglePin = (pin) => async (dispatch) => {
     }
 }
 
-export const createPin = (pin) => async (dispatch) => {
+export const createPin = (pin, boardId) => async (dispatch) => {
+    console.log("PIN FE", boardId)
     const res = await fetch(`/api/pins/newpin`, {
         method: "post",
         headers: {

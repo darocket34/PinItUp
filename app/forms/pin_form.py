@@ -12,7 +12,7 @@ class PinForm(FlaskForm):
     url = FileField("Image Url", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     creatorId = IntegerField("Creator Id", validators=[DataRequired()])
     postDate = StringField("Day", validators=[DataRequired()])
-    # boardId = IntegerField("Board Id", validators=[DataRequired()])
+    boardId = IntegerField("Board Id", validators=[DataRequired()])
 
 def to_dict(self):
     return {
@@ -21,5 +21,5 @@ def to_dict(self):
     'url': self.url,
     'creatorId': self.creatorId,
     'postDate': self.postDate,
-    # 'boardId': self.boardId
+    'boardId': self.boardId
     }

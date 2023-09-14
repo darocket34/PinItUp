@@ -77,10 +77,10 @@ function PinModal({user, type, pin}) {
                     uploadForm.append("url", url);
                     uploadForm.append("creatorId", user.id);
                     uploadForm.append("postDate", newPin.postDate);
-                    // uploadForm.append("boardId", newPin.boardId)
+                    uploadForm.append("boardId", Number(selectedBoard));
                     const upload = await fetch("/api/pins/newpin", {
                         method: "POST",
-                        body: uploadForm,
+                        body: uploadForm
                     })
                     const resUpload = await upload.json();
                     if (resUpload.errors){
@@ -154,6 +154,7 @@ function PinModal({user, type, pin}) {
                                 <select
                                     className="pinform create boardlist"
                                     placeholder="Select"
+                                    name="boardId"
                                     value={selectedBoard}
                                     onChange={(e) => setSelectedBoard(e.target.value)}
                                     required>
