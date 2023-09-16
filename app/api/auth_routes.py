@@ -24,7 +24,12 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        followers = [follower.to_dict() for follower in current_user.followers]
+        following = [follow.to_dict() for follow in current_user.following]
+        userDict = current_user.to_dict()
+        userDict['followers'] = followers
+        userDict['following'] = following
+        return userDict
     return {'errors': ['Unauthorized']}
 
 
@@ -41,7 +46,13 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        followers = [follower.to_dict() for follower in user.followers]
+        following = [follow.to_dict() for follow in user.following]
+        userDict = user.to_dict()
+        userDict['followers'] = followers
+        userDict['following'] = following
+        print("LOGIN------------------------------------", user)
+        return userDict
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

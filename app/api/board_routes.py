@@ -89,7 +89,6 @@ def update_board(id):
 @login_required
 def add_pin_to_board(id):
     req = request.get_json()
-    print("BORARD--------", req['board'])
     pinId = req["pin"]["id"]
     pin = Pin.query.get(pinId)
     if not pin:
@@ -99,7 +98,6 @@ def add_pin_to_board(id):
     board.pins.append(pin)
     db.session.commit()
     board = Board.query.get(board_id)
-    print("POSTBOARD--------", board.pins)
     return board.to_dict()
 
 @board_routes.route('/<int:id>', methods=["DELETE"])

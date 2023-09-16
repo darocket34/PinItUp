@@ -17,7 +17,9 @@ export default function HomePage() {
 
     useEffect(() => {
         dispatch(getAllPins())
-        dispatch(getAllBoards(user?.username))
+        if(user?.id){
+            dispatch(getAllBoards(user?.username))
+        }
     },[dispatch, user])
 
     useEffect(() => {
@@ -35,7 +37,7 @@ export default function HomePage() {
                                 Object.values(pinsObj).map((pin, idx) => {
                                     return (
                                         <div key={idx} className='homepage single pin container'>
-                                                <PinCard key={idx} pin={pin} boardsObj={boards} />
+                                                <PinCard key={idx} pin={pin} boardsObj={boards} user={user} />
                                         </div>
                                     )
                                 })

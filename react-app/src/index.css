@@ -6,19 +6,28 @@
 input, textarea, select {
     padding: 10px 10px;
     border-radius: 10px;
-    border: none;
+    border-color: #B4125D;
     box-shadow: inset 0 0 0 2px #E9E9E9;
 }
 
 button {
-    background-color: #B4125D;
+    background-color: #E9E9E9;
+    /* border: 2px solid #B4125D; */
     border: none;
     border-radius: 18px;
-    color: white;
+    color: #B4125D;
+    font-weight: bold;
+    transition: 0.35s;
 }
 
-button:hover {
+button:hover,
+button:focus-within {
+    background-color: #B4125D;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
+    box-shadow: inset 10em 0 0 0 #B4125D;
+
 }
 
 #modal-content {
@@ -28,7 +37,8 @@ button:hover {
     flex-direction: column;
     padding: 10px;
     text-align: center;
-    width: 30vw;
+    transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+    width: 35vw;
 }
 
 form.login,

@@ -9,8 +9,11 @@ import logo from "../../images/logo.jpg"
 function SignupFormModal() {
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
+	const [name, setName] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [birthday, setBirthday] = useState("");
+	const [profileImage, setProfileImage] = useState("");
 	const [signUpForm, setSignUpForm] = useState(true)
   	const [loginForm, setLoginForm] = useState(false)
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,11 +45,25 @@ function SignupFormModal() {
 				<form className='login form modal' onSubmit={handleSubmit}>
 					<ul>
 						{errors.map((error, idx) => (
-							<li key={idx}>{error}</li>
+							<li key={idx}>
+								<p className="form required">
+									{error}
+								</p>
+							</li>
 						))}
 					</ul>
 					<label>
-						Email
+						<div className="signupform field">Name<p className="form required">*</p></div>
+						<input
+							type="text"
+							placeholder="Darian Brooks"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+							required
+						/>
+					</label>
+					<label>
+						<div className="signupform field">Email<p className="form required">*</p></div>
 						<input
 							type="text"
 							placeholder="hello@world.com"
@@ -56,7 +73,7 @@ function SignupFormModal() {
 						/>
 					</label>
 					<label>
-						Username
+						<div className="signupform field">Username<p className="form required">*</p></div>
 						<input
 							type="text"
 							placeholder="Ex. D.Brooks1"
@@ -66,7 +83,7 @@ function SignupFormModal() {
 						/>
 					</label>
 					<label>
-						Password
+						<div className="signupform field">Password<p className="form required">*</p></div>
 						<input
 							type="password"
 							placeholder="Shh.. it's a secret.."
@@ -76,7 +93,7 @@ function SignupFormModal() {
 						/>
 					</label>
 					<label>
-						Confirm Password
+						<div className="signupform field">Confirm Password<p className="form required">*</p></div>
 						<input
 							type="password"
 							placeholder="Do you remember..?"
@@ -85,15 +102,27 @@ function SignupFormModal() {
 							required
 						/>
 					</label>
+					<label>
+						<div className="signupform field">Birthday</div>
+						<input
+							type="date"
+							placeholder="Do you remember..?"
+							value={birthday}
+							onChange={(e) => setBirthday(e.target.value)}
+							required
+						/>
+					</label>
 					<button className='login form submit' type="submit">Sign Up</button>
 				</form>
 				<div className="login form signup link container">
-				<p className="login form signup link">Already a member?</p>
-				<p className="login form signup link bold"onClick={() => {
-					setSignUpForm(false)
-					setLoginForm(true)
-				}}>Log in</p>
-          </div>
+					<p className="login form signup link">Already a member?</p>
+					<p className="login form signup link bold"onClick={() => {
+						setSignUpForm(false)
+						setLoginForm(true)
+					}}>Log in</p>
+          		</div>
+					<div className="signupform footer">By continuing, you agree to PinItUp's <span style={{fontStyle: 'italic'}}>Non-existent</span> Terms of Service and acknowledge you've read our Privacy Policy. Notice at collection</div>
+					<div className="signupform footer"><p className="form required">*</p>Required</div>
 		  </>
 		  )}
 		  {loginForm && (

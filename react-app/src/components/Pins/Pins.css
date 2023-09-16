@@ -12,13 +12,12 @@ div.boardlist.dropdown.master.container {
 }
 
 div.boardlist.dropdown.submaster.container {
-    /* overflow: scroll; */
     text-align: center;
 }
 
 div.boardlist.subcontainer {
     height: 400px;
-    overflow:auto;
+    overflow: auto;
     text-align: left;
 }
 
@@ -35,6 +34,11 @@ p.boardlist.card.boardname {
     font-weight: bold;
     overflow: hidden;
     text-align: left;
+}
+
+#nouser {
+    font-size: 18px;
+    text-align: center;
 }
 
 button.boardlist.dropdown {
@@ -155,7 +159,7 @@ form#pinform {
     width: 100%;
 }
 
-button.create.submit{
+button.create.submit {
     font-size: 15px;
     height: 30px;
     margin-top: 20px;

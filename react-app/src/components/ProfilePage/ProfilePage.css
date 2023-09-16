@@ -96,3 +96,28 @@ a.profilepage.tile {
     color: black;
     text-decoration: none;
 }
+
+input#profilepage_editmode_username::before {
+    content: "Username";
+    color: black;
+    border: none;
+}
+
+p.profilepage.user.follow {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+button.profilepage.nonowner,
+button.profilepage.owner {
+    font-size: 16px;
+    padding: 5px 35px;
+}
+
+button.profilepage.nonowner.following,
+button#ppfollowing:hover {
+    background-color: black;
+    color: white;
+    cursor: default;
+    box-shadow: none;
+}

@@ -79,9 +79,69 @@ input.navbar.search:hover {
   cursor: pointer;
 }
 
-button.navbar.menu {
+button#navbar_create_button {
   align-items: center;
   background-color: white;
+  border: none;
+  border-radius: 26px;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+  gap: 2px;
+  height: 50px;
+  justify-content: center;
+  margin-right: 5px;
+  padding: 0 15px;
+  text-decoration: none;
+  transition: 0.35s ease-in-out;
+  width: 100px;
+}
+
+#navbar_create_button_active,
+#navbar_create_button_active:hover {
+  align-items: center;
+  background-color: black;
+  border: none;
+  border-radius: 26px;
+  box-shadow: inset 2em 0 0 0 black;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+  gap: 2px;
+  height: 50px;
+  justify-content: center;
+  margin-right: 5px;
+  padding: 0 15px;
+  text-decoration: none;
+  transition: 0.35s ease-in-out;
+  width: 100px;
+}
+
+button#navbar_create_button:focus,
+#navbar_menu_button:focus{
+  background-color: white;
+  box-shadow: none;
+  color: black;
+}
+
+#navbar_create_button:hover,
+#navbar_menu_button:hover {
+  background-color: #B4125D;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  box-shadow: inset 2em 0 0 0 #B4125D;
+}
+
+#navbar_menu_button {
+  align-items: center;
+  background-color: white;
+  border: none;
   border-radius: 100%;
   display: flex;
   height: 30px;
@@ -89,29 +149,53 @@ button.navbar.menu {
   width: 50px;
 }
 
-i.profile-dropdown {
-  color: #B4125D;
-  font-size: 30px;
+button#navbar_menu_button_active,
+button#navbar_menu_button_active:hover,
+button#navbar_menu_button_active:focus {
+  align-items: center;
+  background-color: black;
+  border: none;
+  border-radius: 100%;
+  box-shadow: none;
+  color: white;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  width: 50px;
 }
 
-i.profile-dropdown:hover,
+#createButton:hover {
+  background-color: black;
+  color: white;
+}
+
+#navbar_create,
+#navbar_create:hover,
+.fa-solid.navbar.menu,
+.fa-solid.navbar.menu:hover,
+.fa-solid.create,
+.fa-solid.create:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
 button.navbar.menu:hover {
   background-color: #B4125D;
   color: #E9E9E9;
 }
 
 button.modal {
-  background-color: #B4125D;
+  /* background-color: #B4125D; */
   border-radius: 18px;
-  color: #E9E9E9;
+  /* color: #E9E9E9; */
   /* font-weight: bold; */
   font-size: 20px;
   width: 200px;
 }
 
 button.modal:hover {
-  background-color: #E9E9E9;
-  color: #B4125D;
+  background-color: #B4125D;
+  color: white;
 }
 
 ul.profile-dropdown {
@@ -128,38 +212,18 @@ a.navbar.link.text {
   border-radius: 26px;
   color: black;
   font-size: 16px;
+  font-weight: bold;
   padding: 0 15px;
   text-decoration: none;
 }
 
 a.navbar.link.text.active,
-button.navbar.menu.create.active {
+a.navbar.link.text.active:hover {
   background-color: black;
   border-radius: 26px;
   color: white;
+  font-weight: bold;
   padding: 0 15px;
-}
-
-button.navbar.menu.create {
-  border-radius: 26px;
-  color: black;
-  gap: 6px;
-  margin-right: 5px;
-  font-size: 16px;
-  height: 51px;
-  padding: 0 15px;
-  text-decoration: none;
-  width: 90px;
-}
-
-button.navbar.menu.create:hover,
-a.navbar.link.text:hover {
-  background-color: #B4125D;
-  color: white;
-}
-
-a.navbar.link.text:hover {
-  background-color: #B4125D;
 }
 
 div.create.menu {
@@ -174,7 +238,7 @@ div.create.menu {
   position: absolute;
   top: 30px;
   width: 20vw;
-  z-index: 1;
+  z-index: 2;
 }
 
 p.navbar.messages {

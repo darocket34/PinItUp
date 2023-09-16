@@ -11,19 +11,29 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
 	const history = useHistory()
     const [searchDetails, setSearchDetails] = useState('')
+	// const [makeCreateActive, setMakeCreateActive] = useState(false)
 	const sessionUser = useSelector(state => state.session.user);
 	const {setSearchPins} = useContext(PinSearchContext)
 
 	const handleFormSubmit = (e) => {
 		if (!searchDetails.length){
-			return
+			return;
 		} else {
-			e.preventDefault()
+			e.preventDefault();
 			setSearchPins(searchDetails)
-			history.push('/search')
-			setSearchDetails('')
+			history.push('/search');
+			setSearchDetails('');
 		}
 	}
+
+	// const createActive = (e) => {
+	// 	e.preventDefault();
+	// 	if (makeCreateActive) {
+	// 		setMakeCreateActive(false)
+	// 	} else {
+	// 		setMakeCreateActive(true)
+	// 	}
+	// }
 
 	return (
 		<div className='navbar master container'>

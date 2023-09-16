@@ -5,22 +5,9 @@ import "../Splash/Homepage.css"
 import BoardList from "./BoardList"
 import { Link } from "react-router-dom"
 
-export default function PinCard({pin, boardsObj}) {
-    // const dispatch = useDispatch()
+export default function PinCard({pin, boardsObj, user}) {
     const [hidden, setHidden] = useState(true)
-    // const user = useSelector(state=>state.session.user)
     const boards = Object.values(boardsObj)
-
-    // const handleSave = async (e) => {
-    //     e.preventDefault()
-    //     const res = await fetch(`/api/pins/${pin.id}`, {
-    //         method: "put",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify(pin),
-    //     })
-    // }
 
     return (
         <>
@@ -30,7 +17,7 @@ export default function PinCard({pin, boardsObj}) {
             >
                 {!hidden && (
                     <div className="homepage single pin overlay container">
-                            <BoardList boards={boards} pin={pin} />
+                            <BoardList boards={boards} pin={pin} user={user} />
                             <Link to={`/pins/${pin.id}`} className="pincard pin name">{pin.name}</Link>
                     </div>
                 )}

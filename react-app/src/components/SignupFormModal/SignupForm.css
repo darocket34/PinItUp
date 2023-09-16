@@ -1,0 +1,21 @@
+div.signupform.field {
+    display: flex;
+    flex-direction: row;
+}
+
+div.signupform.footer {
+    display: flex;
+    flex-direction: row;
+    font-size: 11px;
+}
+
+p.form.required {
+    color: red;
+    margin: 0;
+}
+
+span {
+    display: unset;
+    width: calc(fit-content+3px);
+}
+

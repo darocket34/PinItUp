@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Pins.css"
 import { addPinToBoard, getAllBoards } from "../../store/boards";
 import { getAllPins } from "../../store/pins";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 
 
-export default function BoardList({boards, pin}){
+export default function BoardList({boards, pin, user}){
     // const boardsList = Object.values(boards)
     const [hidden, setHidden] = useState(true)
     const dispatch = useDispatch();
@@ -13,14 +15,15 @@ export default function BoardList({boards, pin}){
     const [chevron, setChevron] = useState("down")
     const [saved, setSaved] = useState(false)
     const [test, setTest] = useState('')
-    const user = useSelector(state=> state.session.user)
     const ulRef = useRef();
 
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
         setChevron('up')
-        dispatch(getAllBoards(user?.username))
+        if(user !== null) {
+            dispatch(getAllBoards(user.username))
+        }
         dispatch(getAllPins())
     };
 
@@ -29,9 +32,9 @@ export default function BoardList({boards, pin}){
         if (!showMenu) return;
 
         const closeMenu = (e) => {
-        if (!ulRef.current.contains(e.target)) {
-            setShowMenu(false);
-        }
+        // if (!ulRef.current.contains(e.target)) {
+        //     setShowMenu(false);
+        // }
         setChevron('down')
         };
 
@@ -39,6 +42,8 @@ export default function BoardList({boards, pin}){
 
         return () => document.removeEventListener("click", closeMenu);
     }, [showMenu]);
+
+    const closeMenu = () => setShowMenu(false);
 
     const handleSave = async (pin, board) => {
         dispatch(addPinToBoard(pin, board))
@@ -54,29 +59,40 @@ export default function BoardList({boards, pin}){
                 <>
                     <div className="boardlist dropdown master container">
                         <div className="boardlist dropdown submaster container" ref={ulRef}>
-                            <p className="boardlist dropdown master title">Save to board</p>
+                            {user && <p className="boardlist dropdown master title">Save to board</p>}
                             <div className="boardlist dropdown subcontainer">
-                                {boards?.map((board,idx)=> (
-                                    <div key={board?.id+idx} className="boardlist card container">
-                                        <div className="boardlist card content">
-                                            <div className="boardlist card image container">
-                                                <img className="boardlist card image" id="bdimage" src={board?.previewPin?.url} />
+                                {user ? (
+                                    <>
+                                        {boards.length && boards?.map((board,idx) => (
+                                            <div key={board?.id+idx} className="boardlist card container">
+                                                <div className="boardlist card content">
+                                                    <div className="boardlist card image container">
+                                                        <img className="boardlist card image" id="bdimage" src={board?.previewPin?.url} />
+                                                    </div>
+                                                    <div className="boardlist card textcontent">
+                                                        <p className="boardlist card boardname">{board?.name}</p>
+                                                        <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
+                                                    </div>
+                                                </div>
+                                                <button className={`boardlist card save ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
+                                                    <p className={board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}>
+                                                        {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
+                                                    </p>
+                                                </button>
                                             </div>
-                                            <div className="boardlist card textcontent">
-                                                <p className="boardlist card boardname">{board?.name}</p>
-                                                <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
-                                            </div>
-                                        </div>
-                                        <button className={`boardlist card save ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
-                                            <p className={board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}>
-                                                {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
-                                            </p>
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="boardlist create board container">
-                                <p>Create a new board</p>
+                                            ))}
+                                    </>
+                                ):(
+                                    <>
+                                        <p className="boardlist card boardname nouser" id="nouser">Please Log in to add to boards!</p>
+                                        <OpenModalButton
+                                            buttonText="Log In"
+                                            onItemClick={() => closeMenu}
+                                            onButtonClick={() => setShowMenu(false)}
+                                            modalComponent={<LoginFormModal />}
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

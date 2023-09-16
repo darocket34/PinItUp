@@ -25,23 +25,16 @@ function PinDetails() {
             // await dispatch(getAllBoards(user?.username))
             if (user?.id === pin?.creatorId) setIsOwner(true)
             setIsLoaded(true)
-        }
-        fetchData();
-    }, [dispatch, id, user, isLoaded])
-
-    useEffect(() => {
-        if (user?.id === pin?.creatorId) setIsOwner(true)
-        if (pin?.creatorId){
-            const fetchData = async () => {
+            if (pin?.creatorId){
                 const pinCreator = await dispatch(getUserById(pin?.creatorId))
                 const res = await pinCreator;
                 if (res?.id) {
                     setCreator(pinCreator)
                 }
             }
-            fetchData();
         }
-    }, [isLoaded])
+        fetchData();
+    }, [dispatch, id, isLoaded])
 
     return (
         <>

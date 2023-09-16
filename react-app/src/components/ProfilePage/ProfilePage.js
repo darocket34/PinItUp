@@ -9,37 +9,107 @@ import { getUserByUsername } from "../../store/session";
 function ProfilePage() {
     const dispatch = useDispatch();
     const {username} = useParams();
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [isOwner, setIsOwner] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [newName, setNewName] = useState('')
+    const [newUsername, setNewUsername] = useState('')
+    const [currUserIsFollowing, setCurrUserIsFollowing] = useState(false)
     const boards = useSelector(state => state.boards.allBoards);
     const user = useSelector(state => state.session.user);
-    const creator = useSelector(state => state.session.creator)
+    const creator = useSelector(state => state.session.creator);
 
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(getUserByUsername(username));
             await dispatch(getAllBoards(username));
             if (user?.id === creator?.id) setIsOwner(true);
-            setIsLoaded(true);
+            for (let follower of user?.following) {
+                if (follower.id === creator?.id) {
+                    setCurrUserIsFollowing(true);
+                    setIsLoaded(true);
+                } else {
+                    setIsLoaded(true);
+                }
+            }
         }
         fetchData();
-        // dispatch(getUser(username));
-        // dispatch(getAllBoards(username));
-        console.log(creator)
-    }, [dispatch]);
+    }, [dispatch, isLoaded]);
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        setEditMode(true)
+    }
+
+    const handleFollow = async () => {
+        if (user?.id && creator?.id) {
+            try {
+                const followRes = await fetch(`/api/users/follow/${creator.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "creator": creator.id,
+                        "user": user.id
+                    })
+                })
+                const response = await followRes.json();
+                if (response.error) {
+                    console.log("ERROR", response.error)
+                } else {
+                    setCurrUserIsFollowing(true)
+                    await dispatch(getUserByUsername(username));
+                }
+            } catch (err) {
+                console.log("ERR", err)
+            }
+        }
+    }
+
     return (
         <>
             <div className="profilepage upper section container">
-                {/* <img src={creator.profile_img} alt="Profile Image" className="profilepage user pic" /> */}
-                <h1 className="profilepage user name">{creator?.name}</h1>
-                <p className="profilepage user username">{`@${creator?.username}`}</p>
-                {/*
-                    Add ability to share profile via link as well as to edit user information
-                {user.id === Object.values(boards)[0].creatorId && (
-                    <div className="profilepage uppersection user options container">
-                        <button className="profilepage user edit"></button>
+                <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
+                {editMode ? (
+                    <>
+                        <p className="profilepage editmode username">Name</p>
+                        <input id="profilepage_editmode_name"
+                            type="text"
+                            value={newName}
+                            placeholder={creator?.name}
+                            onChange={(e) => setNewName(e.target.value)}
+                        />
+                        <p className="profilepage editmode username">Username</p>
+                        <input id="profilepage_editmode_username"
+                            type="text"
+                            value={newUsername}
+                            placeholder={creator?.username}
+                            onChange={(e) => setNewUsername(e.target.value)}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <h1 className="profilepage user name">{creator?.name}</h1>
+                        <p className="profilepage user follow">{`Followers ${creator?.followers?.length}`}{'    ·    '}{`Following ${creator?.following?.length}`}</p>
+                        <p className="profilepage user username">{`@${creator?.username}`}</p>
+                    </>
+                )}
+
+                {isOwner ? (
+                    <div className="profilepage owner controls container">
+                        <button className="profilepage owner edit" onClick={handleEdit}>Edit Profile</button>
                     </div>
-                )} */}
+                ) : (
+                    <div className="profilepage nonowner controls container">
+                        {currUserIsFollowing ? (
+                            <button className="profilepage nonowner following" id="ppfollowing" disabled={true}>Following</button>
+                            ) : (
+                            <button className="profilepage nonowner follow" onClick={handleFollow}>Follow</button>
+                            )
+                        }
+                    </div>
+                )}
             </div>
                 <div className="profilepage lower section container">
                 <ul className="profilepage board tile list">
@@ -72,34 +142,7 @@ function ProfilePage() {
                     )}
                 </ul>
              </div>
-
-
-
-
-
-
-
-
-
-            {/* <p>NAME: {user?.name}</p>
-            <p>USERNAME: {user?.username}</p>
-            <p>BOARDS:</p>
-            <ul>
-            {Object.values(boards).length && (
-                Object.values(boards).map((board, idx) => (
-                    <li key={idx}>
-                        <Link to={`/boards/${board?.id}`} key={idx}>{board?.name}</Link>
-                        <ul><p>PINS:</p>
-                            {board.pins.map((pin,idx2) => (
-                                <li key={idx2*0.12}><Link to={`/pins/${pin.id}`}>{pin?.name}</Link></li>
-                            ))}
-                        </ul>
-                    </li>
-                ))
-            )}
-            </ul> */}
         </>
-
     )
 }
 

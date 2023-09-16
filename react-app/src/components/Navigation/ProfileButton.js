@@ -10,24 +10,36 @@ import { Link, useHistory } from "react-router-dom";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
+	const [makeMenuActive, setMakeMenuActive] = useState(false)
   const [showMenu, setShowMenu] = useState(false);
-  const [chevron, setChevron] = useState("down")
+  const [chevron, setChevron] = useState("down");
   const ulRef = useRef();
 
   const openMenu = () => {
-    if (showMenu) return;
+    if (showMenu) {
+      setMakeMenuActive(true);
+      return;
+    }
+    setMakeMenuActive(true);
     setShowMenu(true);
-    setChevron('up')
+    setChevron('up');
   };
 
   useEffect(() => {
-    if (!showMenu) return;
-
+    if (!showMenu) {
+      setMakeMenuActive(false);
+      return;
+    }
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (showMenu) {
         setShowMenu(false);
+        setMakeMenuActive(false);
+      } else {
+        setMakeMenuActive(true);
       }
-      setChevron('down')
+
+      setChevron('down');
+      setMakeMenuActive(false);
     };
 
     document.addEventListener("click", closeMenu);
@@ -39,22 +51,27 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(logout());
     closeMenu();
-    history.push("/home")
+    history.push("/home");
   };
 
   const ulClassName = "profile-dropdown master container" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
+  const closeMenu = () => {
+    setShowMenu(false);
+    setMakeMenuActive(false);
+  }
 
   return (
     <>
-      <button className="navbar menu" onClick={openMenu}>
-      <i className={`fa-solid fa-chevron-${chevron} fa-xl profile-dropdown`}></i>
+      <button className="navbar menu"
+        id={showMenu ? "navbar_menu_button_active" : "navbar_menu_button"}
+        onClick={openMenu}>
+      <i className={`fa-solid fa-chevron-${chevron} fa-xl profile-dropdown navbar menu`} id="navbar_menu_icon"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <div className="profile-dropdown menu">
-              <Link to={`/${user.username}/profile`}>
+              <Link to={`/${user.username}/profile`} onClick={closeMenu}>
                 <div className="profile-dropdown user card">
                   <img className="profile-dropdown user img" src={user.profile_img}></img>
                     <div className="profile-dropdown user acc details">
@@ -63,7 +80,6 @@ function ProfileButton({ user }) {
                     </div>
                 </div>
               </Link>
-              {/* <Link to={`/`} */}
               <li>
                 <button className="modal" onClick={handleLogout}>Log Out</button>
               </li>

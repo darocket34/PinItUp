@@ -1,6 +1,6 @@
 #modal-content form,
 button.demo.user {
-    width: 60%;
+    width: 70%;
 }
 
 button.login.form {
@@ -10,10 +10,10 @@ button.login.form {
     height: 2rem;
 }
 
-button.login.form:hover {
+/* button.login.form:hover {
     background-color: #E9E9E9;
     color: #B4125D;
-}
+} */
 
 p.login.link {
     font-size: 12px;

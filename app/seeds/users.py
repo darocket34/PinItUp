@@ -9,6 +9,7 @@ fake.add_provider(profile)
 fake.add_provider(date_time)
 
 def create_users(num_users):
+    sample_size = num_users // 5 * 4
     for _ in range(num_users):
         personObj = fake.simple_profile()
         yield User(
@@ -30,11 +31,25 @@ def seed_users(num_users):
         name = fake.name(), username='bobbie', email='bobbie@aa.io', password='password', birthday = fake.date_of_birth(), profile_img=f'https://picsum.photos/250.jpg?random={random.randint(1,100)}')
 
     new_users = list(create_users(num_users))
+    initial_users = [demo, marnie, bobbie]
+    for user in initial_users:
+        new_users.append(user)
     add_users = [db.session.add(user) for user in new_users]
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
     db.session.commit()
+    all_users = User.query.all()
+
+    for user in all_users:
+        follower_count = random.randint(0, num_users // 5)
+        follower_list = random.sample(all_users, follower_count)
+        # follower_ids = [follower.id for follower in follower_list]
+        follower_ids = []
+        for follower in follower_list:
+            if (follower.id != user.id):
+                follower_ids.append(follower.id)
+        user.followers.extend(User.query.filter(User.id.in_(follower_ids)))
+        print("USER-------------------------------------", follower_ids)
+    db.session.commit()
+
     return len(User.query.all())
 
 

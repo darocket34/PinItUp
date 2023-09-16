@@ -64,6 +64,7 @@ export const login = (email, password) => async (dispatch) => {
 			return data.errors;
 		}
 	} else {
+		console.log(response)
 		return ["An error occurred. Please try again."];
 	}
 };
@@ -111,7 +112,6 @@ export const getUserById = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}`)
     if (res.ok) {
         const user = await res.json();
-		console.log("USER", user)
 		dispatch(getCreatorById(user))
         return user;
 	    } else {
@@ -125,7 +125,6 @@ export const getUserByUsername = (username) => async (dispatch) => {
     const res = await fetch(`/api/users/username/${username}`)
     if (res.ok) {
         const user = await res.json();
-		console.log("USER", user)
 		dispatch(getCreatorByUsername(user))
         return user;
 	    } else {
