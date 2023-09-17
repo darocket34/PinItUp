@@ -1,6 +1,7 @@
 const cloneDeep = require("clone-deep")
 // constants
 const SET_USER = "session/SET_USER";
+const GET_USER = "session/GET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const GET_CREATOR_ID = "session/GET_CREATOR_ID"
 const GET_CREATOR_USERNAME = "session/GET_CREATOR_USERNAME"
@@ -8,6 +9,16 @@ const GET_CREATOR_USERNAME = "session/GET_CREATOR_USERNAME"
 const setUser = (user) => ({
 	type: SET_USER,
 	payload: user,
+});
+
+const followUser = (updatedUser) => ({
+	type: GET_USER,
+	updatedUser,
+});
+
+const unfollowUser = (updatedUser) => ({
+	type: GET_USER,
+	updatedUser,
 });
 
 const removeUser = () => ({
@@ -108,6 +119,46 @@ export const signUp = (username, email, password) => async (dispatch) => {
 	}
 };
 
+export const followCurrUser = (followObj) => async (dispatch) => {
+    const res = await fetch(`/api/users/follow/${followObj.creator}`, {
+		method: "put",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(followObj),
+	})
+    if (res.ok) {
+        const updatedUser = await res.json();
+		console.log("UPDTE", updatedUser)
+		dispatch(followUser(updatedUser))
+        return updatedUser;
+	    } else {
+        const {errors} = await res.json();
+        console.log(errors)
+        return errors;
+    }
+}
+
+export const unfollowCurrUser = (followObj) => async (dispatch) => {
+    const res = await fetch(`/api/users/unfollow/${followObj.creator}`, {
+		method: "put",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(followObj),
+	})
+    if (res.ok) {
+        const updatedUser = await res.json();
+		console.log("UPDTE", updatedUser)
+		dispatch(unfollowUser(updatedUser))
+        return updatedUser;
+	    } else {
+        const {errors} = await res.json();
+        console.log(errors)
+        return errors;
+    }
+}
+
 export const getUserById = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}`)
     if (res.ok) {
@@ -138,7 +189,11 @@ export default function reducer(state = initialState, action) {
 	let newState = cloneDeep(state)
 	switch (action.type) {
 		case SET_USER:
-			return { user: action.payload };
+			// newState.user = action.user
+			// return newState;
+			return {user: action.payload};
+		case GET_USER:
+			return {user: action.updatedUser};
 		case REMOVE_USER:
 			return { user: null };
 		case GET_CREATOR_ID:

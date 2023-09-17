@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom"
 import "./Pins.css"
 import { addPinToBoard } from "../../store/boards";
 
-function PinModal({user, type, pin}) {
+function PinUpdateModal({user, type, pin}) {
     const history = useHistory()
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
@@ -110,7 +110,7 @@ function PinModal({user, type, pin}) {
             <img src={logo} alt="PinItUp Logo" style={{ width: '40px', height: '40px', alignSelf: 'center' }}></img>
             {user && (
                 <div className="pinform create master container">
-                    <h1 className="pinform create title">{type === "update" ? "Update":"Create"} a New Pin</h1>
+                    <h1 className="pinform create title">{type === "update" ? `Update ${pin?.name}`:"Create a New Pin"}</h1>
                     <div className="pinform create form container">
                         <form className="pinform create form" id="pinform" onSubmit={handleSubmit}>
                             <ul>
@@ -179,4 +179,4 @@ function PinModal({user, type, pin}) {
     )
 }
 
-export default PinModal;
+export default PinUpdateModal;

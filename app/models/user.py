@@ -48,5 +48,18 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'birthday': self.birthday,
             'name': self.name,
-            'profile_img': self.profile_img
+            'profile_img': self.profile_img,
+
+            'following': [follow.to_dict_simplified() for follow in self.following],
+            'followers': [follow.to_dict_simplified() for follow in self.followers]
+        }
+
+    def to_dict_simplified(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'birthday': self.birthday,
+            'name': self.name,
+            'profile_img': self.profile_img,
         }

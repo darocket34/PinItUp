@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
-import PinModal from "../Pins/PinModal";
+import PinUpdateModal from "../Pins/PinUpdateModal";
 import "./Navigation.css"
 import PinDetails from "../Pins/PinDetails";
 import { Link } from "react-router-dom";
@@ -78,7 +78,7 @@ function CreateButton({ user }) {
             <OpenModalButton
               buttonText="Create New Pin"
               onItemClick={closeMenu}
-              modalComponent={<PinModal user={user} type="create" />}
+              modalComponent={<PinUpdateModal user={user} type="create" />}
             />
             <OpenModalButton
               buttonText="Create New Board"

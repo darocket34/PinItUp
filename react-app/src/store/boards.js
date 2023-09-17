@@ -7,6 +7,7 @@ const GET_BOARD = "boards/GET_BOARD"
 const DELETE_BOARD = "boards/DELETE_BOARD"
 const UPDATE_BOARD = "boards/UPDATE_BOARD"
 const ADD_TO_BOARD = "pins/ADD_TO_BOARD"
+const REMOVE_FROM_BOARD = "pins/REMOVE_FROM_BOARD"
 
 /* Action Creators */
 const getBoards = (boards) => ({
@@ -39,6 +40,10 @@ const addToBoard = (board) => ({
     board
 })
 
+const removeFromBoard = (board) => ({
+    type: REMOVE_FROM_BOARD,
+    board
+})
 
 /* Thunks */
 export const getAllBoards = (username) => async (dispatch) => {
@@ -46,7 +51,6 @@ export const getAllBoards = (username) => async (dispatch) => {
     if (res.ok) {
         const boards = await res.json();
         dispatch(getBoards(boards));
-        console.log(boards)
         return boards
     } else {
         const {errors} = await res.json();
@@ -112,7 +116,6 @@ export const updateBoard = (board) => async (dispatch) => {
 }
 
 export const addPinToBoard = (pin, board) => async (dispatch) => {
-    console.log("FRONT END", pin,board)
     const res = await fetch(`/api/boards/${board.id}/addpin`, {
         method: "PUT",
         headers: {
@@ -123,6 +126,24 @@ export const addPinToBoard = (pin, board) => async (dispatch) => {
     if (res.ok) {
         const board = await res.json();
         dispatch(addToBoard(board));
+        return board;
+    } else {
+        const {errors} = await res.json();
+        return errors;
+    }
+}
+
+export const removePinFromBoard = (pin, board) => async (dispatch) => {
+    const res = await fetch(`/api/boards/${board.id}/removepin`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({pin,board})
+    })
+    if (res.ok) {
+        const board = await res.json();
+        dispatch(removeFromBoard(board));
         return board;
     } else {
         const {errors} = await res.json();
@@ -169,6 +190,9 @@ const boardsReducer = (
             return newState;
         case ADD_TO_BOARD:
             newState.allBoards[action.board.id] = action.board
+            return newState;
+        case REMOVE_FROM_BOARD:
+            newState.singleBoard = action.board
             return newState;
         case DELETE_BOARD:
             return newState;

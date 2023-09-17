@@ -14,7 +14,7 @@ p.form.required {
     margin: 0;
 }
 
-span {
+span.signupform.footer {
     display: unset;
     width: calc(fit-content+3px);
 }

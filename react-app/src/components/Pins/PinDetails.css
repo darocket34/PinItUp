@@ -1,4 +1,73 @@
-img.pindetail.image {
-    height: 300px;
+div.pindetail.imagecontainer {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
     width: auto;
+}
+
+img.pindetails {
+    border-radius: 19px;
+    height: auto;
+    max-height: 90%;
+    max-width: 90%;
+    width: 90%;
+}
+
+p.test {
+    width: 50%;
+}
+
+div.pindetail.master.container {
+    display: flex;
+    flex-direction: row;
+    height: 80vw;
+    width: 85vw;
+}
+
+div.leftmodal {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+div.rightmodal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+}
+
+div.comment.container {
+    overflow: auto;
+    height: 100%;
+    margin: 20px 0;
+}
+
+button.pindetail.back {
+    display: flex;
+    height: 30px;
+    padding: 15px 15px;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+div.pindetail.rightmodal button {
+    align-self: flex-end;
+    position: relative;
+    z-index: unset;
+    margin: 0 0;
+    width: 160px;
+}
+
+div.pindetail.details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+div.pindetail.rightmodal div.dropdown.master {
+    position: absolute;
+    z-index: 2;
 }

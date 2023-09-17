@@ -14,7 +14,7 @@ def create_comments(num_comments, num_users, num_pins):
             creatorId = random.randint(1,num_users),
             pinId = random.randint(1, num_pins),
             comment = fake.sentence(nb_words=10),
-            date = fake.date_this_year()
+            date = fake.date_time_this_year()
         )
 
 def seed_comments(num_comments, num_users, num_pins):

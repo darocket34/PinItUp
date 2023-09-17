@@ -59,6 +59,7 @@ div.navbar.search.container {
 input.navbar.search {
   background-color: #E9E9E9;
   border-radius: 20px 0 0 20px;
+  border-right: none;
   font-size: 18px;
   height: 40px;
   padding-left: 20px;
@@ -66,6 +67,10 @@ input.navbar.search {
 }
 
 button.navbar.search.submit {
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-bottom: 2px solid;
+  border-color: #B4125D;
   border-radius: 0 20px 20px 0;
   height: 40px;
   padding-left: 0;

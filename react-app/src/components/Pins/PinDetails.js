@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useModal, closeMenu } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useParams} from "react-router-dom"
 import {getSinglePin} from "../../store/pins"
 import { getUserById } from "../../store/session";
 import { getAllBoards } from "../../store/boards";
-import PinModal from "./PinModal";
+import PinUpdateModal from "./PinUpdateModal";
 import OpenModalButton from "../OpenModalButton";
 import DeletePinModal from "./DeletePinModal"
 import "./PinDetails.css"
@@ -51,6 +51,14 @@ function PinDetails() {
             <p>Owner Id: {pin?.creatorId}</p>
             <p>Post Date: {pin?.postDate}</p>
             <p>Board: {pin?.boardId}</p>
+            <p>Comments: {pin?.comments?.map((comment, idx) => (
+                <>
+                    <p>Date: {comment.date}</p>
+                    <p>Commenter: {comment.creatorId}</p>
+                    <p>Comment: {comment.comment}</p>
+                </>
+                ))}
+            </p>
 
            {isOwner && (
             <>
@@ -60,7 +68,7 @@ function PinDetails() {
                 />
                 <OpenModalButton
                     buttonText="Update"
-                    modalComponent={<PinModal user={user} type="update" pin={pin}/>}
+                    modalComponent={<PinUpdateModal user={user} type="update" pin={pin}/>}
                 />
             </>
            )}

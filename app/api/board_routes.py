@@ -100,6 +100,25 @@ def add_pin_to_board(id):
     board = Board.query.get(board_id)
     return board.to_dict()
 
+@board_routes.route("/<int:id>/removepin", methods=["DELETE"])
+@login_required
+def remove_pin_from_board(id):
+    req = request.get_json()
+    pinId = req["pin"]["id"]
+    board_id = req["board"]["id"]
+    print("BORRF------------------------------", req["pin"])
+    pin = Pin.query.get(pinId)
+    if not pin:
+        return {"error", "Pin not found"}, 404
+    board = Board.query.get(board_id)
+    if not board:
+        return {"error", "Board not found"}, 404
+    if pin in board.pins:
+        board.pins.remove(pin)
+        db.session.commit()
+        updatedBoard = Board.query.get(board.id)
+    return updatedBoard.to_dict()
+
 @board_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_board(id):

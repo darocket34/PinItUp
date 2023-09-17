@@ -18,8 +18,27 @@ p.user.username {
 
 div.lower.section.container {
     display: flex;
+    flex-direction: column;
     column-count: 4;
     margin-top: 20px;
+}
+
+div.profilepage.selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+}
+
+p.profilepage.controls {
+    cursor: pointer;
+    font-size: 20px;
+    /* font-weight: bold; */
+}
+
+p.profilepage.controls.true {
+    font-weight: bold;
+    text-decoration: overline;
 }
 
 div.profilepage.tile.master {
@@ -114,10 +133,36 @@ button.profilepage.owner {
     padding: 5px 35px;
 }
 
-button.profilepage.nonowner.following,
-button#ppfollowing:hover {
+button.profilepage.nonowner.following {
     background-color: black;
     color: white;
     cursor: default;
     box-shadow: none;
+}
+
+button.profilepage.nonowner.following:hover {
+    cursor: pointer;
+    display: inline;
+    background-color: #B4125D;
+    box-shadow: inset 10em 0 0 0 #B4125D;
+}
+
+button.profilepage.nonowner.following:hover span.following {
+    display: none;
+}
+
+button.profilepage.nonowner.following  span.unfollow{
+    display: none;
+}
+
+button.profilepage.nonowner.following:hover  span.unfollow {
+    cursor: pointer;
+    display: inline;
+}
+
+form.profilepage.owner.edit {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
 }

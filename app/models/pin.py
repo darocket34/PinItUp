@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .comment import Comment
+from sqlalchemy import desc
 from .board_pins import board_pins
 
 class Pin(db.Model):
@@ -15,7 +17,7 @@ class Pin(db.Model):
     postDate = db.Column(db.Date, nullable=False)
     boardId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("boards.id")))
 
-    comments = db.relationship("Comment", back_populates="pins")
+    comments = db.relationship("Comment", back_populates="pin", order_by=lambda: desc(Comment.date), cascade="all, delete-orphan")
     user = db.relationship("User", back_populates="pins")
     board = db.relationship("Board", secondary=board_pins, back_populates="pins")
 
@@ -27,5 +29,16 @@ class Pin(db.Model):
             "url": self.url,
             "creatorId": self.creatorId,
             "postDate": self.postDate,
-            "boardId": self.boardId
+            "boardId": self.boardId,
+            "comments": [comment.to_dict() for comment in self.comments]
+        }
+
+    def to_dict_simplified(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "url": self.url,
+            "creatorId": self.creatorId,
+            "postDate": self.postDate
         }

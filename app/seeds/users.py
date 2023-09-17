@@ -1,4 +1,4 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, User, follows_table, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
 from faker.providers import profile, date_time
@@ -41,11 +41,14 @@ def seed_users(num_users):
     for user in all_users:
         follower_count = random.randint(0, num_users // 5)
         follower_list = random.sample(all_users, follower_count)
-        # follower_ids = [follower.id for follower in follower_list]
         follower_ids = []
         for follower in follower_list:
             if (follower.id != user.id):
-                follower_ids.append(follower.id)
+                already_exists = db.session.query(follows_table).filter(
+                    follows_table.c.followerId == follower.id,
+                    follows_table.c.followingId == user.id).scalar()
+                if not already_exists:
+                    follower_ids.append(follower.id)
         user.followers.extend(User.query.filter(User.id.in_(follower_ids)))
         print("USER-------------------------------------", follower_ids)
     db.session.commit()

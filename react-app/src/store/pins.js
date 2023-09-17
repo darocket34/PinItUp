@@ -2,6 +2,7 @@ const cloneDeep = require("clone-deep")
 
 /* Action Type Constants */
 const GET_ALL_PINS = "pins/GET_ALL_PINS"
+const GET_ALL_PINS_BY_USER = "pins/GET_ALL_PINS_BY_USER"
 const CREATE_PIN = "pins/CREATE_PIN"
 const GET_PIN = "pins/GET_PIN"
 const DELETE_PIN = "pins/DELETE_PIN"
@@ -11,6 +12,11 @@ const ADD_TO_BOARD = "pins/ADD_TO_BOARD"
 /* Action Creators */
 const getPins = (pins) => ({
     type: GET_ALL_PINS,
+    payload: pins
+})
+
+const getPinsByUser = (pins) => ({
+    type: GET_ALL_PINS_BY_USER,
     payload: pins
 })
 
@@ -42,6 +48,18 @@ export const getAllPins = () => async (dispatch) => {
     if (res.ok) {
         const pins = await res.json();
         dispatch(getPins(pins));
+        return pins;
+    } else {
+        const {errors} = await res.json();
+        return errors;
+    }
+}
+
+export const getAllPinsByUsername = (username) => async (dispatch) => {
+    const res = await fetch(`/api/pins/${username}/all`);
+    if (res.ok) {
+        const pins = await res.json();
+        dispatch(getPinsByUser(pins));
         return pins;
     } else {
         const {errors} = await res.json();
@@ -144,8 +162,11 @@ const pinsReducer = (
         case GET_ALL_PINS:
             newState.allPins = {};
             action.payload.pins.forEach(pin => {
-                newState.allPins[pin.id] = pin
+                newState.allPins[pin.id] = pin;
             });
+            return newState;
+        case GET_ALL_PINS_BY_USER:
+            newState.allPins = action.payload.pins;
             return newState;
         case CREATE_PIN:
             newState.allPins[action.pin.id] = action.pin;
@@ -160,7 +181,7 @@ const pinsReducer = (
         case DELETE_PIN:
             return newState;
         default:
-            return state
+            return state;
     }
 }
 

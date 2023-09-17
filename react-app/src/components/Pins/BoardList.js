@@ -8,7 +8,6 @@ import LoginFormModal from "../LoginFormModal";
 
 
 export default function BoardList({boards, pin, user}){
-    // const boardsList = Object.values(boards)
     const [hidden, setHidden] = useState(true)
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
@@ -32,9 +31,9 @@ export default function BoardList({boards, pin, user}){
         if (!showMenu) return;
 
         const closeMenu = (e) => {
-        // if (!ulRef.current.contains(e.target)) {
-        //     setShowMenu(false);
-        // }
+        if (!ulRef.current.contains(e.target)) {
+            setShowMenu(false);
+        }
         setChevron('down')
         };
 

@@ -46,14 +46,15 @@ button.boardlist.dropdown {
     display: flex;
     height: 40px;
     margin-top: 7px;
+    margin-left: 10px;
     gap: 7px;
     padding-left: 8px;
     padding-right: 8px;
     position: absolute;
-    z-index: 1;
+    z-index: 3;
 }
 
-a.pincard.pin.name {
+p.pincard.pin.name {
     bottom: 5%;
     color: white;
     position: absolute;
@@ -164,4 +165,14 @@ button.create.submit {
     height: 30px;
     margin-top: 20px;
     width: 90px;
+}
+
+
+#pinUpdateModalButton,
+#pinUpdateModalButton:hover {
+    background-color: unset;
+    box-shadow: none;
+    border-radius: 15px;
+    cursor: zoom-in;
+    max-width: 100%;
 }

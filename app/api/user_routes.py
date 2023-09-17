@@ -46,6 +46,22 @@ def userById(id):
         return userDict
     return {"errors": "User not found"}, 404
 
+@user_routes.route('/set/<int:id>')
+@login_required
+def resetCurrUser(id):
+    """
+    Query to set the current user with updated information
+    """
+    user = User.query.get(id)
+    if user:
+        followers = [follower.to_dict() for follower in user.followers]
+        following = [follow.to_dict() for follow in user.following]
+        userDict = user.to_dict()
+        userDict['followers'] = followers
+        userDict['following'] = following
+        return userDict
+    return {"errors": "User not found"}, 404
+
 @user_routes.route('/follow/<int:creatorId>', methods=["PUT"])
 @login_required
 def followUser(creatorId):
@@ -53,7 +69,6 @@ def followUser(creatorId):
     Follow another user
     """
     req_data = request.get_json()
-    print("DATA---------------------------------------", req_data)
     followedId = req_data["creator"]
     userId = req_data["user"]
     followed = User.query.get(followedId)
@@ -62,6 +77,34 @@ def followUser(creatorId):
         if followed in user.following.all():
             return {"error": "Already following user"}, 400
         user.following.append(followed)
+        print("DATA---------------------------------------", user.following)
         db.session.commit()
         return user.to_dict()
     return {"error": "User not found"}, 404
+
+@user_routes.route('/unfollow/<int:creatorId>', methods=["PUT"])
+@login_required
+def unfollowUser(creatorId):
+    """
+    Unfollow another user
+    """
+    req_data = request.get_json()
+    userId = req_data["user"]
+    followedId = req_data["creator"]
+    followed = User.query.get(followedId)
+    user = User.query.get(userId)
+    print("DATA---------------------------------------",user.following.all())
+    if followed and user:
+        if followed in user.following.all():
+            user.following.remove(followed)
+            db.session.commit()
+            return user.to_dict()
+        return {"error": "Not currently following user"}, 400
+    return {"error": "User not found"}, 404
+
+@user_routes.route('/<string:username>/edit', methods=['PUT'])
+@login_required
+def updateUser(username):
+    """
+    Update name and username for profile
+    """

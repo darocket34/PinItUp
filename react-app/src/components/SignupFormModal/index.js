@@ -121,7 +121,7 @@ function SignupFormModal() {
 						setLoginForm(true)
 					}}>Log in</p>
           		</div>
-					<div className="signupform footer">By continuing, you agree to PinItUp's <span style={{fontStyle: 'italic'}}>Non-existent</span> Terms of Service and acknowledge you've read our Privacy Policy. Notice at collection</div>
+					<div className="signupform footer">By continuing, you agree to PinItUp's <span className="signupform footer" style={{fontStyle: 'italic'}}>Non-existent</span> Terms of Service and acknowledge you've read our Privacy Policy. Notice at collection</div>
 					<div className="signupform footer"><p className="form required">*</p>Required</div>
 		  </>
 		  )}
