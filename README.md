@@ -58,3 +58,17 @@ https://pinitup.onrender.com/
 | `/pins/<int:id>/comment`                     | DELETE       | Delete a comment from a pin.                           |
 | `/pins/<int:id>`                              | DELETE       | Delete a pin.                                          |
 
+# Feature List
+1. Pins
+2. Boards
+3. Comments
+4. Search
+5. Follows
+
+# Future Implementation Goals
+1. Messaging
+2. Stylistic Splash Page
+3. Night Mode
+
+# Connect
+[LinkedIn](https://www.linkedin.com/in/darian-brooks92/)
