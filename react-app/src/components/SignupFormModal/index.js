@@ -70,7 +70,7 @@ function SignupFormModal() {
 			<>
 				<img src={logo} alt="PinItUp Logo" style={{ width: '40px', height: '40px', alignSelf: 'center' }}></img>
 				<h1 className="login form title">Sign Up for PinItUp</h1>
-				<form className='signup form modal' onSubmit={handleSubmit}>
+				<form className='signup form modal' encType="multipart/form-data" onSubmit={handleSubmit}>
 					<ul>
 						{Object.values(errors).map((error, idx) => (
 							<li key={idx}>

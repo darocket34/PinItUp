@@ -180,7 +180,7 @@ function ProfilePage() {
                     <div className="profilepage_editmode_image container">
                         <p className="profilepage_editmode_image text">Select a new profile pic</p>
                         {errors.image && <li key={344047}><p className="form required">{errors.image}</p></li>}
-                        <form className="profilepage owner imageedit form" onSubmit={handleImageSubmit}>
+                        <form className="profilepage owner imageedit form" encType="multipart/form-data" onSubmit={handleImageSubmit}>
                             <input
                                 id="profilepage_editmode_image"
                                 type="file"
