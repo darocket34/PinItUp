@@ -79,7 +79,7 @@ def sign_up():
     raw_data_birthday = request.form.get("birthday")
 
     raw_data_img = request.files.get("url")
-    print("BE RAW DATA IMG----------------------------------------", raw_data_im)
+    print("BE RAW DATA IMG----------------------------------------", raw_data_img)
     form = SignUpForm()
     data = form.data
     print("BE FORM DATA----------------------------------------", json.loads(raw_data_name))
