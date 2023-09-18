@@ -1,12 +1,12 @@
 div.boardlist.dropdown.master.container {
     background-color: white;
     border-radius: 15px;
-    left: 30%;
+    left: 0;
     max-height: 500px;
     max-width: 330px;
     padding: 10px;
     position: absolute;
-    top: 30%;
+    top: 20%;
     width: 330px;
     z-index: 1;
 }
@@ -59,7 +59,7 @@ p.pincard.pin.name {
     color: white;
     position: absolute;
     text-decoration: none;
-    z-index: 1;
+    z-index: 0;
 }
 
 div.boardlist.card.container {

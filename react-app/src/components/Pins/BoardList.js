@@ -60,7 +60,8 @@ export default function BoardList({boards, pin, user}){
                             <div className="boardlist dropdown subcontainer">
                                 {user ? (
                                     <>
-                                        {boards.length && boards?.map((board,idx) => (
+                                        {boards.length === 0 && <h2>You have no boards yet!</h2>}
+                                        {boards.length > 0 && boards?.map((board,idx) => (
                                             <div key={board?.id+idx} className="boardlist card container">
                                                 <div className="boardlist card content">
                                                     <div className="boardlist card image container">
