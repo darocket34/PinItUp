@@ -73,7 +73,7 @@ export default function BoardList({boards, pin, user}){
                                                         <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
                                                     </div>
                                                 </div>
-                                                <button className={`boardlist card save ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
+                                                <button className={`boardlist card ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
                                                     <p className={board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}>
                                                         {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
                                                     </p>

@@ -5,6 +5,7 @@ import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import "./ProfilePage.css"
 import { getUserByUsername, followCurrUser, unfollowCurrUser, updateUserProfile, authenticate } from "../../store/session";
 import { getAllPinsByUsername } from "../../store/pins";
+import PinCard from "../Pins/PinCard";
 
 
 function ProfilePage() {
@@ -32,21 +33,20 @@ function ProfilePage() {
         const fetchData = async () => {
             await dispatch(getUserByUsername(username));
             await dispatch(getAllBoards(username));
-            // const res = await dispatch(getAllPinsByUsername(username))
-            console.log("ISOWNER", isOwner)
+            const res = await dispatch(getAllPinsByUsername(username))
             if (user?.id === creator?.id) {
                 setIsOwner(true);
             } else {
                 setIsOwner(false);
             }
-            // if (res){
-            //     const {pins} = await res;
-            //     if (pins.length > 0) {
-            //         setPinList(pins);
-            //     } else {
-            //         setPinList([]);
-            //     }
-            // }
+            if (res){
+                const {pins} = await res;
+                if (pins.length > 0) {
+                    setPinList(pins);
+                } else {
+                    setPinList([]);
+                }
+            }
             if (user?.following?.length > 0){
                 for (let follower of user?.following) {
                     if (follower.id === creator?.id) {
@@ -298,11 +298,13 @@ function ProfilePage() {
                         </ul>) : (
                         <ul>
                             {pinList?.length > 0 && (
-                                <>
+                                <div className="profilepage pins container">
                                     {pinList.map((pin,idx) => (
-                                        <li>{pin.name}</li>
+                                        <div key={idx} className='profilepage single pin container'>
+                                            <PinCard key={idx*0.2} pin={pin} boardsObj={boards} user={user} />
+                                        </div>
                                     ))}
-                                </>
+                                </div>
                             )}
                         </ul>
                         )}

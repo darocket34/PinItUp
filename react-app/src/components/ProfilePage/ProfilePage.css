@@ -186,3 +186,22 @@ form.profilepage.owner.imageedit {
     flex-direction: column;
     gap: 15px;
 }
+
+div.profilepage.single.pin.container {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 15px;
+    height: 100%;
+    margin: 10px 0;
+    padding: 0;
+}
+
+div.profilepage.pins.container {
+    column-count: 4;
+    margin-top: 20px;
+    padding: 5px;
+    grid-column-gap: 20px;
+    column-gap: 20px;
+    vertical-align: initial;
+    word-break: break-word;
+}

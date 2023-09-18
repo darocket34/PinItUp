@@ -88,7 +88,7 @@ div.boardlist.card.content {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 80%;
+    width: 85%;
 }
 
 div.boardlist.textcontent {
@@ -126,27 +126,31 @@ p.boardlist.dropdown.master.title {
     font-size: 15px;
 }
 
-button.boardlist.card.save:hover {
+p.savedClass,
+button.boardlist.card.saveClass:hover {
     background-color: black;
     color: white;
+    cursor: default;
 }
 
-button.boardlist.card.save {
+button.boardlist.card.saveClass {
     opacity: 0;
     padding: 0 12px;
 }
 
-p.savedClass,
-button.savedClass {
-    background-color: black;
-    color: white;
-}
-
-div.boardlist.card.container:hover button.boardlist.card.save {
-    opacity: 1;
-}
-
 button.boardlist.card.savedClass {
+    background-color: black;
+    box-shadow: none;
+    cursor: default;
+    color: white;
+    width: 69px;
+}
+
+p.saveClass {
+    width: 40px;
+}
+
+div.boardlist.card.container:hover button.boardlist.card.saveClass {
     opacity: 1;
 }
 
