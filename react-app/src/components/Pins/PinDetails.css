@@ -1,5 +1,8 @@
 div.pindetail.imagecontainer {
+    align-items: center;
+    display: flex;
     height: auto;
+    justify-content: flex-start;
     max-height: 100%;
     max-width: 100%;
     width: auto;
@@ -20,22 +23,32 @@ p.test {
 div.pindetail.master.container {
     display: flex;
     flex-direction: row;
-    height: 80vw;
-    width: 85vw;
 }
 
 div.leftmodal {
-    align-items: center;
+    /* align-items: center; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 50%;
 }
 
+div.pindetails.owner.controls {
+    display: flex;
+    margin-top: 15px;
+    gap: 15px;
+    margin-left: 40px;
+}
+
+div.pindetails.owner.controls button {
+    width: 120px;
+}
+
 div.rightmodal {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 50px;
     width: 50%;
 }
 
@@ -45,20 +58,63 @@ div.comment.container {
     margin: 20px 0;
 }
 
-button.pindetail.back {
+form#commentform {
+    align-self: center;
     display: flex;
-    height: 30px;
-    padding: 15px 15px;
-    align-content: center;
-    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
 }
 
-div.pindetail.rightmodal button {
-    align-self: flex-end;
-    position: relative;
-    z-index: unset;
+form#commentform input {
+    width: 100%;
+}
+
+button.pindetail.back {
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 30px;
+    margin-left: -20px;
+    padding: 15px 15px;
+    position: absolute;
+}
+
+button#commentdelete {
+    align-self: center;
     margin: 0 0;
+    padding: 5px 5px;
+    position: relative;
+    top: 0px;
+    width: 60px;
+    z-index: 2;
+}
+
+div.pindetail.rightmodal button.boardlist.dropdown {
+    align-self: flex-end;
+    position: absolute;
+    top: 22px;
     width: 160px;
+}
+
+button#commentform {
+    align-items: center;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    position: unset;
+    width: 40px;
+    z-index: unset;
+}
+
+button#commentform i {
+    color: black;
+    position: fixed;
+    z-index: 1;
+}
+
+button#commentform:hover i {
+    color: white;
 }
 
 div.pindetail.details {
@@ -70,4 +126,150 @@ div.pindetail.details {
 div.pindetail.rightmodal div.dropdown.master {
     position: absolute;
     z-index: 2;
+}
+
+img#pindetailcreator {
+    border-radius: 50%;
+    height: auto;
+    width: 100%;
+}
+
+div.pindetail.creator.image.container {
+    height: 60px;
+    overflow: hidden;
+    width: 60px;
+}
+
+div.pindetail.creator.card.container {
+    border-radius: 18px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 10px 10px;
+    text-decoration: none;
+    width: fit-content;
+}
+
+div.pindetail.creator.card.container:hover {
+    background-color: #E9E9E9;
+}
+
+div.pindetail.creator.card.text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    text-align: left;
+}
+
+p.pindetail.user.follow {
+    color: gray;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+p.pindetail.creator.name {
+    font-size: 20px;
+    margin: 0;
+}
+
+a.pindetail.creator.card {
+    display: flex;
+    justify-content: center;
+    color: black;
+    border-radius: 18px;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+div.pindetail.comment.card.master.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 5px 0;
+    text-align: left;
+    width: 100%;
+}
+
+div.pindetail.comment.subcontainer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+div.pindetail.comment.text.subcontainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+
+a.pindetail.comment.image.container {
+    height: 40px;
+    margin: 0;
+    min-height: 40px;
+    min-width: 40px;
+    overflow: hidden;
+    width: 40px;
+}
+
+p.pindetail.comment {
+    margin: 0;
+}
+
+img#commentcreator {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+a.pindetail.comment.commenter {
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+span.pindetail.comment.text {
+    font-size: 13px;
+    font-weight: normal;
+    white-space: wrap;
+}
+
+p.pindetail.comment.date {
+    color: gray;
+    font-size: 11px;
+}
+
+li.pindetail.comment.listitem {
+    border-radius: 26px;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+}
+
+li.pindetail.comment.listitem:hover {
+    background-color: #E9E9E9;
+}
+
+img.pindetails.logo {
+    left: 50%;
+    position: absolute;
+    top: 30px;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+div.pindetail.details.container div.boardlist.dropdown.master.container {
+    border: 2px solid #E9E9E9;
+    position: fixed;
+    right: 50%;
+    left: 70%;
+    transform: translateX(-50%);
+    top: 80px;
+    z-index: 5;
 }

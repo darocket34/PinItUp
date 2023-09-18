@@ -52,12 +52,10 @@ function PinUpdateModal({user, type, pin}) {
             name,
             description,
             url,
-            // boardId: Number(selectedBoard),
             postDate: today,
             creatorId: user.id
         }
         setErrors(Object.values(errorObj))
-        // console.log(errors)
         let resPin
         if (!Object.keys(errorObj).length){
             try {
@@ -89,7 +87,7 @@ function PinUpdateModal({user, type, pin}) {
                         const newlySelectedBoard = {"id": Number(selectedBoard)}
                         await dispatch(addPinToBoard(resUpload, newlySelectedBoard))
                         closeModal()
-                        history.push(`/pins/${resUpload.id}`)
+                        history.push(`/boards/${Number(selectedBoard)}`)
                     }
                 }
             } catch (err) {

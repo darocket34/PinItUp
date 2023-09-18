@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux"
 import {getAllPins} from "../../store/pins"
 import { getAllBoards } from "../../store/boards"
 import PinCard from "../Pins/PinCard";
-import { Link, useHistory } from "react-router-dom";
 import "./Homepage.css"
+import OpenModalButton from "../OpenModalButton";
+import DelayModal from "./DelayModal";
 
 export default function HomePage() {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false)
     const pinsObj = useSelector(state=> state.pins.allPins)
     const user = useSelector(state=>state.session.user)
@@ -20,13 +20,12 @@ export default function HomePage() {
         if(user?.id){
             dispatch(getAllBoards(user?.username))
         }
+        setIsLoaded(true)
     },[dispatch, user])
 
     useEffect(() => {
-        if(Object.keys(pinsObj)){
-            setIsLoaded(true)
-        }
-    })
+
+    }, [])
 
     return (
         <>
@@ -45,7 +44,9 @@ export default function HomePage() {
                     </div>
                 </>
             ) : (
-                <h1>Loading...</h1>
+                <>
+                    <DelayModal />
+                </>
             )}
         </>
     )

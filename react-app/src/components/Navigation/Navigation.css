@@ -14,8 +14,18 @@ div.profile-dropdown.menu {
   position: absolute;
   right: 0px;
   top: 30px;
-  width: 20vw;
   z-index: 1;
+}
+
+a.profile-dropdown.cardlink {
+  border-radius: 26px;
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+}
+
+a.profile-dropdown.cardlink:hover {
+  background-color: #E9E9E9;
 }
 
 div.profile-dropdown.user.card {
@@ -77,10 +87,9 @@ button.navbar.search.submit {
   width: 40px;
 }
 
-button.navbar.search.submit:hover,
-input.navbar.search:hover {
+button.navbar.search.submit:hover {
   background-color: #E9E9E9;
-  color: #B4125D;
+  color: white;
   cursor: pointer;
 }
 
@@ -220,6 +229,7 @@ a.navbar.link.text {
   font-weight: bold;
   padding: 0 15px;
   text-decoration: none;
+  transition: 0.35s;
 }
 
 a.navbar.link.text.active,
@@ -229,6 +239,16 @@ a.navbar.link.text.active:hover {
   color: white;
   font-weight: bold;
   padding: 0 15px;
+  box-shadow: unset;
+}
+
+a.navbar.link.text:hover {
+  background-color: #B4125D;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  box-shadow: inset 2em 0 0 0 #B4125D;
 }
 
 div.create.menu {
@@ -248,4 +268,29 @@ div.create.menu {
 
 p.navbar.messages {
   cursor: not-allowed;
+  display: inline-block;
+  font-weight: bold;
+  position: relative;
+}
+
+span.navbar.messages.message {
+  background-color: #333;
+  border-radius: 6px;
+  color: #fff;
+  left: 50%;
+  opacity: 0;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 150%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+  visibility: hidden;
+  width: 120px;
+  z-index: 1;
+}
+
+p.navbar.messages:hover span.navbar.messages.message {
+  opacity: 1;
+  visibility: visible;
 }

@@ -26,15 +26,6 @@ function Navigation({ isLoaded }){
 		}
 	}
 
-	// const createActive = (e) => {
-	// 	e.preventDefault();
-	// 	if (makeCreateActive) {
-	// 		setMakeCreateActive(false)
-	// 	} else {
-	// 		setMakeCreateActive(true)
-	// 	}
-	// }
-
 	return (
 		<div className='navbar master container'>
 			<div className='navbar home logo link'>
@@ -53,7 +44,7 @@ function Navigation({ isLoaded }){
 				</form>
 			</div>
 			<div className="navbar links2">
-				<p className='navbar link text messages'>Messages</p>
+				<p className='navbar link text messages'>Messages<span className="navbar messages message">Feature coming soon!</span></p>
 			</div>
 			{isLoaded && (
 				<div className='navbar menu button container'>

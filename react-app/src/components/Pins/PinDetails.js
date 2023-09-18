@@ -63,8 +63,8 @@ function PinDetails() {
            {isOwner && (
             <>
                 <OpenModalButton
-                buttonText="Delete"
-                modalComponent={<DeletePinModal pin={pin}/>}
+                    buttonText="Delete"
+                    modalComponent={<DeletePinModal pin={pin}/>}
                 />
                 <OpenModalButton
                     buttonText="Update"

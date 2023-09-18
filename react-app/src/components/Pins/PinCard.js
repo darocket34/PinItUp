@@ -15,7 +15,7 @@ export default function PinCard({pin, boardsObj, user}) {
 
     return (
         <>
-            <div className="pincard master container"
+            <div key={pin?.id + user?.id} className="pincard master container"
             onMouseEnter={() => setHidden(false)}
             onMouseLeave={() => setHidden(true)}
             >
@@ -24,7 +24,6 @@ export default function PinCard({pin, boardsObj, user}) {
                     buttonDiv={
                         !hidden && (
                         <div className="homepage single pin overlay container">
-
                             <p className="pincard pin name">{pin.name}</p>
                         </div>
                         )
@@ -32,9 +31,6 @@ export default function PinCard({pin, boardsObj, user}) {
                     onItemClick={closeModal}
                     modalComponent={<PinDetailsModal pin={pin} user={user} boards={boards}/>}
                 />
-                {/* <Link className="pincard image link" to={`/pins/${pin.id}`}>
-                    <img className='pincard image' src={pin.url} />
-                </Link> */}
                 <OpenModalButton
                     buttonImage={pin.url}
                     modalComponent={<PinDetailsModal pin={pin} user={user} boards={boards}/>}

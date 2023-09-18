@@ -12,9 +12,9 @@ fake.add_provider(person)
 def create_pins(num_pins, num_users):
     for _ in range(num_pins):
         yield Pin(
-            name = fake.name(),
+            name = fake.sentence(nb_words=5),
             description = fake.paragraph(nb_sentences=4),
-            url = f'https://picsum.photos/{random.randint(260,500)}/350.jpg?random={random.randint(1,100)}',
+            url = f'https://picsum.photos/{random.randint(600,1000)}/{random.randint(600,1000)}.jpg?random={random.randint(1,100)}',
             creatorId = random.randint(1, num_users),
             postDate = fake.date_this_year()
         )

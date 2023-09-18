@@ -1,8 +1,10 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, json
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from .AWS_helpers import remove_file_from_s3, get_unique_filename, upload_file_to_s3
+
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -14,7 +16,7 @@ def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append({f'{field}' : f'{error}'})
+            errorMessages.append(f'{error}')
     return errorMessages
 
 
@@ -69,13 +71,28 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
+    raw_data_name = request.form.get("name")
+    print("HERE----------------------------------------", json.loads(raw_data_name))
+    raw_data_email = request.form.get("email")
+    raw_data_username = request.form.get("username")
+    raw_data_password = request.form.get("password")
+    raw_data_birthday = request.form.get("birthday")
+
+    raw_data_img = request.files.get("url")
     form = SignUpForm()
+    data = form.data
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        image = raw_data_img
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
         user = User(
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
+            name= data['name'],
+            username= data['username'],
+            email= data['email'],
+            password= data['password'],
+            birthday= data['birthday'],
+            profile_img= upload["url"]
         )
         db.session.add(user)
         db.session.commit()

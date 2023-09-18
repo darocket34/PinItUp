@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/Splash";
 import NotFound from "./components/NotFound/NotFound";
-import PinDetails from "./components/Pins/PinDetails";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import BoardDetails from "./components/Boards/BoardDetails"
 import SearchPage from "./components/Splash/SearchPage";
+import Splash from "./components/Splash/Splash";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +25,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path='/'>
+            <Splash />
+          </Route>
           <Route path="/login" >
             <LoginFormPage />
           </Route>
@@ -32,19 +35,16 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route exact path="/home">
-            <HomePage />
+            {user ? <HomePage /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/search">
-            <SearchPage />
-          </Route>
-          <Route exact path="/pins/:id">
-            <PinDetails />
+            {user ? <SearchPage /> : <Redirect to="/" />}
           </Route>
           <Route exact path={"/boards/:id"}>
-            <BoardDetails />
+            {user ? <BoardDetails /> : <Redirect to="/" />}
           </Route>
           <Route exact path={`/:username/profile`}>
-            <ProfilePage />
+            {user ? <ProfilePage /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/notfound">
             <NotFound />

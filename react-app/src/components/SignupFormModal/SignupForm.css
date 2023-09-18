@@ -7,6 +7,8 @@ div.signupform.footer {
     display: flex;
     flex-direction: row;
     font-size: 11px;
+    margin-bottom: 10px;
+    width: 60%;
 }
 
 p.form.required {
@@ -14,8 +16,17 @@ p.form.required {
     margin: 0;
 }
 
-span.signupform.footer {
-    display: unset;
-    width: calc(fit-content+3px);
+#modal-content form.signup {
+    width: 60%;
 }
 
+button.signup.form.submit {
+    height: 30px;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 150px;
+}
+
+form.signup label {
+    margin-top: 10px;
+}

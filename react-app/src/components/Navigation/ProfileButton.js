@@ -71,7 +71,7 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <div className="profile-dropdown menu">
-              <Link to={`/${user.username}/profile`} onClick={closeMenu}>
+              <Link to={`/${user.username}/profile`} onClick={closeMenu} className="profile-dropdown cardlink">
                 <div className="profile-dropdown user card">
                   <img className="profile-dropdown user img" src={user.profile_img}></img>
                     <div className="profile-dropdown user acc details">

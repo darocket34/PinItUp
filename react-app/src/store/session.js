@@ -96,17 +96,18 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (reqObj) => async (dispatch) => {
+	const uploadForm = new FormData()
+	uploadForm.append('name', JSON.stringify(reqObj.name))
+	uploadForm.append('email', JSON.stringify(reqObj.email))
+	uploadForm.append('username', JSON.stringify(reqObj.username))
+	uploadForm.append('password', JSON.stringify(reqObj.password))
+	uploadForm.append('url', reqObj.url)
+	if (reqObj.birthday) uploadForm.append("birthday", JSON.stringify(reqObj.birthday))
+	console.log("RE", reqObj)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			username,
-			email,
-			password,
-		}),
+		body: uploadForm
 	});
 
 	if (response.ok) {
@@ -115,9 +116,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
-		}
+		return data;
 	} else {
 		return ["An error occurred. Please try again."];
 	}
@@ -138,7 +137,6 @@ export const followCurrUser = (followObj) => async (dispatch) => {
         return updatedUser;
 	    } else {
         const {errors} = await res.json();
-        console.log(errors)
         return errors;
     }
 }
@@ -158,7 +156,6 @@ export const unfollowCurrUser = (followObj) => async (dispatch) => {
         return updatedUser;
 	    } else {
         const {errors} = await res.json();
-        console.log(errors)
         return errors;
     }
 }
@@ -171,7 +168,6 @@ export const getUserById = (userId) => async (dispatch) => {
         return user;
 	    } else {
         const {errors} = await res.json();
-        console.log(errors)
         return errors;
     }
 }
@@ -184,63 +180,33 @@ export const getUserByUsername = (username) => async (dispatch) => {
         return user;
 	    } else {
         const {errors} = await res.json();
-        console.log(errors)
         return errors;
     }
 }
 
 export const updateUserProfile = (updateObj) => async (dispatch) => {
-	console.log(updateObj)
 	const uploadForm = new FormData()
 	if (updateObj.url) uploadForm.append("url", updateObj.url)
 	if (updateObj.text) uploadForm.append("text", JSON.stringify(updateObj.text))
 	uploadForm.append("user", JSON.stringify(updateObj.user))
     const res = await fetch(`/api/users/${updateObj.user.username}/edit`, {
 		method: "put",
-		// headers: {
-		// 	"Content-Type": "application/json",
-		// },
 		body: uploadForm,
 	});
     if (res.ok) {
 		const updatedUser = await res.json();
-		console.log("USER",updatedUser)
 		dispatch(updateUser(updatedUser))
         return updatedUser;
 	} else {
 		const errors = await res.json();
-		console.log("USER", errors)
         return errors;
 	};
 };
-
-// export const updateUserProfileImage = (updateObj) => async (dispatch) => {
-// 	console.log("UPDATE", updateObj)
-//     const res = await fetch(`/api/users/${updateObj.user.username}/edit`, {
-// 		method: "put",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(updateObj),
-// 	});
-//     if (res.ok) {
-// 		const updatedUser = await res.json();
-// 		console.log("USER1",updateUser)
-// 		dispatch(updateUser(updatedUser))
-//         return updatedUser;
-// 	} else {
-// 		const errors = await res.json();
-// 		console.log("USER", errors)
-//         return errors;
-// 	};
-// };
 
 export default function reducer(state = initialState, action) {
 	let newState = cloneDeep(state)
 	switch (action.type) {
 		case SET_USER:
-			// newState.user = action.user
-			// return newState;
 			return {user: action.payload};
 		case GET_USER:
 			return {user: action.updatedUser};

@@ -8,7 +8,7 @@ div.boardlist.dropdown.master.container {
     position: absolute;
     top: 30%;
     width: 330px;
-    z-index: 2;
+    z-index: 1;
 }
 
 div.boardlist.dropdown.submaster.container {
@@ -51,7 +51,7 @@ button.boardlist.dropdown {
     padding-left: 8px;
     padding-right: 8px;
     position: absolute;
-    z-index: 3;
+    z-index: 1;
 }
 
 p.pincard.pin.name {
@@ -157,6 +157,7 @@ div.boardlist.card.container:hover button.boardlist.card.saveClass {
 form.pinform.create input,
 form.pinform.create textarea,
 form.pinform.create select {
+    margin-bottom: 10px;
     width: 100%;
 }
 
@@ -165,10 +166,10 @@ form#pinform {
 }
 
 button.create.submit {
-    font-size: 15px;
-    height: 30px;
+    font-size: 20px;
+    height: 35px;
     margin-top: 20px;
-    width: 90px;
+    width: 150px;
 }
 
 

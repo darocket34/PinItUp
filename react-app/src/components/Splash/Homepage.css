@@ -78,3 +78,60 @@ button.overlay.save {
     top: 15px;
     z-index: 1;
 }
+
+div.delay {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div.top.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 200px;
+}
+
+div.bottom.container {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+div.bottom.master {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 0px) and (max-width: 550px) {
+    div.homepage.pin.master.container {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 551px) and (max-width: 1050px) {
+    div.homepage.pin.master.container {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 1051px) and (max-width: 1330px) {
+    div.homepage.pin.master.container {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1331px) and (max-width: 1571px) {
+    div.homepage.pin.master.container {
+        column-count: 5;
+    }
+}
+
+@media (min-width: 1572px) {
+    div.homepage.pin.master.container {
+        column-count: 6;
+    }
+}

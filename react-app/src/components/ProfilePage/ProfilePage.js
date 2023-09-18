@@ -195,7 +195,7 @@ function ProfilePage() {
                 ) : (
                     <div className="profilepage user pic container">
                         <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
-                        {isOwner && !textEditMode && <i class="fa-solid fa-pen-to-square profilepage icon" onClick={() => setImageEditMode(true)} />}
+                        {isOwner && !textEditMode && <i className="fa-solid fa-pen-to-square profilepage icon" onClick={() => setImageEditMode(true)} />}
                     </div>
                 )}
                 {textEditMode && !imageEditMode && isOwner ? (
@@ -274,7 +274,7 @@ function ProfilePage() {
                     <div className="profilepage listcontainer">
                         {activeBoards ? (
                         <ul className="profilepage board tile list">
-                            {Object.values(boards).length && (
+                            {Object.values(boards).length > 0 && (
                                 Object.values(boards).map((board, idx) => (
                                     <div key={board.id}>
                                         <div className="profilepage board tile master container">

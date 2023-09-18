@@ -26,13 +26,6 @@ function CreateButton({ user }) {
     setShowMenu(true);
     setChevron('up')
     setMakeCreateActive(true)
-
-    // if (makeCreateActive) {
-    //   setMakeCreateActive(false)
-    // } else {
-    //   setMakeCreateActive(true)
-    // }
-    console.log(makeCreateActive)
   };
 
   useEffect(() => {

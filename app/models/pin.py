@@ -11,7 +11,7 @@ class Pin(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    description = db.Column(db.String(300), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
     url = db.Column(db.String(255))
     creatorId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     postDate = db.Column(db.Date, nullable=False)

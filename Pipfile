@@ -24,9 +24,9 @@ python-editor = "==1.0.4"
 six = "==1.15.0"
 sqlalchemy = "==1.4.19"
 werkzeug = "==2.0.1"
-wtforms = "==2.3.3"
 faker = "*"
 boto3 = "*"
+wtforms = {extras = ["email"], version = "*"}
 
 [dev-packages]
 

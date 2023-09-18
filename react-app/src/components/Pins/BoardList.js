@@ -8,12 +8,10 @@ import LoginFormModal from "../LoginFormModal";
 
 
 export default function BoardList({boards, pin, user}){
-    const [hidden, setHidden] = useState(true)
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const [chevron, setChevron] = useState("down")
     const [saved, setSaved] = useState(false)
-    const [test, setTest] = useState('')
     const ulRef = useRef();
 
     const openMenu = () => {
