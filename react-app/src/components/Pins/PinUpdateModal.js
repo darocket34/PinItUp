@@ -104,7 +104,7 @@ function PinUpdateModal({user, type, pin}) {
                 <div className="pinform create master container">
                     <h1 className="pinform create title">{type === "update" ? `Update ${pin?.name}`:"Create a New Pin"}</h1>
                     <div className="pinform create form container">
-                        <form className="pinform create form" id="pinform" onSubmit={handleSubmit}>
+                        <form className="pinform create form" encType="multipart/form-data" id="pinform" onSubmit={handleSubmit}>
                             <ul>
                                 {errors.length > 0 && errors.map((error, idx) => (
                                     <li key={idx}>{error}</li>
