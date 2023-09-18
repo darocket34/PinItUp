@@ -8,6 +8,10 @@ button.boarddetails.remove.pin {
     position: relative;
 }
 
+p.boarddetails.desc {
+    width: 60%;
+}
+
 div.boarddetails.single.pin.container:hover button.boarddetails {
     justify-self: center;
     display: unset;

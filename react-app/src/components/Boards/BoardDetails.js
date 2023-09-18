@@ -41,7 +41,7 @@ function BoardDetails() {
             <button className="boarddetails back to boards" onClick={() => history.goBack()}>Back</button>
             <div className="boarddetails top master container">
                 <h2 className="boarddetails board title">{board?.name}</h2>
-                <p>{board?.description}</p>
+                <p className="boarddetails desc">{board?.description}</p>
                 {isOwner && (
                     <div className="boarddetails owner controls">
                         <OpenModalButton
