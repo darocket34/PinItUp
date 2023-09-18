@@ -90,13 +90,17 @@ def sign_up():
         print("BE IMG FILENAME----------------------------------------", image.filename)
         upload = upload_file_to_s3(image)
         # print("BE IMGURL----------------------------------------", upload)
+        if "url" in upload:
+            profile_img1= upload["url"]
+        else:
+            profile_img1 = None
         user = User(
             name= data['name'],
             username= data['username'],
             email= data['email'],
             password= data['password'],
             birthday= data['birthday'],
-            profile_img= upload["url"]
+            profile_img= profile_img1
         )
         print("BE USEROBJ----------------------------------------", user)
         db.session.add(user)

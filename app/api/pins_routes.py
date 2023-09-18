@@ -54,10 +54,14 @@ def create_pin():
         upload = upload_file_to_s3(image)
         if not upload["url"]:
             return {"errors": {"img": upload}}
+        if "url" in upload:
+            img1= upload["url"]
+        else:
+            img1 = None
         pin = Pin(
             name = data["name"],
             description = data["description"],
-            url = upload["url"],
+            url = img1,
             creatorId = current_user.id,
             postDate = data["postDate"],
             boardId = data["boardId"]
