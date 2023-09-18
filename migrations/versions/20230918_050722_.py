@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: ab8db609affc
-Revises: 
+Revises:
 Create Date: 2023-09-18 05:07:22.963275
 
 """
@@ -33,7 +33,7 @@ def upgrade():
     op.create_table('boards',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=60), nullable=False),
-    sa.Column('description', sa.String(length=300), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('creatorId', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['creatorId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
