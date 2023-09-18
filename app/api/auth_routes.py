@@ -72,20 +72,24 @@ def sign_up():
     Creates a new user and logs them in
     """
     raw_data_name = request.form.get("name")
-    print("HERE----------------------------------------", json.loads(raw_data_name))
+    print("BE RAW DATA NAME----------------------------------------", json.loads(raw_data_name))
     raw_data_email = request.form.get("email")
     raw_data_username = request.form.get("username")
     raw_data_password = request.form.get("password")
     raw_data_birthday = request.form.get("birthday")
 
     raw_data_img = request.files.get("url")
+    print("BE RAW DATA IMG----------------------------------------", raw_data_im)
     form = SignUpForm()
     data = form.data
+    print("BE FORM DATA----------------------------------------", json.loads(raw_data_name))
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         image = raw_data_img
         image.filename = get_unique_filename(image.filename)
+        print("BE IMG FILENAME----------------------------------------", image.filename)
         upload = upload_file_to_s3(image)
+        print("BE IMGURL----------------------------------------", upload["url"])
         user = User(
             name= data['name'],
             username= data['username'],
@@ -94,8 +98,10 @@ def sign_up():
             birthday= data['birthday'],
             profile_img= upload["url"]
         )
+        print("BE USEROBJ----------------------------------------", user)
         db.session.add(user)
         db.session.commit()
+        # print("BE USEROBJ----------------------------------------", user.to_dict())
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

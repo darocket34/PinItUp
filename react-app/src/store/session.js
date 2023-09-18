@@ -104,18 +104,19 @@ export const signUp = (reqObj) => async (dispatch) => {
 	uploadForm.append('password', JSON.stringify(reqObj.password))
 	uploadForm.append('url', reqObj.url)
 	if (reqObj.birthday) uploadForm.append("birthday", JSON.stringify(reqObj.birthday))
-	console.log("RE", reqObj)
+	console.log("FE REQ", reqObj)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		body: uploadForm
 	});
-
 	if (response.ok) {
 		const data = await response.json();
+		console.log("FE RES", response)
 		dispatch(setUser(data));
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
+		console.log("FE RES", response)
 		return data;
 	} else {
 		return ["An error occurred. Please try again."];
