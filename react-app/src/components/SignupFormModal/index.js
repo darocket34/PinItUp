@@ -5,8 +5,10 @@ import { signUp } from "../../store/session";
 import LoginFormModal from "../LoginFormModal";
 import "./SignupForm.css";
 import logo from "../../images/logo.jpg"
+import { useHistory } from "react-router-dom";
 
 function SignupFormModal() {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
@@ -45,8 +47,7 @@ function SignupFormModal() {
 				email,
 				username,
 				password,
-				url: url,
-				birthday
+				url: url
 			}
 			const data = await dispatch(signUp(reqObj));
 			const res = await data
@@ -55,6 +56,7 @@ function SignupFormModal() {
 				setErrors(res.errors);
 			} else {
 				closeModal();
+				history.push(`/home`);
 			}
 		} else {
 			setErrors(errObj);
@@ -137,7 +139,7 @@ function SignupFormModal() {
                                 required
                             />
 					</label>
-					<label>
+					{/* <label>
 						<div className="signupform field">Birthday</div>
 						<input
 							type="date"
@@ -145,7 +147,7 @@ function SignupFormModal() {
 							value={birthday}
 							onChange={(e) => setBirthday(e.target.value)}
 						/>
-					</label>
+					</label> */}
 					<button className='signup form submit' type="submit">Sign Up</button>
 				</form>
 				<div className="login form signup link container">
