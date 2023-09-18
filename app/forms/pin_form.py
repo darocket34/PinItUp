@@ -8,7 +8,7 @@ from ..api.AWS_helpers import ALLOWED_EXTENSIONS
 class PinForm(FlaskForm):
 
     name = StringField("Name", validators=[DataRequired(), Length(min=0, max=60)])
-    description = StringField("Description", validators=[DataRequired(), Length(min=0, max=300)])
+    description = StringField("Description", validators=[DataRequired(), Length(min=0, max=500)])
     url = FileField("Image Url", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     creatorId = IntegerField("Creator Id", validators=[DataRequired()])
     postDate = DateField("Day", validators=[DataRequired()])
