@@ -22,7 +22,7 @@ def all_boards(username):
     """
     user = User.query.filter_by(username = username).first()
     if not user:
-        return {"error": "User not found"}, 404
+        return {"errors": "User not found"}, 404
     allBoards = []
     for board in Board.query.filter(Board.creatorId == user.id).all():
         data = board.to_dict()
@@ -43,7 +43,7 @@ def get_board(id):
     """
     board = Board.query.get(id)
     if not board:
-        return {"error", "Board not found"}, 404
+        return {"errors", "Board not found"}, 404
     return board.to_dict()
 
 @board_routes.route('/new', methods=["POST"])
@@ -64,7 +64,7 @@ def create_board():
         db.session.add(board)
         db.session.commit()
         return board.to_dict()
-    return {"errors": form.errors}, 400
+    return {'errors': form_validation_errors(form.errors)}, 401
 
 @board_routes.route('/<int:id>/edit', methods=["PUT"])
 @login_required
@@ -83,7 +83,7 @@ def update_board(id):
         board.creatorId = data["creatorId"]
         db.session.commit()
         return board.to_dict()
-    return {"errors": form.errors}, 400
+    return {'errors': form_validation_errors(form.errors)}, 401
 
 @board_routes.route("/<int:id>/addpin", methods=["PUT"])
 @login_required
@@ -92,7 +92,7 @@ def add_pin_to_board(id):
     pinId = req["pin"]["id"]
     pin = Pin.query.get(pinId)
     if not pin:
-        return {"error", "Pin not found"}, 404
+        return {"errors", "Pin not found"}, 404
     board_id = req["board"]["id"]
     board = Board.query.get(board_id)
     board.pins.append(pin)
@@ -106,13 +106,12 @@ def remove_pin_from_board(id):
     req = request.get_json()
     pinId = req["pin"]["id"]
     board_id = req["board"]["id"]
-    print("BORRF------------------------------", req["pin"])
     pin = Pin.query.get(pinId)
     if not pin:
-        return {"error", "Pin not found"}, 404
+        return {"errors", "Pin not found"}, 404
     board = Board.query.get(board_id)
     if not board:
-        return {"error", "Board not found"}, 404
+        return {"errors", "Board not found"}, 404
     if pin in board.pins:
         board.pins.remove(pin)
         db.session.commit()
@@ -131,4 +130,4 @@ def delete_board(id):
         db.session.commit()
         return board.to_dict()
     else:
-        return {"error": "Board not found"}, 404
+        return {"errors": "Board not found"}, 404

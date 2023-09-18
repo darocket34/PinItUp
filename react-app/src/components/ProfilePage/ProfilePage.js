@@ -1,50 +1,52 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBoards } from "../../store/boards";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import "./ProfilePage.css"
-import { getUserByUsername, followCurrUser, unfollowCurrUser } from "../../store/session";
+import { getUserByUsername, followCurrUser, unfollowCurrUser, updateUserProfile, authenticate } from "../../store/session";
 import { getAllPinsByUsername } from "../../store/pins";
 
 
 function ProfilePage() {
     const dispatch = useDispatch();
-    const currLocation = window.location.pathname.split('/')
+    const history = useHistory();
+    const currLocation = window.location.pathname.split('/');
     const boards = useSelector(state => state.boards.allBoards);
     const user = useSelector(state => state.session.user);
     const creator = useSelector(state => state.session.creator);
     const {username} = useParams();
     const [isLoaded, setIsLoaded] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
-    const [editMode, setEditMode] = useState(false);
-    const [newName, setNewName] = useState(user?.name || '');
-    const [newUsername, setNewUsername] = useState(user?.username || '');
-    const [url, setUrl] = useState('')
+    const [textEditMode, setTextEditMode] = useState(false);
+    const [imageEditMode, setImageEditMode] = useState(false);
+    const [newName, setNewName] = useState(user?.name);
+    const [newUsername, setNewUsername] = useState(user?.username);
+    const [url, setUrl] = useState('');
     const [currUserIsFollowing, setCurrUserIsFollowing] = useState(false);
     const [activeBoards, setActiveBoards] = useState(true);
     const [activePins, setActivePins] = useState(false);
     const [pinList, setPinList] = useState([]);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(getUserByUsername(username));
             await dispatch(getAllBoards(username));
-            const res = await dispatch(getAllPinsByUsername(username))
-            // if (user?.id && creator?.id){
-                if (user?.id === creator?.id) {
-                    setIsOwner(true);
-                } else {
-                    setIsOwner(false)
-                }
-            // }
-            if (res){
-                const {pins} = await res
-                if (pins.length > 0) {
-                    setPinList(pins)
-                } else {
-                    setPinList([])
-                }
+            // const res = await dispatch(getAllPinsByUsername(username))
+            console.log("ISOWNER", isOwner)
+            if (user?.id === creator?.id) {
+                setIsOwner(true);
+            } else {
+                setIsOwner(false);
             }
+            // if (res){
+            //     const {pins} = await res;
+            //     if (pins.length > 0) {
+            //         setPinList(pins);
+            //     } else {
+            //         setPinList([]);
+            //     }
+            // }
             if (user?.following?.length > 0){
                 for (let follower of user?.following) {
                     if (follower.id === creator?.id) {
@@ -65,16 +67,9 @@ function ProfilePage() {
         if (user?.id === creator?.id) {
             setIsOwner(true);
         } else {
-            setIsOwner(false)
+            setIsOwner(false);
         }
-    }, [isOwner, currLocation])
-
-    const handleEdit = (e) => {
-        e.preventDefault();
-        if (user?.id === creator?.id){
-            setEditMode(true)
-        }
-    }
+    }, [isOwner, currLocation]);
 
     const handleFollow = async () => {
         if (user?.id && creator?.id) {
@@ -83,17 +78,18 @@ function ProfilePage() {
                             "creator": creator.id,
                             "user": user.id
                         }))
-                if (followRes.error) {
-                    console.log("ERROR", followRes.error)
+                if (followRes.errors) {
+                    setErrors(followRes.errors);
+                    console.log("ERROR", followRes.errors);
                 } else {
-                    setCurrUserIsFollowing(true)
+                    setCurrUserIsFollowing(true);
                     await dispatch(getUserByUsername(username));
                 }
             } catch (err) {
-                console.log("ERR", err)
+                setErrors(err.errors);
             }
         }
-    }
+    };
 
     const handleUnfollow = async () => {
         if (user?.id && creator?.id) {
@@ -101,55 +97,138 @@ function ProfilePage() {
                 const unfollowRes = await dispatch(unfollowCurrUser({
                             "creator": creator.id,
                             "user": user.id
-                        }))
+                        }));
                 if (unfollowRes.error) {
-                    console.log("ERROR", unfollowRes.error)
+                    console.log("ERROR", unfollowRes.error);
                 } else {
                     setCurrUserIsFollowing(false)
                     await dispatch(getUserByUsername(username));
                 }
             } catch (err) {
-                console.log("ERR", err)
+                console.log("ERR", err);
             }
         }
-    }
+    };
 
-    const handleSubmit = async () => {
+    const handleTextSubmit = async (e) => {
+        e.preventDefault();
+        if (newName === user.name && newUsername === user.username){
+            setTextEditMode(false);
+            return;
+        }
+        let errObj = {};
+        if (newName.length < 3){
+            errObj["name"] = "Field must be between 3 and 20 characters long.";
+        };
+        if (newUsername.length < 3){
+            errObj["username"] = "Field must be between 3 and 20 characters long.";
+        };
+        const reqObj = {
+            text: {
+                username: newUsername,
+                name: newName
+            },
+            user
+        };
 
-    }
+        if (Object.keys(errObj).length > 0){
+            setErrors(errObj);
+            return;
+        }
+
+        const res = await dispatch(updateUserProfile(reqObj));
+        if(res.errors){
+            errObj["username"] = res.errors[0].username
+            setErrors(errObj);
+            return;
+        } else {
+            setTextEditMode(false);
+            await dispatch(authenticate())
+            await dispatch(getUserByUsername(res.username))
+
+            history.push(`/${res.username}/profile`)
+        }
+    };
+
+    const handleImageSubmit = async (e) => {
+        e.preventDefault()
+        let errObj = {};
+        if (!url) {
+            setErrors({"image": "Please select an image."})
+            return;
+        }
+        const reqObj = {
+            url: url,
+            user
+        }
+        const res = await dispatch(updateUserProfile(reqObj));
+        if(res.errors){
+            setErrors(errObj);
+            return;
+        } else {
+            setImageEditMode(false);
+            await dispatch(authenticate())
+            await dispatch(getUserByUsername(res.username))
+            history.push(`/${res.username}/profile`)
+        }
+    };
 
     return (
         <>
             <div className="profilepage upper section container">
-                <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
-                {editMode ? (
-                    <form className="profilepage owner edit form">
-                        <div className="profilepage_editmode_image container">
-                            <input id="profilepage_editmode_image"
+                {imageEditMode && isOwner ? (
+                    <div className="profilepage_editmode_image container">
+                        <p className="profilepage_editmode_image text">Select a new profile pic</p>
+                        {errors.image && <li key={344047}><p className="form required">{errors.image}</p></li>}
+                        <form className="profilepage owner imageedit form" onSubmit={handleImageSubmit}>
+                            <input
+                                id="profilepage_editmode_image"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setUrl(e.target.files[0])}
                                 required
                             />
-                        </div>
-                        <div className="profilepage_editmode_name container">
-                            <input id="profilepage_editmode_name"
-                                type="text"
-                                value={newName}
-                                placeholder={creator?.name}
-                                onChange={(e) => setNewName(e.target.value)}
-                            />
-                        </div>
-                        <div className="profilepage_editmode_username container">
-                            <input id="profilepage_editmode_username"
-                                type="text"
-                                value={newUsername}
-                                placeholder={creator?.username}
-                                onChange={(e) => setNewUsername(e.target.value)}
-                            />
-                        </div>
-                         <button className="profilepage owner edit" type="submit" onClick={handleSubmit}>Update</button>
-                    </form>
+                            <button className="profilepage owner imageedit" type="submit">Update</button>
+                            <button className="profilepage owner imageedit cancel" onClick={() => setImageEditMode(false)}>Cancel</button>
+                        </form>
+                    </div>
+                ) : (
+                    <div className="profilepage user pic container">
+                        <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
+                        {isOwner && !textEditMode && <i class="fa-solid fa-pen-to-square profilepage icon" onClick={() => setImageEditMode(true)} />}
+                    </div>
+                )}
+                {textEditMode && !imageEditMode && isOwner ? (
+                    <>
+                        {errors && (
+                            <ul>
+                                {errors.username && <li key={344041}><p className="form required">Username: {errors.username}</p></li>}
+                                {errors.name && <li key={344042}><p className="form required">Name: {errors.name}</p></li>}
+                            </ul>
+                        )}
+                        <form className="profilepage owner textedit form" onSubmit={handleTextSubmit}>
+                            <div className="profilepage_editmode_name container">
+                                <input id="profilepage_editmode_name"
+                                    type="text"
+                                    value={newName}
+                                    placeholder={creator?.name}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="profilepage_editmode_username container">
+                                <input id="profilepage_editmode_username"
+                                    type="text"
+                                    value={newUsername}
+                                    placeholder={creator?.username}
+                                    onChange={(e) => setNewUsername(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button className="profilepage owner textedit" type="submit">Update</button>
+                            <button className="profilepage owner textedit cancel" onClick={() => setTextEditMode(false)}>Cancel</button>
+                        </form>
+                    </>
                 ) : (
                     <>
                         <h1 className="profilepage user name">{creator?.name}</h1>
@@ -160,7 +239,7 @@ function ProfilePage() {
 
                 {isOwner ? (
                     <div className="profilepage owner controls container">
-                        {!editMode && <button className="profilepage owner edit" onClick={handleEdit}>Edit Profile</button>}
+                        {!textEditMode && !imageEditMode && <button className="profilepage owner edit" onClick={() => setTextEditMode(true)}>Edit Profile</button>}
                     </div>
                 ) : (
                     <div className="profilepage nonowner controls container">

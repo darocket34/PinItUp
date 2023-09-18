@@ -32,7 +32,6 @@ def all_pins_by_username(username):
     Query all pins by username for the profile page
     """
     user = User.query.filter(User.username == username).first()
-    print("user-------------------------", user.id)
     userPins = Pin.query.filter(Pin.creatorId == user.id).all()
     allPins = [pin.to_dict() for pin in userPins]
     return {"pins": allPins}
@@ -67,7 +66,7 @@ def create_pin():
         db.session.add(pin)
         db.session.commit()
         return pin.to_dict()
-    return {"errors": form.errors}, 400
+    return {'errors': form_validation_errors(form.errors)}, 401
 
 @pin_routes.route("/<int:id>/edit", methods=["PUT"])
 @login_required
@@ -92,7 +91,7 @@ def update_pin(id):
         pin.postDate = current_date
         db.session.commit()
         return {"pin": pin.to_dict()}
-    return {"errors": form.errors}, 400
+    return {'errors': form_validation_errors(form.errors)}, 401
 
 @pin_routes.route("/<int:id>")
 def getSinglePin(id):
@@ -126,7 +125,7 @@ def addComment(id):
         db.session.add(newComment)
         db.session.commit()
         return newComment.to_dict()
-    return {"errors": form.errors}, 400
+    return {'errors': form_validation_errors(form.errors)}, 401
 
 @pin_routes.route("/<int:id>/comment", methods=["DELETE"])
 @login_required
@@ -156,4 +155,4 @@ def deletePin(id):
         db.session.commit()
         return pin.to_dict()
     else:
-        return {"error": "Pin not found"}, 404
+        return {"errors": "Pin not found"}, 404

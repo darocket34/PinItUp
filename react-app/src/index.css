@@ -56,3 +56,8 @@ form label {
 h1.login {
     margin-bottom: 0;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+}

@@ -35,6 +35,11 @@ const getCreatorByUsername = (creator) => ({
 	creator
 })
 
+const updateUser = (user) => ({
+	type: GET_USER,
+	user
+})
+
 const initialState = { user: null, creator: null };
 
 export const authenticate = () => async (dispatch) => {
@@ -48,7 +53,6 @@ export const authenticate = () => async (dispatch) => {
 		if (data.errors) {
 			return;
 		}
-
 		dispatch(setUser(data));
 	}
 };
@@ -173,7 +177,7 @@ export const getUserById = (userId) => async (dispatch) => {
 }
 
 export const getUserByUsername = (username) => async (dispatch) => {
-    const res = await fetch(`/api/users/username/${username}`)
+    const res = await fetch(`/api/users/username/${username}`);
     if (res.ok) {
         const user = await res.json();
 		dispatch(getCreatorByUsername(user))
@@ -184,6 +188,52 @@ export const getUserByUsername = (username) => async (dispatch) => {
         return errors;
     }
 }
+
+export const updateUserProfile = (updateObj) => async (dispatch) => {
+	console.log(updateObj)
+	const uploadForm = new FormData()
+	if (updateObj.url) uploadForm.append("url", updateObj.url)
+	if (updateObj.text) uploadForm.append("text", JSON.stringify(updateObj.text))
+	uploadForm.append("user", JSON.stringify(updateObj.user))
+    const res = await fetch(`/api/users/${updateObj.user.username}/edit`, {
+		method: "put",
+		// headers: {
+		// 	"Content-Type": "application/json",
+		// },
+		body: uploadForm,
+	});
+    if (res.ok) {
+		const updatedUser = await res.json();
+		console.log("USER",updatedUser)
+		dispatch(updateUser(updatedUser))
+        return updatedUser;
+	} else {
+		const errors = await res.json();
+		console.log("USER", errors)
+        return errors;
+	};
+};
+
+// export const updateUserProfileImage = (updateObj) => async (dispatch) => {
+// 	console.log("UPDATE", updateObj)
+//     const res = await fetch(`/api/users/${updateObj.user.username}/edit`, {
+// 		method: "put",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify(updateObj),
+// 	});
+//     if (res.ok) {
+// 		const updatedUser = await res.json();
+// 		console.log("USER1",updateUser)
+// 		dispatch(updateUser(updatedUser))
+//         return updatedUser;
+// 	} else {
+// 		const errors = await res.json();
+// 		console.log("USER", errors)
+//         return errors;
+// 	};
+// };
 
 export default function reducer(state = initialState, action) {
 	let newState = cloneDeep(state)
@@ -204,5 +254,5 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		default:
 			return state;
-	}
-}
+	};
+};

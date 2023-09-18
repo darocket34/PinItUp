@@ -11,6 +11,20 @@ img.profilepage.user.pic {
     width: 200px;
 }
 
+div.profilepage.user.pic.container:hover i {
+    background-color: #B4125D;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    /* box-shadow: 2px 0 0 #B4125D; */
+    padding: 10px;
+    transition: 0.25s ease-in-out;
+}
+
+div.profilepage_editmode_image {
+    margin: 90px 0;
+}
+
 p.user.username {
     color: gray;
     margin-top: 0px;
@@ -160,9 +174,15 @@ button.profilepage.nonowner.following:hover  span.unfollow {
     display: inline;
 }
 
-form.profilepage.owner.edit {
+form.profilepage.owner.textedit {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-top: 15px;
+}
+
+form.profilepage.owner.imageedit {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }

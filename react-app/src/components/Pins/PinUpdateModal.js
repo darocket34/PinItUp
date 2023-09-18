@@ -78,7 +78,6 @@ function PinUpdateModal({user, type, pin}) {
                     uploadForm.append("creatorId", user.id);
                     uploadForm.append("postDate", newPin.postDate);
                     uploadForm.append("boardId", selectedBoard);
-                    console.log(selectedBoard)
                     const upload = await fetch("/api/pins/newpin", {
                         method: "POST",
                         body: uploadForm
@@ -86,11 +85,8 @@ function PinUpdateModal({user, type, pin}) {
                     const resUpload = await upload.json();
                     if (resUpload.errors){
                         setErrors(resUpload)
-                        console.log("ERROR2", errors)
                     } else {
-                        console.log("ERROR3", selectedBoard)
                         const newlySelectedBoard = {"id": Number(selectedBoard)}
-                        // const newlySelectedPin = {"pin": resUpload}
                         await dispatch(addPinToBoard(resUpload, newlySelectedBoard))
                         closeModal()
                         history.push(`/pins/${resUpload.id}`)
@@ -98,9 +94,7 @@ function PinUpdateModal({user, type, pin}) {
                 }
             } catch (err) {
                     if (err) {
-                        console.log(err)
                         errorObj.pin = "Something went wrong"
-                        console.log(errorObj)
                     }}
             }
         }
