@@ -89,7 +89,7 @@ def sign_up():
         image.filename = get_unique_filename(image.filename)
         print("BE IMG FILENAME----------------------------------------", image.filename)
         upload = upload_file_to_s3(image)
-        print("BE IMGURL----------------------------------------", upload)
+        # print("BE IMGURL----------------------------------------", upload)
         user = User(
             name= data['name'],
             username= data['username'],
