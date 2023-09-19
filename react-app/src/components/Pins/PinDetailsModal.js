@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef} from "react";
 import { useModal } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useLocation, useParams} from "react-router-dom"
-import {getAllPins, getSinglePin} from "../../store/pins"
+import {getAllPins, getSinglePin, updatePin} from "../../store/pins"
 import { getUserById } from "../../store/session";
 import PinUpdateModal from "./PinUpdateModal";
 import OpenModalButton from "../OpenModalButton";
@@ -20,6 +20,9 @@ function PinDetailsModal({pin, user, boards}) {
     const [isOwner, setIsOwner] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [chevron, setChevron] = useState("down")
+    const [name, setName] = useState(pin?.name || '')
+    const [description, setDescription] = useState(pin?.description || '')
+    const [editMode, setEditMode] = useState(false);
     const [errors, setErrors] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(true)
     const [creator, setCreator] = useState({})
@@ -85,13 +88,11 @@ function PinDetailsModal({pin, user, boards}) {
         if (newComment.length > 250 || !newComment) {
             setErrors({'error': "Please enter a comment"})
         }
-
         const newCommentForm = {
             creatorId: user.id,
             pinId: pin.id,
             comment: newComment
         }
-
         try {
             const res = await fetch(`/api/pins/${pin.id}/comment`, {
                 method: "POST",
@@ -148,6 +149,43 @@ function PinDetailsModal({pin, user, boards}) {
         }
     }
 
+    const handlePinUpdate = async (e) => {
+        e.preventDefault()
+        let errorObj = {};
+        if (name.length > 60 || !name) {
+            errorObj.name = "Please enter a name with 60 characters or less"
+        }
+        if (description.length > 300 || !description) {
+            errorObj.description = "Please enter a description with 300 characters or less"
+        }
+        const newPin = {
+            name,
+            description,
+            url: pin.url,
+            postDate: pin.postDate,
+            creatorId: pin.creatorId
+        }
+        setErrors(Object.values(errorObj))
+        if (!Object.keys(errorObj).length){
+            try {
+                newPin.id = pin.id
+                const resUpdate = await dispatch(updatePin(newPin))
+                if (resUpdate.id){
+                    setEditMode(false)
+                    setName(resUpdate.name)
+                    setDescription(resUpdate.description)
+                    await dispatch(getSinglePin(resUpdate.id))
+                } else {
+                    console.log(resUpdate)
+                    setErrors(resUpdate)
+                }
+            } catch (err) {
+                if (err) {
+                    errorObj.pin = "Something went wrong"
+                }}
+            }
+        }
+
     return (
 
         <div className="pindetail modal master container">
@@ -159,11 +197,7 @@ function PinDetailsModal({pin, user, boards}) {
                 </div>
                 {isOwner && (
                     <div className="pindetails owner controls">
-                        <OpenModalButton
-                            buttonText="Edit"
-                            modalComponent={<PinUpdateModal user={user} type="update" pin={pin}/>}
-                            onItemClick={closeModal}
-                        />
+                        {!editMode && <button className="pindetails owner controls edit" onClick={() => setEditMode(true)}>Edit</button>}
                         <OpenModalButton
                             buttonText="Delete"
                             modalComponent={<DeletePinModal pin={pin}/>}
@@ -197,9 +231,9 @@ function PinDetailsModal({pin, user, boards}) {
                                                                 <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
                                                             </div>
                                                         </div>
-                                                        <button className={`boardlist card ${saved} ${board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(pin, board)}>
-                                                            <p className={board?.pins?.some(boardPin => boardPin.id === pin.id) ? "savedClass" : "saveClass"}>
-                                                                {board?.pins?.some(boardPin => boardPin.id === pin.id) ? "Saved" : "Save"}
+                                                        <button className={`boardlist card ${saved} ${board?.pins?.some(boardPin => boardPin.id === currPin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(currPin, board)}>
+                                                            <p className={board?.pins?.some(boardPin => boardPin.id === currPin.id) ? "savedClass" : "saveClass"}>
+                                                                {board?.pins?.some(boardPin => boardPin.id === currPin.id) ? "Saved" : "Save"}
                                                             </p>
                                                         </button>
                                                     </div>
@@ -211,9 +245,34 @@ function PinDetailsModal({pin, user, boards}) {
                             </div>
                         </>
                     )}
-                    <h1 className="pindetail title">{pin?.name}</h1>
                     <p className="pindetail created date">Post Date: {formattedDate}</p>
-                    <p className="pindetail description">{pin?.description}</p>
+                    {editMode ? (
+                        <form className="pinform create form" id="pinform" onSubmit={handlePinUpdate}>
+                            <input
+                                className="pinform create name"
+                                type="text"
+                                placeholder="Name this pin"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                            <textarea
+                                className="pinform create description"
+                                type="text"
+                                placeholder="Give a short description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                required
+                            />
+                            <button className="profilepage owner imageedit" type="submit">Update</button>
+                            <button className="profilepage owner imageedit cancel" onClick={() => setEditMode(false)}>Cancel</button>
+                        </form>
+                    ) : (
+                        <>
+                            <h1 className="pindetail title">{currPin?.name}</h1>
+                            <p className="pindetail description">{currPin?.description}</p>
+                        </>
+                    )}
                     <Link to={`/${creator?.username}/profile`} className="pindetail creator card" onClick={closeModal}>
                         <div className="pindetail creator card container">
                             <div className="pindetail creator image container">

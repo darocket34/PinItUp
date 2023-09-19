@@ -130,12 +130,10 @@ function ProfilePage() {
             },
             user
         };
-
         if (Object.keys(errObj).length > 0){
             setErrors(errObj);
             return;
         }
-
         const res = await dispatch(updateUserProfile(reqObj));
         if(res.errors){
             errObj["username"] = res.errors[0].username

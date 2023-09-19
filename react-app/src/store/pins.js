@@ -101,6 +101,7 @@ export const createPin = (pin, boardId) => async (dispatch) => {
 }
 
 export const updatePin = (pin) => async (dispatch) => {
+    console.log("PIN", pin)
     try {
         const res = await fetch(`/api/pins/${pin.id}/edit`, {
             method: "PUT",
@@ -112,15 +113,15 @@ export const updatePin = (pin) => async (dispatch) => {
         if (res.ok) {
             const pinRes = await res.json();
             dispatch(updateSinglePin(pinRes.pin));
-            return pinRes.pin
+            return pin
         } else {
             const {errors} = await res.json();
             return errors;
         }
     } catch (err) {
         if (err) {
-            let {error} = await err.json()
-            return error
+            let {errors} = await err.json()
+            return errors
         }
     }
 }

@@ -98,12 +98,12 @@ export const logout = () => async (dispatch) => {
 
 export const signUp = (reqObj) => async (dispatch) => {
 	const uploadForm = new FormData()
-	uploadForm.append('name', JSON.stringify(reqObj.name))
-	uploadForm.append('email', JSON.stringify(reqObj.email))
-	uploadForm.append('username', JSON.stringify(reqObj.username))
-	uploadForm.append('password', JSON.stringify(reqObj.password))
+	uploadForm.append('name', reqObj.name)
+	uploadForm.append('email', reqObj.email)
+	uploadForm.append('username', reqObj.username)
+	uploadForm.append('password', reqObj.password)
 	uploadForm.append('url', reqObj.url)
-	if (reqObj.birthday) uploadForm.append("birthday", JSON.stringify(reqObj.birthday))
+	if (reqObj.birthday) uploadForm.append("birthday", reqObj.birthday)
 	console.log("FE REQ", reqObj)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",

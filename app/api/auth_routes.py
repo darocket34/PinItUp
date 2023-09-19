@@ -72,8 +72,8 @@ def sign_up():
     Creates a new user and logs them in
     """
     raw_data_name = request.form.get("name")
-    print("BE RAW DATA NAME----------------------------------------", json.loads(raw_data_name))
     raw_data_email = request.form.get("email")
+    print("BE RAW DATA NAME----------------------------------------", raw_data_email)
     raw_data_username = request.form.get("username")
     raw_data_password = request.form.get("password")
     raw_data_birthday = request.form.get("birthday")
@@ -82,14 +82,13 @@ def sign_up():
     print("BE RAW DATA IMG----------------------------------------", raw_data_img)
     form = SignUpForm()
     data = form.data
-    print("BE FORM DATA----------------------------------------", json.loads(raw_data_name))
+    print("BE FORM DATA----------------------------------------", raw_data_name)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         image = raw_data_img
         image.filename = get_unique_filename(image.filename)
         print("BE IMG FILENAME----------------------------------------", image.filename)
         upload = upload_file_to_s3(image)
-        # print("BE IMGURL----------------------------------------", upload)
         if "url" in upload:
             profile_img1= upload["url"]
         else:

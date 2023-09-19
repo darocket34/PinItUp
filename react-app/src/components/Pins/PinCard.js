@@ -23,7 +23,7 @@ export default function PinCard({pin, boardsObj, user}) {
                 <OpenModalButton
                     buttonDiv={
                         !hidden && (
-                        <div className="homepage single pin overlay container">
+                        <div key={user?.id} className="homepage single pin overlay container">
                             <p className="pincard pin name">{pin.name}</p>
                         </div>
                         )

@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import { createPin, updatePin } from "../../store/pins";
 import {useHistory} from "react-router-dom"
 import "./Pins.css"
-import { addPinToBoard } from "../../store/boards";
+import { addPinToBoard, getBoard } from "../../store/boards";
 
 function PinUpdateModal({user, type, pin}) {
     const history = useHistory()
@@ -14,7 +14,7 @@ function PinUpdateModal({user, type, pin}) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [url, setUrl] = useState('')
-    const [selectedBoard, setSelectedBoard] = useState({})
+    const [selectedBoard, setSelectedBoard] = useState('')
     const { closeModal } = useModal();
     const boards = useSelector(state=> state.boards.allBoards)
 
@@ -28,6 +28,7 @@ function PinUpdateModal({user, type, pin}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(selectedBoard)
         let errorObj = {};
         if (name.length > 60 || !name) {
             errorObj.name = "Please enter a name with 60 characters or less"
@@ -40,7 +41,6 @@ function PinUpdateModal({user, type, pin}) {
         }
         const getCurrentDate = () => {
             const currentDate = new Date();
-            console.log(currentDate)
             const year = currentDate.getFullYear();
             const month = String(currentDate.getMonth() + 1).padStart(2, '0');
             const day = String(currentDate.getDate()).padStart(2, '0');
@@ -85,15 +85,16 @@ function PinUpdateModal({user, type, pin}) {
                         setErrors(resUpload)
                     } else {
                         const newlySelectedBoard = {"id": Number(selectedBoard)}
-                        await dispatch(addPinToBoard(resUpload, newlySelectedBoard))
-                        closeModal()
+                        dispatch(addPinToBoard(resUpload, newlySelectedBoard))
                         history.push(`/boards/${Number(selectedBoard)}`)
+                        dispatch(getBoard(Number(selectedBoard)))
+                        closeModal()
                     }
                 }
             } catch (err) {
-                    if (err) {
-                        errorObj.pin = "Something went wrong"
-                    }}
+                if (err) {
+                    errorObj.pin = "Something went wrong"
+                }}
             }
         }
 
@@ -107,7 +108,7 @@ function PinUpdateModal({user, type, pin}) {
                         <form className="pinform create form" encType="multipart/form-data" id="pinform" onSubmit={handleSubmit}>
                             <ul>
                                 {errors.length > 0 && errors.map((error, idx) => (
-                                    <li key={idx}>{error}</li>
+                                    <li key={idx} style={{color: 'red'}}>{error}</li>
                                 ))}
                             </ul>
                             <label>

@@ -23,20 +23,21 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-        closeModal()
+        closeModal();
+        history.push('/home');
     }
   };
 
   const demoLogin = async (e) => {
       e.preventDefault();
-      const res = await dispatch(login("demo@aa.io", "password"))
+      const res = await dispatch(login("demo@aa.io", "password"));
       if (res) {
         setErrors(res);
       } else {
-        closeModal()
-        history.push('/home')
+        closeModal();
+        history.push('/home');
     }
-  }
+  };
 
 
 

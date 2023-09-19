@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Pin, Board, db, board_pins, Comment, User
 from ..forms import PinForm, CommentForm
 from .AWS_helpers import remove_file_from_s3, get_unique_filename, upload_file_to_s3
-from datetime import datetime
+from datetime import date
 
 pin_routes = Blueprint('pins', __name__)
 
@@ -63,7 +63,7 @@ def create_pin():
             description = data["description"],
             url = img1,
             creatorId = current_user.id,
-            postDate = data["postDate"],
+            postDate = date.today(),
             boardId = data["boardId"]
         )
         board.pins.append(pin)
@@ -75,15 +75,16 @@ def create_pin():
 @pin_routes.route("/<int:id>/edit", methods=["PUT"])
 @login_required
 def update_pin(id):
-    current_date = datetime.now()
+    current_date = date.today()
     request_data = request.get_json()
     pin = Pin.query.get(id)
+    if not pin:
+        return {"error", "Pin not found"}, 404
     form = PinForm(
         name = request_data["name"],
         url = request_data["url"],
         description = request_data["description"],
         creatorId = request_data["creatorId"],
-        postDate = current_date
     )
     data = form.data
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -94,7 +95,7 @@ def update_pin(id):
         pin.creatorId = data["creatorId"]
         pin.postDate = current_date
         db.session.commit()
-        return {"pin": pin.to_dict()}
+        return pin.to_dict()
     return {'errors': form_validation_errors(form.errors)}, 401
 
 @pin_routes.route("/<int:id>")

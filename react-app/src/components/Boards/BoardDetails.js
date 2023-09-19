@@ -8,6 +8,7 @@ import DeleteBoardModal from "./DeleteBoardModal";
 import BoardModal from "./BoardModal";
 import "./Boards.css"
 import PinCard from "../Pins/PinCard";
+import { getAllPins } from "../../store/pins";
 
 function BoardDetails() {
     const {id} = useParams();
@@ -21,6 +22,7 @@ function BoardDetails() {
     useEffect(() => {
         dispatch(getBoard(id));
         dispatch(getAllBoards(user.username));
+        dispatch(getAllPins());
     },[dispatch]);
 
     useEffect(() => {
@@ -34,7 +36,6 @@ function BoardDetails() {
     const removePin = async (pin,board) => {
         const res = await dispatch(removePinFromBoard(pin,board));
     }
-
 
     return (
         <>
@@ -58,7 +59,7 @@ function BoardDetails() {
             <div className="boarddetails pinList">
                 <ul>
                     {board?.pins?.length > 0 && (
-                        <div className="homepage pin master container">
+                        <div key={board?.id}className="homepage pin master container">
                             {board?.pins?.map((pin,idx) => (
                                 <>
                                     <div key={idx} className='boarddetails single pin container'>
