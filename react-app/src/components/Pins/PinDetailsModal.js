@@ -134,12 +134,13 @@ function PinDetailsModal({pin, user, boards}) {
             })
             if (res.ok){
                 const currPinComments = await res.json();
-                await dispatch(getSinglePin(currPin.id))
-                setComments(currPinComments)
-                setNewComment('')
+                console.log(currPinComments)
                 if (commentRef.current) {
                     commentRef.current.scrollTop = commentRef.current.scrollHeight;
-                  }
+                }
+                setNewComment('')
+                await dispatch(getSinglePin(currPin.id))
+                setComments(currPinComments)
                 console.log("AFTER", pin)
             } else {
                 console.log("RES", res)
@@ -287,9 +288,9 @@ function PinDetailsModal({pin, user, boards}) {
                 </div>
                 <div className="comment container" ref={commentRef}>
                     <ul>Comments:
-                        {comments?.length > 0 ? (
+                        {currPin?.comments?.length > 0 ? (
                             <>
-                                {comments?.map((comment, idx) => (
+                                {currPin?.comments?.map((comment, idx) => (
                                     <li key={idx} className="pindetail comment listitem">
                                         <CommentCard comment={comment} />
                                         {comment?.creatorId === user?.id && (

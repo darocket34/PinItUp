@@ -30,7 +30,7 @@ class Pin(db.Model):
             "creatorId": self.creatorId,
             "postDate": self.postDate,
             "boardId": self.boardId,
-            "comments": [comment.to_dict() for comment in self.comments]
+            "comments": [comment.to_dict() for comment in sorted(self.comments, key=lambda comment: comment.date)]
         }
 
     def to_dict_simplified(self):
