@@ -4,6 +4,7 @@ from app.models import Pin, Board, db, board_pins, Comment, User
 from ..forms import PinForm, CommentForm
 from .AWS_helpers import remove_file_from_s3, get_unique_filename, upload_file_to_s3
 from datetime import date
+from datetime import datetime
 
 pin_routes = Blueprint('pins', __name__)
 
