@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link, useLocation, useParams} from "react-router-dom"
 import {getAllPins, getSinglePin, updatePin} from "../../store/pins"
 import { getUserById } from "../../store/session";
+import { addPinToBoard, getAllBoards } from "../../store/boards";
 import PinUpdateModal from "./PinUpdateModal";
 import OpenModalButton from "../OpenModalButton";
 import DeletePinModal from "./DeletePinModal"
@@ -12,7 +13,6 @@ import CommentCard from "./CommentCard";
 import logo from "../../images/logo.jpg";
 import "./PinDetails.css"
 import "./Pins.css"
-import { addPinToBoard, getAllBoards } from "../../store/boards";
 
 function PinDetailsModal({pin, user, boards}) {
     const dispatch = useDispatch()
@@ -134,7 +134,6 @@ function PinDetailsModal({pin, user, boards}) {
             })
             if (res.ok){
                 const currPinComments = await res.json();
-                console.log(currPinComments)
                 if (commentRef.current) {
                     commentRef.current.scrollTop = commentRef.current.scrollHeight;
                 }
@@ -229,7 +228,7 @@ function PinDetailsModal({pin, user, boards}) {
                                                             </div>
                                                             <div className="boardlist card textcontent">
                                                                 <p className="boardlist card boardname">{board?.name}</p>
-                                                                <p className="boardlist card numberofpins">{board.pins.length} Pins</p>
+                                                                <p className="boardlist card numberofpins">{board?.pins?.length} Pins</p>
                                                             </div>
                                                         </div>
                                                         <button className={`boardlist card ${saved} ${board?.pins?.some(boardPin => boardPin.id === currPin.id) ? "savedClass" : "saveClass"}`} onClick={() => handleSave(currPin, board)}>

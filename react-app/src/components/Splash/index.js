@@ -5,7 +5,7 @@ import { getAllBoards } from "../../store/boards"
 import PinCard from "../Pins/PinCard";
 import "./Homepage.css"
 import OpenModalButton from "../OpenModalButton";
-import DelayModal from "./DelayModal";
+import Splash from "./Splash";
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export default function HomePage() {
                 </>
             ) : (
                 <>
-                    <DelayModal />
+                    <Splash />
                 </>
             )}
         </>
