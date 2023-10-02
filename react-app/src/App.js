@@ -8,6 +8,7 @@ import NotFound from "./components/NotFound/NotFound";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import BoardDetails from "./components/Boards/BoardDetails"
 import SearchPage from "./components/Splash/SearchPage";
+import Footer from "./components/Footer";
 import Splash from "./components/Splash/Splash";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer isLoaded={isLoaded} />
     </>
   );
 }

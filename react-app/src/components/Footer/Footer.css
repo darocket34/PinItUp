@@ -1,0 +1,17 @@
+footer {
+    background-color: #7c0d41;
+    bottom: 0;
+    color: white;
+    height: 200px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+}
+
+div.footer.container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
