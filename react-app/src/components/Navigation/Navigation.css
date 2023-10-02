@@ -28,6 +28,18 @@ a.profile-dropdown.cardlink:hover {
   background-color: #E9E9E9;
 }
 
+img#navcreator {
+  border-radius: 50%;
+  height: auto;
+  width: 100%;
+}
+
+div.navcreator.creator.image.container {
+  height: 40px;
+  overflow: hidden;
+  width: 40px;
+}
+
 div.profile-dropdown.user.card {
   display: flex;
   gap: 15px;
@@ -156,11 +168,12 @@ button#navbar_create_button:focus,
   align-items: center;
   background-color: white;
   border: none;
-  border-radius: 100%;
+  border-radius: 26px;
   display: flex;
-  height: 30px;
+  gap: 5px;
+  height: 50px;
   justify-content: center;
-  width: 50px;
+  width: 80px;
 }
 
 button#navbar_menu_button_active,
@@ -169,13 +182,13 @@ button#navbar_menu_button_active:focus {
   align-items: center;
   background-color: black;
   border: none;
-  border-radius: 100%;
+  border-radius: 26px;
   box-shadow: none;
   color: white;
   display: flex;
-  height: 30px;
+  height: 50px;
   justify-content: center;
-  width: 50px;
+  width: 80px;
 }
 
 #createButton:hover {

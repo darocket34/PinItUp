@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBoards } from "../../store/boards";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import "./ProfilePage.css"
+import "../Splash/Homepage.css"
 import { getUserByUsername, followCurrUser, unfollowCurrUser, updateUserProfile, authenticate } from "../../store/session";
 import { getAllPinsByUsername } from "../../store/pins";
 import PinCard from "../Pins/PinCard";

@@ -43,12 +43,14 @@ function Navigation({ isLoaded }){
 					</div>
 				</form>
 			</div>
-			<div className="navbar links2">
+			{/* <div className="navbar links2">
 				<p className='navbar link text messages'>Messages<span className="navbar messages message">Feature coming soon!</span></p>
-			</div>
+			</div> */}
 			{isLoaded && (
-				<div className='navbar menu button container'>
-					<ProfileButton user={sessionUser} />
+				<div className="navcreator user container">
+					<div className='navbar menu button container'>
+						<ProfileButton user={sessionUser} />
+					</div>
 				</div>
 			)}
 

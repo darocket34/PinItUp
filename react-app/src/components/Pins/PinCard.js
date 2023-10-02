@@ -4,14 +4,20 @@ import { getAllBoards } from "../../store/boards"
 import "../Splash/Homepage.css"
 import BoardList from "./BoardList"
 import { useModal } from "../../context/Modal"
+import { removePinFromBoard } from "../../store/boards"
 import { Link, useLocation } from "react-router-dom"
 import OpenModalButton from "../OpenModalButton"
 import PinDetailsModal from "./PinDetailsModal"
 
-export default function PinCard({pin, boardsObj, user}) {
+export default function PinCard({pin, board, boardsObj, user, isOwner}) {
+    const dispatch = useDispatch();
     const [hidden, setHidden] = useState(true)
     const boards = Object.values(boardsObj)
     const { closeModal } = useModal();
+
+    const removePin = async (pin,board) => {
+        const res = await dispatch(removePinFromBoard(pin,board));
+    }
 
     return (
         <>
@@ -20,6 +26,7 @@ export default function PinCard({pin, boardsObj, user}) {
             onMouseLeave={() => setHidden(true)}
             >
                 {!hidden && <BoardList boards={boards} pin={pin} user={user} />}
+                {isOwner && !hidden && <button key={pin.id*0.3} className="boarddetails remove pin" onClick={() => removePin(pin, board)}>Remove</button>}
                 <OpenModalButton
                     buttonDiv={
                         !hidden && (

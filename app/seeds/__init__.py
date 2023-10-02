@@ -24,8 +24,8 @@ def seed():
         undo_boards()
         undo_comments()
     users = seed_users(40)
-    pinList = seed_pins(600, users)
-    boards = seed_boards(250, users, pinList)
+    pinList = seed_pins(200, users)
+    boards = seed_boards(150, users, pinList)
     seed_comments(400, users, len(pinList))
 
 

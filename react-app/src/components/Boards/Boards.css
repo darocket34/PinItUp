@@ -3,24 +3,26 @@ div.boarddetails.pinList {
     flex-direction: column;
 }
 
-button.boarddetails.remove.pin {
+/* button.boarddetails.remove.pin {
     display: none;
     position: relative;
-}
+} */
 
 p.boarddetails.desc {
     width: 60%;
 }
 
-div.boarddetails.single.pin.container:hover button.boarddetails {
+div.boarddetails.single.pin.container:hover button.boarddetails.remove {
     justify-self: center;
-    display: unset;
+    display: absolute;
     font-size: 15px;
-    position: relative;
-    left: 50%;
-    margin-top: 10px;
-    transform: translateX(-50%);
-    z-index: 0;
+    position: absolute;
+    right: 10px;
+    margin: 0;
+    /* transform: translateX(-50%); */
+    bottom: 3%;
+    padding: 3px;
+    z-index: 1;
 }
 
 div.boarddetails.single.pin.container {

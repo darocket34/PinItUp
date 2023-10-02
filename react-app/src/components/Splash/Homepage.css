@@ -107,31 +107,36 @@ div.bottom.master {
 }
 
 @media (min-width: 0px) and (max-width: 550px) {
-    div.homepage.pin.master.container {
+    div.homepage.pin.master.container,
+    div.profilepage.pins.container {
         column-count: 2;
     }
 }
 
 @media (min-width: 551px) and (max-width: 1050px) {
-    div.homepage.pin.master.container {
+    div.homepage.pin.master.container,
+    div.profilepage.pins.container {
         column-count: 3;
     }
 }
 
 @media (min-width: 1051px) and (max-width: 1330px) {
-    div.homepage.pin.master.container {
+    div.homepage.pin.master.container,
+    div.profilepage.pins.container {
         column-count: 4;
     }
 }
 
 @media (min-width: 1331px) and (max-width: 1571px) {
-    div.homepage.pin.master.container {
+    div.homepage.pin.master.container,
+    div.profilepage.pins.container {
         column-count: 5;
     }
 }
 
 @media (min-width: 1572px) {
-    div.homepage.pin.master.container {
+    div.homepage.pin.master.container,
+    div.profilepage.pins.container {
         column-count: 6;
     }
 }

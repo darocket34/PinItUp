@@ -14,7 +14,10 @@ export default function HomePage() {
     const user = useSelector(state=>state.session.user)
     const boards = useSelector(state=>state.boards.allBoards)
 
-
+    const handleReturnToTop = (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     useEffect(() => {
         dispatch(getAllPins())
         if(user?.id){
@@ -32,15 +35,16 @@ export default function HomePage() {
             {isLoaded ? (
                 <>
                     <div className="homepage pin master container">
-                            {Object.keys(pinsObj) && (
-                                Object.values(pinsObj).map((pin, idx) => {
-                                    return (
-                                        <div key={idx} className='homepage single pin container'>
-                                                <PinCard key={idx} pin={pin} boardsObj={boards} user={user} />
-                                        </div>
-                                    )
-                                })
-                            )}
+                        <button className="homepage return to top" onClick={handleReturnToTop}><i className="fa-solid fa-circle-up fa-xl"></i></button>
+                        {Object.keys(pinsObj) && (
+                            Object.values(pinsObj).map((pin, idx) => {
+                                return (
+                                    <div key={idx} className='homepage single pin container'>
+                                            <PinCard key={idx} pin={pin} boardsObj={boards} user={user} />
+                                    </div>
+                                )
+                            })
+                        )}
                     </div>
                 </>
             ) : (

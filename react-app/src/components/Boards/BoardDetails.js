@@ -63,8 +63,7 @@ function BoardDetails() {
                             {board?.pins?.map((pin,idx) => (
                                 <>
                                     <div key={pin.id} className='boarddetails single pin container'>
-                                        <PinCard key={idx*0.2} pin={pin} boardsObj={boards} user={user} />
-                                        {isOwner && <button key={pin.id*0.3}className="boarddetails remove pin" onClick={() => removePin(pin, board)}>Remove</button>}
+                                        <PinCard key={idx*0.2} pin={pin} boardsObj={boards} board={board} user={user} isOwner={isOwner} />
                                     </div>
                                 </>
                             ))}
