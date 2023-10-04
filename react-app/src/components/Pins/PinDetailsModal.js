@@ -14,9 +14,11 @@ import logo from "../../images/logo.jpg";
 import "./PinDetails.css"
 import "./Pins.css"
 
-function PinDetailsModal({pin, user, boards}) {
+function PinDetailsModal({pin, user}) {
     const dispatch = useDispatch()
     const { closeModal } = useModal();
+    const currPin = useSelector(state => state.pins.singlePin)
+    const boards = useSelector(state => state.boards.allBoards)
     const [isOwner, setIsOwner] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [chevron, setChevron] = useState("down")
@@ -30,12 +32,10 @@ function PinDetailsModal({pin, user, boards}) {
     const [newComment, setNewComment] = useState('')
     const [saved, setSaved] = useState(false)
     const [comments, setComments] = useState(pin?.comments || []);
-    const [updatedBoards, setUpdatedBoards] = useState(boards);
+    const [updatedBoards, setUpdatedBoards] = useState(Object.values(boards) || []);
     const {id} = useParams();
     const commentRef = useRef(null);
     const newRef = useRef();
-    const currPin = useSelector(state => state.pins.singlePin)
-
     const dateString = pin?.postDate;
     const date = new Date(dateString);
     const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getFullYear() % 100).toString().padStart(2, '0')}`;
@@ -50,6 +50,7 @@ function PinDetailsModal({pin, user, boards}) {
             setShowMenu(true);
             setChevron('up');
         }
+        console.log(boards)
     };
 
     const handleSave = async (pin, board) => {
@@ -223,7 +224,7 @@ function PinDetailsModal({pin, user, boards}) {
                                     <div className="boardlist dropdown subcontainer">
                                         {user && (
                                             <>
-                                                {updatedBoards && updatedBoards?.map((board,idx) => (
+                                                {updatedBoards && Object.values(boards)?.map((board,idx) => (
                                                     <div key={board?.id+idx} className="boardlist card container">
                                                         <div className="boardlist card content">
                                                             <div className="boardlist card image container">

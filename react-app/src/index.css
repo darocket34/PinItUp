@@ -3,6 +3,12 @@
     font-family: 'Roboto', sans-serif;
 }
 
+body {
+    display: grid;
+    /* flex-direction: column; */
+    height: 100vh;
+}
+
 input, textarea, select {
     padding: 10px 10px;
     border-radius: 10px;
