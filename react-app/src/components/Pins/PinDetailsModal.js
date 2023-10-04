@@ -50,7 +50,6 @@ function PinDetailsModal({pin, user}) {
             setShowMenu(true);
             setChevron('up');
         }
-        console.log(boards)
     };
 
     const handleSave = async (pin, board) => {
@@ -180,7 +179,6 @@ function PinDetailsModal({pin, user}) {
                     setDescription(resUpdate.description)
                     await dispatch(getSinglePin(resUpdate.id))
                 } else {
-                    console.log(resUpdate)
                     setErrors(resUpdate)
                 }
             } catch (err) {

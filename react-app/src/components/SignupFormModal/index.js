@@ -49,10 +49,8 @@ function SignupFormModal() {
 				password,
 				url: url
 			}
-			console.log("SIGNUP REQ", reqObj)
 			const data = await dispatch(signUp(reqObj));
 			const res = await data
-			console.log("SIGNUP RES", res)
 			if (res) {
 				setErrors(res.errors);
 			} else {

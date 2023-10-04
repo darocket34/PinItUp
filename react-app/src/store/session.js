@@ -79,7 +79,6 @@ export const login = (email, password) => async (dispatch) => {
 			return data.errors;
 		}
 	} else {
-		console.log(response)
 		return ["An error occurred. Please try again."];
 	}
 };
@@ -104,19 +103,16 @@ export const signUp = (reqObj) => async (dispatch) => {
 	uploadForm.append('password', reqObj.password)
 	uploadForm.append('url', reqObj.url)
 	if (reqObj.birthday) uploadForm.append("birthday", reqObj.birthday)
-	console.log("FE REQ", reqObj)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		body: uploadForm
 	});
 	if (response.ok) {
 		const data = await response.json();
-		console.log("FE RES", response)
 		dispatch(setUser(data));
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
-		console.log("FE RES", response)
 		return data;
 	} else {
 		return ["An error occurred. Please try again."];
@@ -133,7 +129,6 @@ export const followCurrUser = (followObj) => async (dispatch) => {
 	})
     if (res.ok) {
         const updatedUser = await res.json();
-		console.log("UPDTE", updatedUser)
 		dispatch(followUser(updatedUser))
         return updatedUser;
 	    } else {
@@ -152,7 +147,6 @@ export const unfollowCurrUser = (followObj) => async (dispatch) => {
 	})
     if (res.ok) {
         const updatedUser = await res.json();
-		console.log("UPDTE", updatedUser)
 		dispatch(unfollowUser(updatedUser))
         return updatedUser;
 	    } else {

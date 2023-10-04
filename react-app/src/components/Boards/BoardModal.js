@@ -58,7 +58,6 @@ function BoardModal({user, type, board}) {
             } catch (err) {
                     if (err) {
                         errorObj.pin = "Something went wrong"
-                        console.log("CREATE PIN DISPATCH ERROR", err)
                     }}
             }
         }

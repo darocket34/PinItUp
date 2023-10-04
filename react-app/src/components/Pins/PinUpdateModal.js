@@ -28,7 +28,6 @@ function PinUpdateModal({user, type, pin}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(selectedBoard)
         let errorObj = {};
         if (name.length > 60 || !name) {
             errorObj.name = "Please enter a name with 60 characters or less"

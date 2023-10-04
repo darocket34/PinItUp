@@ -81,7 +81,6 @@ function ProfilePage() {
                         }))
                 if (followRes.errors) {
                     setErrors(followRes.errors);
-                    console.log("ERROR", followRes.errors);
                 } else {
                     setCurrUserIsFollowing(true);
                     await dispatch(getUserByUsername(username));

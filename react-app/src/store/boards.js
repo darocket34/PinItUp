@@ -66,7 +66,6 @@ export const getBoard = (id) => async (dispatch) => {
         return board;
     } else {
         const {errors} = await res.json();
-        console.log(errors)
         return errors;
     }
 }
@@ -108,7 +107,6 @@ export const updateBoard = (board) => async (dispatch) => {
             return errors;
         }
     } catch (err) {
-        console.log("ERROR THUINK", err)
         if (err) {
             return err
         }
