@@ -8,7 +8,6 @@ import NotFound from "./components/NotFound/NotFound";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import BoardDetails from "./components/Boards/BoardDetails"
 import SearchPage from "./components/Splash/SearchPage";
-import Footer from "./components/Footer";
 import Splash from "./components/Splash/Splash";
 
 function App() {
@@ -27,12 +26,6 @@ function App() {
           <Route exact path='/'>
             <Splash />
           </Route>
-          {/* <Route path="/login" >
-            <LoginFormPage />
-          </Route> */}
-          {/* <Route path="/signup">
-            <SignupFormPage />
-          </Route> */}
           <Route exact path="/home">
             {user ? <HomePage /> : <Redirect to="/" />}
           </Route>
@@ -50,7 +43,6 @@ function App() {
           </Route>
         </Switch>
       )}
-      {/* <Footer isLoaded={isLoaded} /> */}
     </>
   );
 }
