@@ -5,7 +5,6 @@
 
 body {
     display: grid;
-    /* flex-direction: column; */
     height: 100vh;
 }
 
