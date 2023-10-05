@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import {getAllPins, removePin} from "../../store/pins"
+import { getAllPinsByUsername, removePin} from "../../store/pins"
 import logo from "../../images/logo.jpg"
+import { getAllBoards } from "../../store/boards";
 
 
 const DeletePinModal = ({pin}) => {
@@ -13,7 +14,7 @@ const DeletePinModal = ({pin}) => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        dispatch(removePin(pin.id)).then(dispatch(getAllPins())).then(closeModal());
+        dispatch(removePin(pin.id)).then(dispatch(getAllPinsByUsername(user?.username))).then(dispatch(getAllBoards(user.username))).then(closeModal());
         history.push(`/${user?.username}/profile`)
     }
 

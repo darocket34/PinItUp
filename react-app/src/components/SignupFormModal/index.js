@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import LoginFormModal from "../LoginFormModal";
 import "./SignupForm.css";
 import logo from "../../images/logo.jpg"
 import { useHistory } from "react-router-dom";
+import { createBoard } from "../../store/boards";
 
 function SignupFormModal() {
 	const history = useHistory();
@@ -22,6 +23,7 @@ function SignupFormModal() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
+	const user = useSelector(state => state.session.user)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -50,10 +52,19 @@ function SignupFormModal() {
 				url: url
 			}
 			const data = await dispatch(signUp(reqObj));
-			const res = await data
-			if (res) {
-				setErrors(res.errors);
+			console.log("SIGNUPRES", data)
+			if (data.errors) {
+				setErrors(data);
 			} else {
+				let firstBoard = {
+					name: 'First Board',
+					description: 'This is your first board. Update the name and desription by clicking on the board. Then begin adding pins!',
+					creatorId: data.id
+				}
+				const resUpdate = await dispatch(createBoard(firstBoard))
+                    if (resUpdate.errors){
+                        setErrors(resUpdate)
+                    }
 				closeModal();
 				history.push(`/home`);
 			}

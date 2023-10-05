@@ -140,7 +140,7 @@ export const removePin = (pin) => async (dispatch) => {
 
 /* Reducer */
 const pinsReducer = (
-    state = {allPins: [], singlePin: null},
+    state = {allPins: [], singlePin: null, creatorPins: []},
     action
 ) => {
     let newState = cloneDeep(state);
@@ -152,7 +152,11 @@ const pinsReducer = (
             });
             return newState;
         case GET_ALL_PINS_BY_USER:
-            newState.allPins = action.payload.pins;
+            // newState.creatorPins ={};
+            // action.payload.pins.forEach(pin => {
+            //     newState.creatorPins[pin.id] = pin;
+            // });
+            newState.creatorPins = action.payload.pins;
             return newState;
         case CREATE_PIN:
             newState.allPins[action.pin.id] = action.pin;
@@ -165,6 +169,7 @@ const pinsReducer = (
             newState.singlePin = action.pin;
             return newState;
         case DELETE_PIN:
+            delete newState.allPins[action.pinId];
             return newState;
         default:
             return state;

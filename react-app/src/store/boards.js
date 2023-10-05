@@ -191,6 +191,7 @@ const boardsReducer = (
             return newState;
         case REMOVE_FROM_BOARD:
             newState.singleBoard = action.board
+            newState.allBoards[action.board.id] = action.board
             return newState;
         case DELETE_BOARD:
             return newState;

@@ -16,6 +16,7 @@ function ProfilePage() {
     const boards = useSelector(state => state.boards.allBoards);
     const user = useSelector(state => state.session.user);
     const creator = useSelector(state => state.session.creator);
+    const pins = useSelector(state => state.pins.creatorPins)
     const {username} = useParams();
     const [isLoaded, setIsLoaded] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
@@ -34,19 +35,11 @@ function ProfilePage() {
         const fetchData = async () => {
             await dispatch(getUserByUsername(username));
             await dispatch(getAllBoards(username));
-            const res = await dispatch(getAllPinsByUsername(username))
+            await dispatch(getAllPinsByUsername(username))
             if (user?.id === creator?.id) {
                 setIsOwner(true);
             } else {
                 setIsOwner(false);
-            }
-            if (res){
-                const {pins} = await res;
-                if (pins.length > 0) {
-                    setPinList(pins);
-                } else {
-                    setPinList([]);
-                }
             }
             if (user?.following?.length > 0){
                 for (let follower of user?.following) {
@@ -62,9 +55,10 @@ function ProfilePage() {
             }
         }
         fetchData();
-    }, [dispatch, isLoaded, username, currUserIsFollowing, isOwner]);
+    }, [dispatch, isLoaded, username, newUsername, currUserIsFollowing, isOwner]);
 
     useEffect(() => {
+        console.log(boards)
         if (user?.id === creator?.id) {
             setIsOwner(true);
         } else {
@@ -280,8 +274,14 @@ function ProfilePage() {
                                                 <div className="profilepage board tile image container">
                                                     <img src={board?.pins[0]?.url || null} className="profilepage board tile main"></img>
                                                     <div className="profilepage board tile nonmain images">
-                                                        <img src={board?.pins[1]?.url || null} className="profilepage board tile secondary"></img>
-                                                        <img src={board?.pins[2]?.url || null} className="profilepage board tile terciary"></img>
+                                                        {board?.pins.length > 0 && (
+                                                            <>
+                                                                <img src={board?.pins[1]?.url || null} className="profilepage board tile secondary"></img>
+                                                                {board?.pins?.length > 1 && (
+                                                                    <img src={board?.pins[2]?.url || null} className="profilepage board tile terciary"></img>
+                                                                )}
+                                                            </>
+                                                        )}
                                                     </div>
                                                 </div>
                                                 <div className="profilepage board tile text container">
@@ -295,9 +295,9 @@ function ProfilePage() {
                             )}
                         </ul>) : (
                         <ul>
-                            {pinList?.length > 0 && (
+                            {pins?.length > 0 && (
                                 <div className="profilepage pins container">
-                                    {pinList.map((pin,idx) => (
+                                    {pins.map((pin,idx) => (
                                         <div key={idx} className='profilepage single pin container'>
                                             <PinCard key={idx*0.2} pin={pin} boardsObj={boards} user={user} />
                                         </div>

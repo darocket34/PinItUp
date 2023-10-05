@@ -1,9 +1,18 @@
+import { useSelector } from "react-redux";
 import logo from "../../images/logo.jpg"
 import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
+import { useHistory } from "react-router-dom";
 
 function Splash() {
+    const history = useHistory();
+    const user = useSelector(state => state.session.user);
+
+    if (user) {
+        history.push('/home')
+    };
+    
     return (
         <>
             <div className="top container">

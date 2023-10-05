@@ -65,9 +65,9 @@ function ProfileButton({ user }) {
       <button className="navbar menu"
         id={showMenu ? "navbar_menu_button_active" : "navbar_menu_button"}
         onClick={openMenu}>
-					<div className="navcreator creator image container">
+					{user?.profile_img && <div className="navcreator creator image container">
 						<img id="navcreator" src={user?.profile_img} alt="Creator Profile Picture"/>
-					</div>
+					</div>}
           <i className={`fa-solid fa-chevron-${chevron} fa-xl profile-dropdown navbar menu`} id="navbar_menu_icon"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>

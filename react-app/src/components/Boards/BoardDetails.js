@@ -33,9 +33,9 @@ function BoardDetails() {
         }
     });
 
-    const removePin = async (pin,board) => {
-        const res = await dispatch(removePinFromBoard(pin,board));
-    }
+    // const removePin = async (pin,board) => {
+    //     const res = await dispatch(removePinFromBoard(pin,board));
+    // }
 
     return (
         <>
