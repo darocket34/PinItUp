@@ -205,3 +205,28 @@ div.profilepage.pins.container {
     vertical-align: initial;
     word-break: break-word;
 }
+
+div.profilepage.followmodal.container button {
+    font-size: 15px;
+    padding: 5px 8px;
+    width: unset;
+}
+
+div.profilepage.followmodal.container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+p.profilepage.separator {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+div.profilepage.follower.list {
+    max-height: 400px;
+    overflow: auto;
+}

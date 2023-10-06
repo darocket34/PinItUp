@@ -117,7 +117,7 @@ def addComment(id):
         creatorId = req_data['creatorId'],
         pinId = req_data['pinId'],
         comment = req_data['comment'],
-        date= datetime.now()
+        date= datetime.utcnow()
     )
     data = form.data
     form['csrf_token'].data = request.cookies['csrf_token']

@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../../context/Modal";
 import { getAllBoards } from "../../store/boards";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import "./ProfilePage.css"
-import "../Splash/Homepage.css"
+import { Link, useHistory, useParams } from "react-router-dom";
 import { getUserByUsername, followCurrUser, unfollowCurrUser, updateUserProfile, authenticate } from "../../store/session";
 import { getAllPinsByUsername } from "../../store/pins";
 import PinCard from "../Pins/PinCard";
+import loadingImage from "../../images/loading.gif"
+import "./ProfilePage.css"
+import "../Splash/Homepage.css"
+import FollowModal from "./FollowModal";
+import OpenModalButton from "../OpenModalButton";
 
 
 function ProfilePage() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { closeModal } = useModal();
     const currLocation = window.location.pathname.split('/');
     const boards = useSelector(state => state.boards.allBoards);
     const user = useSelector(state => state.session.user);
@@ -186,7 +191,11 @@ function ProfilePage() {
                     </div>
                 ) : (
                     <div className="profilepage user pic container">
-                        <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
+                        {creator?.profile_img ? (
+                            <img src={creator?.profile_img} alt="Profile Image" className="profilepage user pic" />
+                        ) : (
+                            <img src={loadingImage} alt="Profile Image" className="profilepage user pic" />
+                        )}
                         {isOwner && !textEditMode && <i className="fa-solid fa-pen-to-square profilepage icon" onClick={() => setImageEditMode(true)} />}
                     </div>
                 )}
@@ -224,8 +233,19 @@ function ProfilePage() {
                 ) : (
                     <>
                         <h1 className="profilepage user name">{creator?.name}</h1>
-                        <p className="profilepage user follow">{`Followers ${creator?.followers?.length}`}{'    ·    '}{`Following ${creator?.following?.length}`}</p>
-                        <p className="profilepage user username">{`@${creator?.username}`}</p>
+                        <div className="profilepage followmodal container">
+                            <OpenModalButton
+                                buttonText={`Followers ${creator?.followers?.length}`}
+                                modalComponent={<FollowModal creator={creator} followers={true} />}
+                                onItemClick={closeModal}
+                            />
+                            <p className="profilepage user separator">{'    ·    '}</p>
+                            <OpenModalButton
+                                buttonText={`Following ${creator?.following?.length}`}
+                                modalComponent={<FollowModal creator={creator} following={true} />}
+                                onItemClick={closeModal}
+                            />
+                        </div>
                     </>
                 )}
 

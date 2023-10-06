@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef} from "react";
 import { useModal } from "../../context/Modal";
 import {useDispatch, useSelector} from "react-redux"
-import {Link, useLocation, useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import {getAllPins, getSinglePin, updatePin} from "../../store/pins"
 import { getUserById } from "../../store/session";
 import { addPinToBoard, getAllBoards } from "../../store/boards";
@@ -93,7 +93,10 @@ function PinDetailsModal({pin, user}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (newComment.length > 250 || !newComment) {
-            setErrors({'error': "Please enter a comment"})
+            setErrors({'comment': "Please enter a comment with 250 or less characters"})
+        }
+        if (!newComment.trim().length > 0) {
+            setErrors({'comment': "Please enter a comment with 250 or less characters"})
         }
         const newCommentForm = {
             creatorId: user.id,
@@ -305,9 +308,7 @@ function PinDetailsModal({pin, user}) {
                         )}
                     </ul>
                 </div>
-                    {errors.length > 0 && errors.map((error, idx) => (
-                                    <li key={idx}>{error}</li>
-                                ))}
+                    {errors.comment && <p className="errors" style={{'color': 'red'}}>{errors.comment}</p>}
                     <form id="commentform" onSubmit={handleSubmit}>
                         <input type="text"
                             value={newComment}

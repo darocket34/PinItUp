@@ -13,11 +13,17 @@ export default function CommentCard({comment}) {
 
     const dateString = comment?.date;
     const date = new Date(dateString);
-    const userTimeZoneOffsetMinutes = date.getTimezoneOffset();
-    date.setMinutes(date.getMinutes() - userTimeZoneOffsetMinutes);
-    const formattedLocalDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getFullYear() % 100).toString().padStart(2, '0')} ${date.toLocaleTimeString()}`;
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        timeZoneName: 'short',
+      };
+    const formattedLocalDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getFullYear() % 100).toString().padStart(2, '0')} ${date.toLocaleTimeString(undefined, options)}`;
+
 
     useEffect(() => {
+        console.log(comment?.date)
         const fetchData = async () => {
             const req = await dispatch(getUserById(comment?.creatorId))
             const res = await req
