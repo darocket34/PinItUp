@@ -32,7 +32,7 @@ export default function HomePage() {
 
     useEffect(() => {
         setLoadDelay(false)
-        setTimeout(() => setLoadDelay(true),3000)
+        setTimeout(() => setLoadDelay(true),3500)
     }, [currentPage])
 
     const totalPages = Math.ceil(Object.keys(pinsObj).length / itemsPerPage);
