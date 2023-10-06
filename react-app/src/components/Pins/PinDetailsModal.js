@@ -92,6 +92,7 @@ function PinDetailsModal({pin, user}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setErrors([])
         if (newComment.length > 250 || !newComment) {
             setErrors({'comment': "Please enter a comment with 250 or less characters"})
         }
@@ -146,7 +147,6 @@ function PinDetailsModal({pin, user}) {
                 await dispatch(getSinglePin(currPin.id))
                 scrollToBottom();
                 setComments(currPinComments)
-                console.log("AFTER", pin)
             } else {
                 console.log("RES", res)
             }
