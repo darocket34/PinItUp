@@ -23,7 +23,6 @@ export default function CommentCard({comment}) {
 
 
     useEffect(() => {
-        console.log(comment?.date)
         const fetchData = async () => {
             const req = await dispatch(getUserById(comment?.creatorId))
             const res = await req

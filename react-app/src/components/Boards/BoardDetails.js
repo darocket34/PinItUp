@@ -33,10 +33,6 @@ function BoardDetails() {
         }
     });
 
-    // const removePin = async (pin,board) => {
-    //     const res = await dispatch(removePinFromBoard(pin,board));
-    // }
-
     return (
         <>
             <button className="boarddetails back to boards" onClick={() => history.goBack()}>Back</button>

@@ -245,11 +245,10 @@ button.profilepage.nonowner.true span.nonowner:hover{
 }
 
 div.profilepage.followcounter {
+    align-items: center;
     display: flex;
     flex-direction: row;
     gap: 20px;
-    align-items: center;
-    /* width: 200px; */
 }
 
 div.profilepage.followcounter p {
