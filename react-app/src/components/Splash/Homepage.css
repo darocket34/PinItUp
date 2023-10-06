@@ -107,7 +107,7 @@ div.bottom.master {
 }
 
 div.splash.loading {
-    align-items: center;
+    align-items: flex-start;
     background-color: white;
     display: flex;
     justify-content: center;
