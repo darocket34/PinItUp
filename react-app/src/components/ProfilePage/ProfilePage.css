@@ -227,6 +227,14 @@ p.profilepage.separator {
 }
 
 div.profilepage.follower.list {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
     max-height: 400px;
     overflow: auto;
+    width: 410px;
+}
+
+div.profilepage.follower.list div {
+    width: 290px;
 }
