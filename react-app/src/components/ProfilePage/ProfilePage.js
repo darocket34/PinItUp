@@ -283,7 +283,7 @@ function ProfilePage() {
                                     <span className="profilepage nonowner unfollow">Unfollow</span>
                                 </button>
                                 {countdown > 0 && (
-                                    <p>Updating {countdown}</p>)
+                                    <p>Updating {countdown}...</p>)
                                 }
                             </div>
                             ) : (
