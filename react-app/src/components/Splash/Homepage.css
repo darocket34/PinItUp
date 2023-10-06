@@ -112,9 +112,27 @@ div.splash.loading {
     display: flex;
     justify-content: center;
     position: fixed;
-    min-height: 2000px;
-    min-width: 2000px;
+    /* min-height: 2000px;
+    min-width: 2000px; */
+    height: 100%;
+    width: 100%;
     z-index: 100;
+}
+
+div.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.page-button {
+    margin: 7px;
+}
+
+.page-button:focus {
+    background-color: black;
+    color: white;
 }
 
 @media (min-width: 0px) and (max-width: 550px) {
@@ -129,6 +147,9 @@ div.splash.loading {
     div.profilepage.pins.container {
         column-count: 3;
     }
+    /* div.splash.loading {
+        min-width: 1050px;
+    } */
 }
 
 @media (min-width: 1051px) and (max-width: 1330px) {
@@ -136,6 +157,9 @@ div.splash.loading {
     div.profilepage.pins.container {
         column-count: 4;
     }
+    /* div.splash.loading {
+        min-width: 1350px;
+    } */
 }
 
 @media (min-width: 1331px) and (max-width: 1571px) {
@@ -143,6 +167,9 @@ div.splash.loading {
     div.profilepage.pins.container {
         column-count: 5;
     }
+    /* div.splash.loading {
+        min-width: 1575px;
+    } */
 }
 
 @media (min-width: 1572px) {
@@ -150,4 +177,7 @@ div.splash.loading {
     div.profilepage.pins.container {
         column-count: 6;
     }
+    /* div.splash.loading {
+        min-width: 2000px;
+    } */
 }
