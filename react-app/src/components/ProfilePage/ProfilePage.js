@@ -35,6 +35,22 @@ function ProfilePage() {
     const [activePins, setActivePins] = useState(false);
     const [pinList, setPinList] = useState([]);
     const [errors, setErrors] = useState({});
+    const [disableFollow, setDisableFollow] = useState(false);
+    const [countdown, setCountdown] = useState(0);
+
+    useEffect(() => {
+        let countdownInterval;
+
+        if (countdown > 0) {
+          countdownInterval = setInterval(() => {
+            setCountdown((prevCountdown) => prevCountdown - 1);
+          }, 1000);
+        }
+
+        return () => {
+          clearInterval(countdownInterval);
+        };
+      }, [countdown]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +79,6 @@ function ProfilePage() {
     }, [dispatch, isLoaded, username, newUsername, currUserIsFollowing, isOwner]);
 
     useEffect(() => {
-        console.log(boards)
         if (user?.id === creator?.id) {
             setIsOwner(true);
         } else {
@@ -72,6 +87,7 @@ function ProfilePage() {
     }, [isOwner, currLocation]);
 
     const handleFollow = async () => {
+        setDisableFollow(true)
         if (user?.id && creator?.id) {
             try {
                 const followRes = await dispatch(followCurrUser({
@@ -83,14 +99,18 @@ function ProfilePage() {
                 } else {
                     setCurrUserIsFollowing(true);
                     await dispatch(getUserByUsername(username));
+
                 }
             } catch (err) {
                 setErrors(err.errors);
             }
         }
+        setTimeout(() => setDisableFollow(false), 5000);
+        setCountdown(5);
     };
 
     const handleUnfollow = async () => {
+        setDisableFollow(true)
         if (user?.id && creator?.id) {
             try {
                 const unfollowRes = await dispatch(unfollowCurrUser({
@@ -107,6 +127,8 @@ function ProfilePage() {
                 console.log("ERR", err);
             }
         }
+        setTimeout(() => setDisableFollow(false), 5000);
+        setCountdown(5);
     };
 
     const handleTextSubmit = async (e) => {
@@ -142,7 +164,6 @@ function ProfilePage() {
             setTextEditMode(false);
             await dispatch(authenticate())
             await dispatch(getUserByUsername(res.username))
-
             history.push(`/${res.username}/profile`)
         }
     };
@@ -256,14 +277,25 @@ function ProfilePage() {
                 ) : (
                     <div className="profilepage nonowner controls container">
                         {currUserIsFollowing ? (
-                            <button className="profilepage nonowner following" id="ppfollowing" onClick={handleUnfollow}>
-                                <span className="profilepage nonowner following">Following</span>
-                                <span className="profilepage nonowner unfollow">Unfollow</span>
-                            </button>
+                            <div className="profilepage followcounter">
+                                <button className={`profilepage nonowner following ${disableFollow}`} id="ppfollowing" disabled={disableFollow} onClick={handleUnfollow}>
+                                    <span className="profilepage nonowner following">Following</span>
+                                    <span className="profilepage nonowner unfollow">Unfollow</span>
+                                </button>
+                                {countdown > 0 && (
+                                    <p>Updating {countdown}</p>)
+                                }
+                            </div>
                             ) : (
-                            <button className="profilepage nonowner follow" onClick={handleFollow}>Follow</button>
+                            <div className="profilepage followcounter">
+                                <button className={`profilepage nonowner follow ${disableFollow}`} disabled={disableFollow} onClick={handleFollow}>Follow</button>
+                                {countdown > 0 && (
+                                    <p>Updating {countdown}...</p>)
+                                }
+                            </div>
                             )
                         }
+
                     </div>
                 )}
             </div>

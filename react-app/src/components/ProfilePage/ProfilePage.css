@@ -238,3 +238,22 @@ div.profilepage.follower.list {
 div.profilepage.follower.list div {
     width: 290px;
 }
+
+button.profilepage.nonowner.true:hover,
+button.profilepage.nonowner.true span.nonowner:hover{
+    cursor: not-allowed;
+}
+
+div.profilepage.followcounter {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    /* width: 200px; */
+}
+
+div.profilepage.followcounter p {
+    color: #B4125D;
+    margin: 0;
+    padding: 0;
+}
