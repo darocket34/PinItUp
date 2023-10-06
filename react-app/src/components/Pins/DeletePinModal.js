@@ -14,7 +14,7 @@ const DeletePinModal = ({pin}) => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        dispatch(removePin(pin.id)).then(dispatch(getAllPinsByUsername(user?.username))).then(dispatch(getAllBoards(user.username))).then(closeModal());
+        dispatch(removePin(pin.id)).then(dispatch(getAllPinsByUsername(user?.username))).then(dispatch(getAllBoards(user.username))).then(dispatch(getAllPinsByUsername(user?.username))).then(closeModal());
         history.push(`/${user?.username}/profile`)
     }
 
