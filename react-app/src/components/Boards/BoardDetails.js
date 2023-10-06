@@ -59,13 +59,13 @@ function BoardDetails() {
             <div className="boarddetails pinList">
                 <ul>
                     {board?.pins?.length > 0 && (
-                        <div key={board?.id}className="homepage pin master container">
-                            {board?.pins?.map((pin,idx) => (
-                                <>
-                                    <div key={pin.id} className='boarddetails single pin container'>
+                        <div key={board.id}className="homepage pin master container">
+                            {board.pins?.map((pin,idx) => (
+                                <div key={pin.id}>
+                                    <div className='boarddetails single pin container'>
                                         <PinCard key={idx*0.2} pin={pin} boardsObj={boards} board={board} user={user} isOwner={isOwner} />
                                     </div>
-                                </>
+                                </div>
                             ))}
                         </div>
                     )}
