@@ -17,7 +17,6 @@ export default function CommentCard({comment}) {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
-        timeZoneName: 'short',
       };
     const formattedLocalDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/${(date.getFullYear() % 100).toString().padStart(2, '0')} ${date.toLocaleTimeString(undefined, options)}`;
 
