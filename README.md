@@ -16,11 +16,6 @@ https://pinitup.onrender.com/
  ### Hosting:
  ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
-# Index
-
-[Feature List](https://github.com/darocket34/PinItUp/wiki/Feature-List) | [Database Schema](https://github.com/darocket34/PinItUp/wiki/Database-Schema) | [User Stories](https://github.com/darocket34/PinItUp/wiki/User-Stories) | [Wireframes](https://github.com/darocket34/PinItUp/wiki/WireFrame)
-
-
 # Endpoints
 ## Auth
 
@@ -58,17 +53,36 @@ https://pinitup.onrender.com/
 | `/pins/<int:id>/comment`                     | DELETE       | Delete a comment from a pin.                           |
 | `/pins/<int:id>`                              | DELETE       | Delete a pin.                                          |
 
-# Feature List
-1. Pins
-2. Boards
-3. Comments
-4. Search
-5. Follows
+# Installation
 
-# Future Implementation Goals
-1. Messaging
-2. Stylistic Splash Page
-3. Night Mode
+1. `pipenv install` in the root
+2.  `npm install` in the react-app folder
+3. create a .env file at the root that matches the .env.example file
+4. run the command `pipenv shell`
+5. open two terminals: one at the root(A), and one in the react-app folder (B)
+6. terminal A - run `flask run db migrate` followed by `flas run db upgrade` and finally `flask run seed all`
+7. to begin the local server: on terminal A - run `flask run` and terminal B - run `npm start` this should automatically open a new tab in your browser running the live server on port 3000
+
+# Screenshots
+Splash
+![image](https://github.com/darocket34/PinItUp/assets/130183749/37caa718-42b5-409d-8662-c9a985dfe470)
+
+Login Modal
+![image](https://github.com/darocket34/PinItUp/assets/130183749/58197608-6f83-43a7-9651-e60edead3aa5)
+
+Signup Modal
+![image](https://github.com/darocket34/PinItUp/assets/130183749/d18bcc7d-857b-47bf-b063-9d270d268a64)
+
+Homepage
+![image](https://github.com/darocket34/PinItUp/assets/130183749/420d5994-9df8-4d43-8dbc-58eb6ef3909b)
+
+Pin Details Modal
+![image](https://github.com/darocket34/PinItUp/assets/130183749/6927274f-8af5-40f5-9d29-cefbb9df9dd2)
+
+Profile Page
+![image](https://github.com/darocket34/PinItUp/assets/130183749/dc260fec-1d5e-418d-95fe-d0fbfffebc2e)
 
 # Connect
 [LinkedIn](https://www.linkedin.com/in/darian-brooks92/)
+
+[Portfolio](https://darianbrooks.info)
